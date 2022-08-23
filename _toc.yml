@@ -5,4 +5,8 @@ root: intro.md
 chapters:
 - file: notebooks/01/syllabus.ipynb
 
-- file: notebooks/03/discrete-event-modeling
+- file: notebooks/02/01-discrete-event-modeling.ipynb
+  sections:
+  - file: notebooks/02/02-simpy.ipynb
+
+  
