@@ -5,8 +5,7 @@ root: intro.md
 chapters:
 - file: notebooks/01/syllabus.ipynb
 
-- file: notebooks/02/01-discrete-event-modeling.ipynb
+- file: notebooks/02/00-discrete-event-modeling.ipynb
   sections:
-  - file: notebooks/02/02-simpy.ipynb
-
-  
+  - file: notebooks/02/01-simpy.ipynb
+  - file: notebooks/02/02-agent-based-models.ipynb
