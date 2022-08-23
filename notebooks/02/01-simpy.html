@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Simpy &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Agent Based Models" href="02-agent-based-models.html" />
+    <link rel="prev" title="Introduction to Discrete Event Simulation" href="00-discrete-event-modeling.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   CBE 40555/60455 Process Operations
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/02/01-simpy.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jckantor/cbe60455"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02/01-simpy.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/02/01-simpy.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/02/01-simpy.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-steps">
+   First Steps
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-simplest-simpy-model">
+     The simplest Simpy model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-a-process">
+     Adding a process
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#accessing-time">
+     Accessing time
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-multiple-instances-of-a-generator">
+     Creating multiple instances of a generator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-a-simulation-for-a-known-period-of-time">
+     Running a simulation for a known period of time
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logging-data">
+     Logging data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-simulating-a-stirred-tank-reactor">
+   Example: Simulating a Stirred Tank Reactor
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-development">
+     Model development
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Simpy</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-steps">
+   First Steps
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-simplest-simpy-model">
+     The simplest Simpy model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-a-process">
+     Adding a process
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#accessing-time">
+     Accessing time
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-multiple-instances-of-a-generator">
+     Creating multiple instances of a generator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-a-simulation-for-a-known-period-of-time">
+     Running a simulation for a known period of time
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logging-data">
+     Logging data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-simulating-a-stirred-tank-reactor">
+   Example: Simulating a Stirred Tank Reactor
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-development">
+     Model development
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-simpy">
+<h1>Introduction to Simpy<a class="headerlink" href="#introduction-to-simpy" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install simpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: simpy in /Users/jeff/opt/anaconda3/lib/python3.7/site-packages (4.0.1)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="first-steps">
+<h2>First Steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h2>
+<section id="the-simplest-simpy-model">
+<h3>The simplest Simpy model<a class="headerlink" href="#the-simplest-simpy-model" title="Permalink to this headline">¶</a></h3>
+<p>Simpy implements an Environment() object that does the heavy work of scheduling processing events that occur when simulating complex models. The simplest possible Simpy model is one that creates and runs an empty simulation environment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-a-process">
+<h3>Adding a process<a class="headerlink" href="#adding-a-process" title="Permalink to this headline">¶</a></h3>
+<p>The components that make up a Simpy models are implemented using python gnerators. A generator begins with the <code class="docutils literal notranslate"><span class="pre">def</span></code> statement and must have at least one <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement. The yield statement returns an event to the simulation environment. A frequently used events is <code class="docutils literal notranslate"><span class="pre">simpy.Environment.timeout()</span></code> which simulates the passage of time in a model component.</p>
+<p>Once the generator has been defined, an instance of the generator is passed to the simulation environment using the <code class="docutils literal notranslate"><span class="pre">simpy.Environment.process()</span></code> method.</p>
+<p>The following model defines a process model in which “Hello, World” is printed after a simulated 2.0 seconds have elapsed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>           <span class="c1"># let 2.0 seconds of simulated time elapse</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, World&quot;</span><span class="p">)</span>            <span class="c1"># print &quot;Hello, World&quot;</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>            <span class="c1"># create a simulation environment instance</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">())</span>                <span class="c1"># register an instance of the process model</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>                            <span class="c1"># run the simulaton</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello, World
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="accessing-time">
+<h3>Accessing time<a class="headerlink" href="#accessing-time" title="Permalink to this headline">¶</a></h3>
+<p>The environment variable <code class="docutils literal notranslate"><span class="pre">simpy.Environment.now</span></code> returns the current time in the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time =&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>             <span class="c1"># print current time in the simulation</span>
+    <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>               <span class="c1"># take a time out of 1 time unit</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time =&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>             <span class="c1"># print current time in the simulation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, World&quot;</span><span class="p">)</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>                <span class="c1"># create a simulation environment instance</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">())</span>                 <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>                                <span class="c1"># run the simulation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time = 0
+time = 2.0
+Hello, World
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-multiple-instances-of-a-generator">
+<h3>Creating multiple instances of a generator<a class="headerlink" href="#creating-multiple-instances-of-a-generator" title="Permalink to this headline">¶</a></h3>
+<p>The same generator can be used to create multiple instances of a model component. For example, this cell creates three instances of a generator. The generator is modified to add an identifier and variable time delay.</p>
+<p><strong>Carefully examine the output of this cell. Be sure you explain the order in which the print statements appear in the output.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;time =&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>         <span class="c1"># print current time in the simulation</span>
+    <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>             <span class="c1"># take a time out of 1 time unit</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;says Hello, World at time&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>                <span class="c1"># create a simulation environment instance</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span>         <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>         <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>         <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>                                <span class="c1"># run the simulation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A time = 0
+B time = 0
+C time = 0
+B says Hello, World at time 2.0
+A says Hello, World at time 3.0
+C says Hello, World at time 4.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="running-a-simulation-for-a-known-period-of-time">
+<h3>Running a simulation for a known period of time<a class="headerlink" href="#running-a-simulation-for-a-known-period-of-time" title="Permalink to this headline">¶</a></h3>
+<p>The simulations presented above finish when all of the components making up the model have finished. In process modeling, however, some model components will simply cycle forever leading to a simulation that would never end. To handle this situation, the <code class="docutils literal notranslate"><span class="pre">simpy.Environment.run()</span></code> has an optional parameter <code class="docutils literal notranslate"><span class="pre">until</span></code> the causes the simulation to end a known point in time.</p>
+<p>The next modifies the generator to include an infinite loop, and controls the simulation period using the <code class="docutils literal notranslate"><span class="pre">until</span></code> parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;time =&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>          <span class="c1"># print current time in the simulation</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>          <span class="c1"># take a time out of 1 time unit</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;says Hello, World at time&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>                 <span class="c1"># create a simulation environment instance</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>                       <span class="c1"># run the simulation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A time = 0
+B time = 0
+C time = 0
+B says Hello, World at time 2.0
+A says Hello, World at time 3.0
+C says Hello, World at time 4.0
+B says Hello, World at time 4.0
+A says Hello, World at time 6.0
+B says Hello, World at time 6.0
+C says Hello, World at time 8.0
+B says Hello, World at time 8.0
+A says Hello, World at time 9.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="logging-data">
+<h3>Logging data<a class="headerlink" href="#logging-data" title="Permalink to this headline">¶</a></h3>
+<p>Discrete-event simulations can create large amounts of data. A good practice is create a data log for the purpose of capturing data generated during the simulation. After the simulation is complete, the data log can be processed to create reports and charts to analyze results of the simulation.</p>
+<p>If not sure what to log, a good practice is log at least three items for each event:</p>
+<ul class="simple">
+<li><p><strong>who</strong> what object created this event</p></li>
+<li><p><strong>what</strong> a description of the event</p></li>
+<li><p><strong>when</strong> when the event occurred</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="n">data_log</span> <span class="o">=</span> <span class="p">[]</span>                             <span class="c1"># create an empty data log</span>
+
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>          <span class="c1"># take a time out of 1 time unit</span>
+        <span class="n">data_log</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;Hello, World&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">])</span>   <span class="c1"># log who (id), what (&quot;Hello, World&quot;), when (env.now)</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>                 <span class="c1"># create a simulation environment instance</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>          <span class="c1"># tell the simulation environment which generators to process</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>                       <span class="c1"># run the simulation</span>
+
+<span class="k">for</span> <span class="n">data_record</span> <span class="ow">in</span> <span class="n">data_log</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_record</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;B&#39;, &#39;Hello, World&#39;, 2.0]
+[&#39;A&#39;, &#39;Hello, World&#39;, 3.0]
+[&#39;C&#39;, &#39;Hello, World&#39;, 4.0]
+[&#39;B&#39;, &#39;Hello, World&#39;, 4.0]
+[&#39;A&#39;, &#39;Hello, World&#39;, 6.0]
+[&#39;B&#39;, &#39;Hello, World&#39;, 6.0]
+[&#39;C&#39;, &#39;Hello, World&#39;, 8.0]
+[&#39;B&#39;, &#39;Hello, World&#39;, 8.0]
+[&#39;A&#39;, &#39;Hello, World&#39;, 9.0]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="example-simulating-a-stirred-tank-reactor">
+<h2>Example: Simulating a Stirred Tank Reactor<a class="headerlink" href="#example-simulating-a-stirred-tank-reactor" title="Permalink to this headline">¶</a></h2>
+<section id="model-development">
+<h3>Model development<a class="headerlink" href="#model-development" title="Permalink to this headline">¶</a></h3>
+<p>Write a Python generator to simulate the response of a differential equation describing concentration in a stirred tank reactor.</p>
+<div class="math notranslate nohighlight">
+\[\frac{dC}{dt} = -k C + q(t)\]</div>
+<p>where k = 1.0,  C(0) = 1.0 and q(t) has a constant value 0.5. Use can use the Euler approximation</p>
+<div class="math notranslate nohighlight">
+\[C(t + \Delta t) = C(t) + \Delta t \left[ - k C(t) + q(t) \right]\]</div>
+<p>The definition of the generator should allow specification of the time step, <span class="math notranslate nohighlight">\(\Delta t\)</span>, and the rate constant <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="kn">import</span> <span class="nn">simpy</span>
+
+<span class="k">def</span> <span class="nf">flow</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">q</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reactor</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">C</span> <span class="o">-</span> <span class="n">k</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">C</span> <span class="o">+</span> <span class="n">q</span><span class="o">*</span><span class="n">dt</span>
+        
+<span class="n">env</span> <span class="o">=</span> <span class="n">simpy</span><span class="o">.</span><span class="n">Environment</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">flow</span><span class="p">())</span>
+<span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">reactor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 1.0
+0.5 0.75
+1.0 0.62
+1.5 0.56
+2.0 0.53
+2.5 0.52
+3.0 0.51
+3.5 0.5
+4.0 0.5
+4.5 0.5
+5.0 0.5
+5.5 0.5
+6.0 0.5
+6.5 0.5
+7.0 0.5
+7.5 0.5
+8.0 0.5
+8.5 0.5
+9.0 0.5
+9.5 0.5
+10.0 0.5
+10.5 0.5
+11.0 0.5
+11.5 0.5
+12.0 0.5
+12.5 0.5
+13.0 0.5
+13.5 0.5
+14.0 0.5
+14.5 0.5
+15.0 0.5
+15.5 0.5
+16.0 0.5
+16.5 0.5
+17.0 0.5
+17.5 0.5
+18.0 0.5
+18.5 0.5
+19.0 0.5
+19.5 0.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Extend stirred tank model by adding the following features:</p>
+<ul class="simple">
+<li><p>Modify the flow simulation so that the flowrate initially starts at 0.0, switches to a value of 0.5 at t=1.0, then back to 0.0 five time units later.</p></li>
+<li><p>Add a data log to records time and the values of concentration, <span class="math notranslate nohighlight">\(C\)</span>, and flowrate <span class="math notranslate nohighlight">\(q\)</span>. After debugging, remove the print statements.</p></li>
+<li><p>When the simulation is complete, convert the data log to a numpy array, then create plots of <span class="math notranslate nohighlight">\(C(t)\)</span> and <span class="math notranslate nohighlight">\(q(t)\)</span>. Take time to label axes and, if necessary, add a legend.</p></li>
+<li><p>The whole thing should run in a single cell</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your solution goes in this cell</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="00-discrete-event-modeling.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to Discrete Event Simulation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="02-agent-based-models.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Agent Based Models</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Jeffrey C. Kantor<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
