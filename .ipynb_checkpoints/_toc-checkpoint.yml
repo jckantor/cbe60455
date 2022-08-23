@@ -4,3 +4,5 @@ format: jb-book
 root: intro.md
 chapters:
 - file: notebooks/01/syllabus.ipynb
+
+- file: notebooks/03/discrete-event-modeling
