@@ -1,0 +1,6 @@
+# Table of contents
+
+format: jb-book
+root: intro.md
+chapters:
+- file: notebooks/01/syllabus.ipynb
