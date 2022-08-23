@@ -1,3 +1,3 @@
-# Companion Notebooks for Mathematical Optimization
+# CBE 40455/60455 Process Operations
 
-This is the source repository for [Mathematical Optimization](http://jckantor.github.io/MO-book/).
+This is the source repository for [CBE 40455/60455](http://jckantor.github.io/cbe60455/).
