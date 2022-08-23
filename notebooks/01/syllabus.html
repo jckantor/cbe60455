@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CBE 40455/60455 Process Operations: Syllabus &#8212; Companion Notebooks for Data-Driven Mathematical Optimization in Python</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Data-Driven Mathematical Optimization in Python" href="../../intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-DVQ7NZ8CYZ');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Companion Notebooks for Data-Driven Mathematical Optimization in Python</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Data-Driven Mathematical Optimization in Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/01/syllabus.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jckantor/MO-book/main?urlpath=tree/notebooks/01/syllabus.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/jckantor/MO-book/blob/main/notebooks/01/syllabus.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#catalog-description">
+   Catalog Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-information">
+   Course Information
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#schedule-and-locations">
+     Schedule and Locations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#topics">
+   Topics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-1-2-discrete-event-dynamics-and-simulation">
+     Weeks 1-2: Discrete Event Dynamics and Simulation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-3-4-linear-optimization">
+     Weeks 3-4: Linear Optimization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-5-6-scheduling">
+     Weeks 5-6: Scheduling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-7-8-logistics">
+     Weeks 7-8: Logistics
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#readings">
+       Readings
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-9-10-optimization-under-uncertainty">
+     Weeks 9-10: Optimization under Uncertainty
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-11-12-financial-modeling-risk-and-diversification">
+     Weeks 11-12: Financial Modeling, Risk and Diversification
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-13-14-capstone-project">
+     Weeks 13-14: Capstone Project
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#project-ideas">
+       Project Ideas
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#project-github-repository">
+       Project Github Repository
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>CBE 40455/60455 Process Operations: Syllabus</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#catalog-description">
+   Catalog Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-information">
+   Course Information
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#schedule-and-locations">
+     Schedule and Locations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#topics">
+   Topics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-1-2-discrete-event-dynamics-and-simulation">
+     Weeks 1-2: Discrete Event Dynamics and Simulation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-3-4-linear-optimization">
+     Weeks 3-4: Linear Optimization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-5-6-scheduling">
+     Weeks 5-6: Scheduling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-7-8-logistics">
+     Weeks 7-8: Logistics
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#readings">
+       Readings
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-9-10-optimization-under-uncertainty">
+     Weeks 9-10: Optimization under Uncertainty
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-11-12-financial-modeling-risk-and-diversification">
+     Weeks 11-12: Financial Modeling, Risk and Diversification
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weeks-13-14-capstone-project">
+     Weeks 13-14: Capstone Project
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#project-ideas">
+       Project Ideas
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#project-github-repository">
+       Project Github Repository
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="cbe-40455-60455-process-operations-syllabus">
+<h1>CBE 40455/60455 Process Operations: Syllabus<a class="headerlink" href="#cbe-40455-60455-process-operations-syllabus" title="Permalink to this headline">¶</a></h1>
+<p>August 23, 2022</p>
+<section id="catalog-description">
+<h2>Catalog Description<a class="headerlink" href="#catalog-description" title="Permalink to this headline">¶</a></h2>
+<p>This course introduces students to methods for the analysis and optimization of process operations. Topics will include process modeling, continuous and discrete optimization, scheduling, supply chains, scenario analysis, and financial  analysis for process operations. Special emphasis will be given to practical implementation of methods for real world applications.</p>
+</section>
+<section id="course-information">
+<h2>Course Information<a class="headerlink" href="#course-information" title="Permalink to this headline">¶</a></h2>
+<section id="schedule-and-locations">
+<h3>Schedule and Locations<a class="headerlink" href="#schedule-and-locations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Class Meetings:</strong> TTh 9:35-10:50 in 119 DeBartolo Hall</p></li>
+<li><p><strong>Course Management:</strong> Course materials and assignments will be managed using <span class="xref myst">Canvas</span>, Notre Dame’s Learning Management System.</p></li>
+<li><p><strong>Github Repository:</strong> <span class="xref myst">jckantor.github.io/CBE60455</span></p></li>
+<li><p><strong>Instructor:</strong> Jeffrey Kantor, Department of Chemical &amp; Biomolecular Engineering.</p>
+<ul>
+<li><p><strong>Office:</strong> 257 Nieuwland Hall</p></li>
+<li><p><strong>Office Hours:</strong> Monday and Wednesday afternoons are the regularly scheduled drop-in office hours for the course. Otherwise I’m generally available during regular business hours by appointment.</p></li>
+<li><p><strong>Email:</strong> <span class="xref myst">jeff&#64;nd.edu</span> This is the generally the best way to reach me.</p></li>
+<li><p><strong>Text Message:</strong> 574-532-4233</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="topics">
+<h2>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h2>
+<section id="weeks-1-2-discrete-event-dynamics-and-simulation">
+<h3>Weeks 1-2: Discrete Event Dynamics and Simulation<a class="headerlink" href="#weeks-1-2-discrete-event-dynamics-and-simulation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Discrete Event Simulation</strong>. Implementing discrete event simulations in Python. Poisson processes, queues, evaluating simulation results.</p></li>
+</ul>
+<p>Reading: \citep{Beamon1998}  \citep{Christopher2000}
+\citep{Shah2005} \citep{You2008} \citep{Ferrio2008}</p>
+<p>Project: Simulation a COVID outbreak.</p>
+</section>
+<section id="weeks-3-4-linear-optimization">
+<h3>Weeks 3-4: Linear Optimization<a class="headerlink" href="#weeks-3-4-linear-optimization" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Blending Problems. Formulation and solution of <code class="docutils literal notranslate"><span class="pre">blending'</span>&#160; <span class="pre">and</span> </code>diet’ models. History and significance of linear programming. Comparison of single product and multi-product plants.</p></li>
+<li><p>Modeling Languages. Formulation and solution of linear programming problems using spreadsheets, algebraic modeling languages, and embedded modeling languages.</p></li>
+<li><p>Examples of modeling languages for mathematical programming.</p>
+<ul>
+<li><p>AMPL</p></li>
+<li><p>APMonitor</p></li>
+<li><p>GLPK/MathProg</p></li>
+<li><p>CMPL</p></li>
+<li><p><a class="reference external" href="http://www-03.ibm.com/software/products/en/subcategory/decision-optimization">CPLEX/OPL</a></p></li>
+</ul>
+</li>
+<li><p>Examples of modeling languages embedded within programming languages.</p>
+<ul>
+<li><p>Matlab/CVX</p></li>
+<li><p>Matlab/YALMIP</p></li>
+<li><p>Matlab|Python/APMonitor</p></li>
+<li><p>Python/PuLP</p></li>
+<li><p>Python/Pyomo</p></li>
+</ul>
+</li>
+<li><p>Mathematical formulation and optimality conditions. Standard formulations of linear programming problems. Necessary conditions for optimality.  Outline of an active set method for solution.</p></li>
+<li><p>Sensitivity Analysis. Weak and strong duality. Slack variables, shadow prices. Applications to process analysis and decision making.</p></li>
+<li><p>Transportation, Assignment, and Network Flow Problems]</p></li>
+<li><p>Project Management. Critical Path Method, PERT and Gantt charts.</p></li>
+</ul>
+<p>{Readings:}</p>
+<p>{Project:} Optimization of a simple model for refinery operations (Example 16.1 from \citep{Edgar2001}).</p>
+</section>
+<section id="weeks-5-6-scheduling">
+<h3>Weeks 5-6: Scheduling<a class="headerlink" href="#weeks-5-6-scheduling" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Mixed Integer Linear Programming. Integer and binary variables. Using binary variables to model logical constraints and application to process decisions. Application to agricultural and stock cutting operations.</p></li>
+<li><p>Scheduling. Empirical methods for job scheduling.</p></li>
+<li><p>Machine and Job Scheduling. Modeling machines and jobs. Disjuctive constraints. Locating bottlenecks, tracking jobs and machine activities with Gannt charts. Practical implications of computational complexity.</p></li>
+<li><p>Short Term Scheduling of Batch Processes. Resource task networks, state task networks.</p></li>
+</ul>
+<p>Reading: \citep{Mendez2006a} \citep{Floudas2005a}</p>
+<p>Project: Scheduling production for a contract pharmaceutical manufacturer.</p>
+</section>
+<section id="weeks-7-8-logistics">
+<h3>Weeks 7-8: Logistics<a class="headerlink" href="#weeks-7-8-logistics" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Inventory Management</strong>. Inventory, reorder levels, economic order quantity. Empirical models for inventory management.</p></li>
+<li><p><strong>Supply Chains</strong>. <a class="reference external" href="http://www.beergame.org/">Beer Game Simulation</a>. Multi-echelon supply chains, processes, dynamics, and the `bullwhip’ effect. The role of information flow in supply chains.</p></li>
+</ul>
+<section id="readings">
+<h4>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h4>
+<p>Fisher, Marshall L. <a class="reference external" href="https://pdfs.semanticscholar.org/647a/c2ded3d69e41bb09ef5556aa942e01abd14d.pdf">“What is the right supply chain for your product?.” Harvard business review 75 (1997): 105-117.</a></p>
+</section>
+</section>
+<section id="weeks-9-10-optimization-under-uncertainty">
+<h3>Weeks 9-10: Optimization under Uncertainty<a class="headerlink" href="#weeks-9-10-optimization-under-uncertainty" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Newsvendor Problem. Optimal order size for uncertain demand \citep{Petruzzi1999}.</p></li>
+<li><p>Scenario Analysis. Plant expansion. Introduction to stochastic programming. Expected values, optimization of the mean scenario, value of perfect information, value of the stochastic solution. <code class="docutils literal notranslate"><span class="pre">Here</span> <span class="pre">and</span> <span class="pre">Now'</span> <span class="pre">decisions</span> <span class="pre">versus</span></code>Wait and See’.</p></li>
+<li><p>Stochastic Linear Programming. Two stage decisions, recourse variables. Implementing stochastic linear programs with algebraic modeling languages. Solution by decomposition methods.</p></li>
+<li><p>Process Resiliency. Measures of process flexibility and resiliency to perturbations.</p></li>
+</ul>
+<p>Readings: \citep{Sen1999a} \citep{Grossmann2014}</p>
+<p>Project: Production planning for a consumer goods company.</p>
+</section>
+<section id="weeks-11-12-financial-modeling-risk-and-diversification">
+<h3>Weeks 11-12: Financial Modeling, Risk and Diversification<a class="headerlink" href="#weeks-11-12-financial-modeling-risk-and-diversification" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Time value of money</strong>. Discounted cash flows. Replicating portfolio for a sequence of cash flows. Bonds and duration. Net present value and internal rate of returns. Project valuation.</p></li>
+<li><p><strong>Stochastic Modeling of Asset Prices</strong>. Statistical properties of prices for financial assets and commodity goods. Statistical distributions, discrete time models, model calibration, approximations with binomial trees. Correlation and copulas.</p></li>
+<li><p><strong>Commodity Markets</strong>. Futures, forwards, and options, and swaps. Hedging operational costs. Replicating portfolios.</p></li>
+<li><p><strong>Investment Objectives</strong>. Kelly’s criterion, and log optimal growth. Logarithmic utility functions, certainty equivalence principle, coherent risk measures, first and second order stochastic dominance. Practical risk measures.</p></li>
+<li><p><strong>Portfolio Management</strong>. Risk versus return. Markowitz analysis, diversification. Efficient frontier.  Comparison of Markowitz to Mean Absolute Difference, and optimal portfolios. Effects of adding a risk-free asset, two-fund theorem, market price of risk.</p></li>
+<li><p><strong>Real Options</strong>. European and American options on a financial asset. Extending the analysis to real options on tradable assets, and to decisions without tradable assets. \citep{Davis20xx}</p></li>
+</ul>
+<p>Reading: \citep{Adner2004}, \citep{Anderson2013},</p>
+<p>Project: (a) Valuation of a natural resource operation, or (b) Pricing and managing an energy swap for a flex-fuel utility</p>
+</section>
+<section id="weeks-13-14-capstone-project">
+<h3>Weeks 13-14: Capstone Project<a class="headerlink" href="#weeks-13-14-capstone-project" title="Permalink to this headline">¶</a></h3>
+<p>The capstone experience will be a team-based, integrative, open-ended project. Student teams will propose projects of their own design or select from a suggested list of projects. Projects will consist of an initial proposal, an oral status report to the class, a final poster presentation and written report, and a Github repository memorializing the project.</p>
+<section id="project-ideas">
+<h4>Project Ideas<a class="headerlink" href="#project-ideas" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Networks Against Time.</strong> Blood supplies, medical nuclear supplies, pharacueticals, food, and fast fashion are all examples of supply chains for perishable products. The book <a class="reference external" href="https://www.springer.com/gp/book/9781461462767">Networks Against Time</a> (available from <a class="reference external" href="https://link-springer-com.proxy.library.nd.edu/book/10.1007%2F978-1-4614-6277-4">Hesburgh Library</a>) describes analytics suitable for supply chains of perishable goods. Using an example from this book, develop an analytical model, sample calculation, and simulation.</p></li>
+<li><p><strong>Model Predictive Control</strong> is an optimization-based method for feedback control of dynamical systems. Implement and MPC controller for a system with discrete decisions.</p></li>
+<li><p><strong>Refinery Products Pooling Problem</strong> is the task of finding a cost set of product pools from which final products can be blended. The project is to develop and solve an example problem.</p></li>
+<li><p><strong>Energy Swap</strong> design and price an energy swap for a flex fuel utility located on a university campus.</p></li>
+<li><p><strong>Demand Response</strong> evaluate the potential for demand response for an aluminum smelter or a chlorine producer.</p></li>
+<li><p><strong>Process Resiliency</strong> has been a topic discussed in the process systems engineering literature since the pioneering work of Morari and Grossmann in the early 1980’s (Grossmann, 2014). The purpose of this project is to implement a measure of process resiliency and demonstrate its application to a chemical process.</p></li>
+<li><p><strong>Log Periodic Power Laws</strong> are models that have been used to predict the collapse of speculative `bubbles’ in financial and commodity markets. For this project, develop a regression method to fit a log periodic power law model to commodity price data, and compare a recent data series of your choice to the price of gold in the 2007–2009 period.</p></li>
+</ul>
+<p>Additional project ideas can be found at the following links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.aimms.com/downloads/application-examples">AIMMS Application Examples</a></p></li>
+</ul>
+</section>
+<section id="project-github-repository">
+<h4>Project Github Repository<a class="headerlink" href="#project-github-repository" title="Permalink to this headline">¶</a></h4>
+<p>Your project should be memorialized in the form of a <a class="reference external" href="https://github.com/">Github</a> repository. The simplest way to manage your repository is to use download the <a class="reference external" href="https://desktop.github.com/">Github Desktop application</a> and follow the <a class="reference external" href="https://help.github.com/en/articles/set-up-git">tutorial and guides</a>.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../../intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Data-Driven Mathematical Optimization in Python</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By The MO Book Group<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
