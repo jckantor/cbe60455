@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction to Discrete Event Simulation &#8212; CBE 40455/60455 Process Operations</title>
+    <title>Batch Chemical Process &#8212; CBE 40455/60455 Process Operations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,8 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>mermaid.initialize({startOnLoad:true});</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Introduction to Simpy" href="01-simpy.html" />
-    <link rel="prev" title="CBE 40455/60455 Process Operations: Syllabus" href="../01/syllabus.html" />
+    <link rel="prev" title="Simulating Queuing Systems" href="03-queuing-systems.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -117,7 +116,7 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
-  <a class="current reference internal" href="#">
+  <a class="reference internal" href="00-discrete-event-modeling.html">
    Introduction to Discrete Event Simulation
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
@@ -125,7 +124,7 @@ const thebe_selector_output = ".output, .cell_output"
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="01-simpy.html">
      Introduction to Simpy
@@ -141,8 +140,8 @@ const thebe_selector_output = ".output, .cell_output"
      Simulating Queuing Systems
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="04-batch-process-prompt.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      Batch Chemical Process
     </a>
    </li>
@@ -207,7 +206,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/02/00-discrete-event-modeling.ipynb"
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/02/04-batch-process-prompt.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -225,7 +224,7 @@ title="Launch on Binder"
       </li>
       
       <li>
-        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/02/00-discrete-event-modeling.ipynb"
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/02/04-batch-process-prompt.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -285,7 +284,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02/00-discrete-event-modeling.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02/04-batch-process-prompt.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -313,7 +312,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/notebooks/02/00-discrete-event-modeling.ipynb"
+        <a href="../../_sources/notebooks/02/04-batch-process-prompt.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -373,13 +372,13 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-discrete-event-simulation">
-   What is discrete-event simulation?
+  <a class="reference internal nav-link" href="#problem-statement">
+   Problem Statement
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simpy">
-   SimPy
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
   </a>
  </li>
 </ul>
@@ -391,7 +390,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Discrete Event Simulation</h1>
+                <h1>Batch Chemical Process</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -402,13 +401,13 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-discrete-event-simulation">
-   What is discrete-event simulation?
+  <a class="reference internal nav-link" href="#problem-statement">
+   Problem Statement
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simpy">
-   SimPy
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
   </a>
  </li>
 </ul>
@@ -421,25 +420,26 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-discrete-event-simulation">
-<h1>Introduction to Discrete Event Simulation<a class="headerlink" href="#introduction-to-discrete-event-simulation" title="Permalink to this headline">#</a></h1>
-<section id="what-is-discrete-event-simulation">
-<h2>What is discrete-event simulation?<a class="headerlink" href="#what-is-discrete-event-simulation" title="Permalink to this headline">#</a></h2>
-<p>Simulation is of profound importance to engineering practice. By comparing simulation to experiments, simulation can be used to verify one’s understanding of complex systems. Going the next step, simulation can be used to validate the design of new systems prior to their physical realization.</p>
-<p>Discrete-event simulation addresses the simulation of systems characterized by events. In contrast to systems typically modeled by low order and mathematically smooth functions and differential equations, discrete-event systems generally comprise objects and activities demarcarted by events such as the start and completion of tasks, the assignment of discrete resources to tasks, preemption of tasks. Discrete-event simulation has a wide range of applications ranging from manufacturing and logistics to health care delivery.</p>
-<p>There are a broad range of <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_discrete_event_simulation_software">software tools that support discrete-event simulation</a>. In this unit we will examine two representative tool sets. The first is <a class="reference external" href="https://simpy.readthedocs.io/en/latest/">SimPy</a>, an easy to use Python library that is used to construct custom simulations and can be integrated with a vast array of other Python tools. The second is <a class="reference external" href="https://www.anylogic.com/">AnyLogic</a>, a commercial simulation too representative of current state-of-the-art in discrete-event simulation.</p>
-</section>
-<section id="simpy">
-<h2>SimPy<a class="headerlink" href="#simpy" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://simpy.readthedocs.io/en/latest/">SimPy documentation</a> includes a <a class="reference external" href="https://simpy.readthedocs.io/en/latest/simpy_intro/index.html#intro">tutorial</a></p></li>
-<li><p>Scherfke, Stefan. <a class="reference external" href="https://stefan.sofa-rockers.org/downloads/simpy-ep14.pdf">Slides</a> from a <a class="reference external" href="https://www.youtube.com/watch?v=Bk91DoAEcjY">conference talk</a> given by one of the current developers of SimPy.</p></li>
-<li><p>Heintz, Meghan.<a class="reference external" href="https://www.youtube.com/watch?v=693UiPq6mII">Launching a new warehouse with SimPy at Rent the Runway</a>, a presentation at PyData NYC 2019.</p></li>
-<li><p>Horgan, Juan (2020). <a class="reference external" href="https://towardsdatascience.com/manufacturing-simulation-using-simpy-5b432ba05d98">Manufacturing simulation using SimPy</a>: A complete example of a simulation of a guitar factory using SimPy and class definitions.</p></li>
-</ul>
-</section>
-<div class="toctree-wrapper compound">
+  <section class="tex2jax_ignore mathjax_ignore" id="batch-chemical-process">
+<h1>Batch Chemical Process<a class="headerlink" href="#batch-chemical-process" title="Permalink to this headline">#</a></h1>
+<section id="problem-statement">
+<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">#</a></h2>
+<p>Schultheisz, Daniel, and Jude T. Sommerfeld. “Discrete-Event Simulation in Chemical Engineering.” Chemical Engineering Education 22.2 (1988): 98-102.</p>
+<p><img alt="Batch Process" src="notebooks/02/figures/BatchProcess.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;... a small, single-product batch chemical plant has three identical reactors in parallel, followed by a single storage tank and a batch still. Customer orders (batches) to be filled (which begin with processing in the reactor) occur every 115 ± 30 minutes, uniformly distributed. The reaction time in a given reactor is 335 ± 60 minutes, and the distillation time in the still is 110 ± 25 minutes, both times uniformly distributed. The holding capacity of the storage tank is exactly one batch. Hence, the storage tank must be empty for a given reactor to discharge its batch; if not, the reactor cannot begin processing a new batch until the storage tank becomes empty. The simulation is to be run for 100 batches. The model should have the capability to collect waiting line statistics for the queue immediately upstream of the reactor.&quot;&quot;
+</pre></div>
 </div>
+<p>You have been hired by the client as a consulting engineer. Prepare a SimPy simulation of this process to deliver to the client. The delivery should include functions to report the key performance indicators, visualize the results of the simulation, and to conduct ‘what-if’ studies to determine ways to improve process performance.</p>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>What is the purpose of the simulation? What question needs to be answered? In thinking about this, carefully consider what has been requested, what other questions are relevant to improving system performance.</p></li>
+<li><p>What are the key performance indicators?  What data needs to be collected?</p></li>
+<li><p>What simulation objects should be created for this application?</p></li>
+<li><p>What classes of shared resources will be used in this model?</p></li>
+</ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -469,19 +469,12 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../01/syllabus.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="03-queuing-systems.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">CBE 40455/60455 Process Operations: Syllabus</p>
+            <p class="prev-next-title">Simulating Queuing Systems</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="01-simpy.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to Simpy</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
