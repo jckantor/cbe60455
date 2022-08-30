@@ -10,3 +10,4 @@ chapters:
   - file: notebooks/02/01-simpy.ipynb
   - file: notebooks/02/02-agent-based-models.ipynb
   - file: notebooks/02/03-queuing-systems.ipynb
+  - file: notebooks/02/04-batch-process-prompt.ipynb
