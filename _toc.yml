@@ -12,8 +12,8 @@ chapters:
   - file: notebooks/02/03-queuing-systems.ipynb
   - file: notebooks/02/04-batch-process-prompt.ipynb
 
-- file: notebooks/02/00-scheduling.ipynb
+- file: notebooks/03/00-scheduling.md
   sections:
-  - file: notebooks/02/01-critical-path-method.ipynb
-  - file: notebooks/02/02-machine-bottleneck.ipynb
-  - file: notebooks/02/03-job-shop-scheduling.ipynb
+  - file: notebooks/03/01-critical-path-method.ipynb
+  - file: notebooks/03/02-machine-bottleneck.ipynb
+  - file: notebooks/03/03-job-shop-scheduling.ipynb
