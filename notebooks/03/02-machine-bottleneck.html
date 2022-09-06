@@ -1,0 +1,1200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Machine Bottleneck &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Job Shop Scheduling" href="03-job-shop-scheduling.html" />
+    <link rel="prev" title="Critical Path Method" href="01-critical-path-method.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-scheduling.html">
+   Scheduling
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/03/02-machine-bottleneck.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/03/02-machine-bottleneck.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/03/02-machine-bottleneck.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/03/02-machine-bottleneck.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling">
+   Modeling
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decision-variables">
+     Decision Variables
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pyomo-model">
+   Pyomo Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-machines">
+   Multiple Machines
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Machine Bottleneck</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling">
+   Modeling
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decision-variables">
+     Decision Variables
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pyomo-model">
+   Pyomo Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-machines">
+   Multiple Machines
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <!--NOTEBOOK_HEADER-->
+<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
+Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
+The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
+and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb">Critical Path Method</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb">Job Shop Scheduling</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="machine-bottleneck">
+<h1>Machine Bottleneck<a class="headerlink" href="#machine-bottleneck" title="Permalink to this headline">#</a></h1>
+<p>This notebook demonstrates the formulation and solution of the a machine bottleneck problem using Pyomo/GLPK. The task is to schedule a set of jobs on a single machine given the release time, duration, and due time for each job. Date for the example problem is from Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 5, Dash Optimization, 2000.</p>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
+<p>The problem is to schedule a sequence of jobs for a single machine. The data consists of a list of jobs. For each job, the data provides the time at which the job is released to the for machine processing, the expected duration of the job, and the due date. The problem is to sequence the jobs on the machine to meet the due dates, or show that no such sequence is possible.</p>
+<p>The following data was presented in the Machine Bottleneck Example from Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 5, Dash Optimization, 2000.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">JOBS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">21</span><span class="p">},</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">},</span>
+    <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+    <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span>  <span class="mi">5</span><span class="p">},</span>
+    <span class="s1">&#39;F&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">},</span>
+    <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;release&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;due&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">JOBS</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>due</th>
+      <td>10</td>
+      <td>21</td>
+      <td>15</td>
+      <td>10</td>
+      <td>5</td>
+      <td>15</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>duration</th>
+      <td>5</td>
+      <td>6</td>
+      <td>8</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="n">JOBS</span><span class="p">):</span>
+    
+    <span class="c1"># create model</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+    
+    <span class="c1"># index set to simplify notation</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="c1"># decision variables</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">start</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span>    <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">early</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+
+    
+    <span class="n">m</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">))</span>
+    
+    <span class="n">m</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">])</span>
+                   
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]())</span>
+    
+<span class="n">schedule</span><span class="p">(</span><span class="n">JOBS</span><span class="p">)</span>
+ 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A 2.0
+B 5.0
+C 4.0
+D 0.0
+E 0.0
+F 8.0
+G 9.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="modeling">
+<h2>Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">#</a></h2>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h3>
+<p>The data for this problem consists of a list of jobs. Each job is tagged with a unique ID along with numerical data giving the time at which the job will be released for machine processing, the expected duration, and the time at which it is due.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="text-align:left head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{ID}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Unique ID for task <span class="math notranslate nohighlight">\(j\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\text{due}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Due time for task <span class="math notranslate nohighlight">\(j\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{duration}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Duration of task <span class="math notranslate nohighlight">\(j\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\text{release}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Time task <span class="math notranslate nohighlight">\(j\)</span> becomes available for processing</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="decision-variables">
+<h3>Decision Variables<a class="headerlink" href="#decision-variables" title="Permalink to this headline">#</a></h3>
+<p>For a single machine, the essential decision variable is the start time at which the job begins processing.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="text-align:left head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{start}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Start of task <span class="math notranslate nohighlight">\(j\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\text{makespan}\)</span></p></td>
+<td class="text-align:left"><p>Time to complete <em>all</em> jobs.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{pastdue}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Time by which task <span class="math notranslate nohighlight">\(j\)</span> is past due</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\text{early}_{j}\)</span></p></td>
+<td class="text-align:left"><p>Time by which task <span class="math notranslate nohighlight">\(j\)</span> is finished early</p></td>
+</tr>
+</tbody>
+</table>
+<p>A job cannot start until it is released for processing
+\begin{align*}
+\text{start}<em>{j} &amp; \geq \text{release}</em>{j}\
+\end{align*}</p>
+<p>Once released for processing, we assume the processing continues until the job is finished. The finish time is compared to the due time, and the result stored in either the early or pastdue decision variables. These decision variables are needed to handle cases where it might not be possible to complete all jobs by the time they are due.</p>
+<p>\begin{align*}
+\text{start}<em>{j} + \text{duration}</em>{j} + \text{early}<em>{j} &amp; = \text{due}</em>{j} + \text{pastdue}<em>{j}\
+\text{early}</em>{j} &amp; \geq 0 \
+\text{pastdue}_{j} &amp; \geq 0
+\end{align*}</p>
+<p>Finally, we include a single decision variable measuring the overall makespan for all jobs.
+\begin{align*}
+\text{start}<em>{j} +\text{duration}</em>{j} \leq \text{makespan}
+\end{align*}</p>
+<p>The final set of constraints requires that, for any given pair of jobs <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span>, that either <span class="math notranslate nohighlight">\(j\)</span> starts before <span class="math notranslate nohighlight">\(k\)</span> finishes, or <span class="math notranslate nohighlight">\(k\)</span> finishes before <span class="math notranslate nohighlight">\(j\)</span> starts. The boolean variable <span class="math notranslate nohighlight">\(y_{jk} = 1\)</span> indicates <span class="math notranslate nohighlight">\(j\)</span> finishes before <span class="math notranslate nohighlight">\(k\)</span> starts, and is 0 for the opposing case. Note that we only need to consider cases <span class="math notranslate nohighlight">\(j &gt; k\)</span></p>
+<p>\begin{align*}
+\text{start}<em>{i}+\text{duration}</em>{i} &amp; \leq \text{start}<em>{j}+My</em>{i,j}\
+\text{start}<em>{j}+\text{duration}</em>{j} &amp; \leq \text{start}<em>{i}+M(1-y</em>{i,j})
+\end{align*}</p>
+<p>where <span class="math notranslate nohighlight">\(M\)</span> is a sufficiently large enough to assure the relaxed constraint is satisfied for all plausible values of the decision variables.</p>
+</section>
+</section>
+<section id="pyomo-model">
+<h2>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="n">JOBS</span><span class="p">):</span>
+    
+    <span class="c1"># create model</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+    
+    <span class="c1"># index set to simplify notation</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="c1"># decision variables</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">start</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">makespan</span>   <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span>    <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">early</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    
+    <span class="c1"># additional decision variables for use in the objecive</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span>  <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">maxpastdue</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># for modeling disjunctive constraints</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+    <span class="n">BigM</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1">#  max([JOBS[j][&#39;release&#39;] for j in J]) + sum([JOBS[j][&#39;duration&#39;] for j in J])</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">OBJ</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">]),</span>
+        <span class="n">sense</span> <span class="o">=</span> <span class="n">minimize</span>
+    <span class="p">)</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">early</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;due&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">maxpastdue</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">makespan</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">BigM</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">BigM</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]))</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">BigM</span><span class="o">*</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]))</span>
+    
+    <span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;pastdue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;early&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">early</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;ispastdue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        
+    <span class="c1"># display table of results</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">JOBS</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;due&#39;</span><span class="p">,</span><span class="s1">&#39;finish&#39;</span><span class="p">,</span><span class="s1">&#39;release&#39;</span><span class="p">,</span><span class="s1">&#39;start&#39;</span><span class="p">],</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">JOBS</span>
+
+<span class="n">JOBS</span> <span class="o">=</span> <span class="n">schedule</span><span class="p">(</span><span class="n">JOBS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>due</th>
+      <td>10.0</td>
+      <td>21.0</td>
+      <td>15.0</td>
+      <td>10.0</td>
+      <td>5.0</td>
+      <td>15.0</td>
+      <td>22.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>duration</th>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>8.0</td>
+      <td>4.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>early</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>finish</th>
+      <td>11.0</td>
+      <td>20.0</td>
+      <td>30.0</td>
+      <td>6.0</td>
+      <td>2.0</td>
+      <td>14.0</td>
+      <td>22.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>ispastdue</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>pastdue</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>15.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>9.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td>6.0</td>
+      <td>14.0</td>
+      <td>22.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>11.0</td>
+      <td>20.0</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="n">JOBS</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">],</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">]],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">],</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;due&#39;</span><span class="p">]],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span>
+            <span class="s1">&#39;Job &#39;</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Machine Schedule&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Job Index&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">visualize</span><span class="p">(</span><span class="n">JOBS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/02-machine-bottleneck_12_0.png" src="../../_images/02-machine-bottleneck_12_0.png" />
+</div>
+</div>
+</section>
+<section id="multiple-machines">
+<h2>Multiple Machines<a class="headerlink" href="#multiple-machines" title="Permalink to this headline">#</a></h2>
+<p>The case of multiple machines requires a modest extension of model described above. Given a set <span class="math notranslate nohighlight">\(M\)</span> of machines, we introduce an additional decision binary variable <span class="math notranslate nohighlight">\(z_{j,m}\)</span> indicating if job <span class="math notranslate nohighlight">\(j\)</span> has been assigned to machine <span class="math notranslate nohighlight">\(m\)</span>. The additional constraints</p>
+<p>\begin{align*}
+\sum_{m\in M}z_{j,m} = 1
+\end{align*}</p>
+<p>require each job to be assigned to exactly one machine for processing.</p>
+<p>If both jobs <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span> have been assigned to machine <span class="math notranslate nohighlight">\(m\)</span>, then the disjunctive ordering constraints must apply.  This logic is equivalent to the following constraints for <span class="math notranslate nohighlight">\(j &lt; k\)</span>.</p>
+<p>\begin{align*}
+\text{start}<em>{i}+\text{duration}</em>{i} &amp; \leq \text{start}<em>{j}+M(1 -y</em>{i,j}) + M(1-z_{j,m}) + M(1-z_{k,m})\
+\text{start}<em>{j}+\text{duration}</em>{j} &amp; \leq \text{start}<em>{i}+M y</em>{i,j} + M(1-z_{j,m}) + M(1-z_{k,m}))
+\end{align*}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MACHINES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">schedule_machines</span><span class="p">(</span><span class="n">JOBS</span><span class="p">,</span><span class="n">MACHINES</span><span class="p">):</span>
+    
+    <span class="c1"># create model</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+    
+    <span class="c1"># index set to simplify notation</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">MACHINES</span><span class="p">)</span>
+
+    <span class="c1"># decision variables</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">start</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">makespan</span>   <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span>    <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">early</span>      <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    
+    <span class="c1"># additional decision variables for use in the objecive</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span>  <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">maxpastdue</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    
+    <span class="c1"># for binary assignment of jobs to machines</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+
+    <span class="c1"># for modeling disjunctive constraints</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Binary</span><span class="p">)</span>
+    <span class="n">BigM</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">])</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">])</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">OBJ</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span>
+        <span class="n">expr</span> <span class="o">=</span> 
+            <span class="o">+</span> <span class="mi">1</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mi">1</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">makespan</span>
+            <span class="o">-</span> <span class="mi">1</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">early</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">),</span>
+        <span class="n">sense</span> <span class="o">=</span> <span class="n">minimize</span>
+    <span class="p">)</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">early</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;due&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">maxpastdue</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">makespan</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">BigM</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">mach</span><span class="p">]</span> <span class="k">for</span> <span class="n">mach</span> <span class="ow">in</span> <span class="n">M</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mach</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> 
+                        <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">BigM</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">mach</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">mach</span><span class="p">])))</span>
+                    <span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> 
+                        <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">BigM</span><span class="o">*</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">mach</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">mach</span><span class="p">])))</span>
+    
+    <span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;pastdue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">pastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;early&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">early</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;ispastdue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">ispastdue</span><span class="p">[</span><span class="n">j</span><span class="p">]()</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;machine&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">mach</span> <span class="k">for</span> <span class="n">mach</span> <span class="ow">in</span> <span class="n">MACHINES</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">mach</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+        
+    <span class="c1"># display table of results</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">JOBS</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;due&#39;</span><span class="p">,</span><span class="s1">&#39;finish&#39;</span><span class="p">,</span><span class="s1">&#39;release&#39;</span><span class="p">,</span><span class="s1">&#39;start&#39;</span><span class="p">,</span><span class="s1">&#39;machine&#39;</span><span class="p">],</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">JOBS</span>
+
+<span class="n">JOBS</span> <span class="o">=</span> <span class="n">schedule_machines</span><span class="p">(</span><span class="n">JOBS</span><span class="p">,</span><span class="n">MACHINES</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            A   B   C   D  E   F   G Total
+due        10  21  15  10  5  15  22      
+duration    5   6   8   4  2   3   2    30
+early       3   8   3   6  3   0   7    30
+finish      7  13  12   4  2  15  15      
+ispastdue   0   0   0   0  0   0   0     0
+machine     B   B   A   A  B   A   B      
+pastdue     0   0   0   0  0   0   0     0
+release     2   5   4   0  0   8   9      
+start       2   7   4   0  0  12  13      
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="k">def</span> <span class="nf">visualize_machines</span><span class="p">(</span><span class="n">JOBS</span><span class="p">,</span><span class="n">MACHINES</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">],</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">]],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;release&#39;</span><span class="p">],</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;due&#39;</span><span class="p">]],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">)</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;Job &#39;</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="s1">&#39; on &#39;</span><span class="o">+</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;machine&#39;</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span>
+            <span class="n">txt</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Machine Schedule&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Job Index&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">MACHINES</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">JOBS</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;machine&#39;</span><span class="p">]:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">],</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">]],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span>
+                        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">)</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;Job &#39;</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="s1">&#39; on &#39;</span><span class="o">+</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;machine&#39;</span><span class="p">]</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;finish&#39;</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span>
+                    <span class="n">txt</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span>
+                    <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>  
+
+<span class="n">MACHINES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">]</span>
+<span class="n">JOBS</span> <span class="o">=</span> <span class="n">schedule_machines</span><span class="p">(</span><span class="n">JOBS</span><span class="p">,</span><span class="n">MACHINES</span><span class="p">)</span>
+<span class="n">visualize_machines</span><span class="p">(</span><span class="n">JOBS</span><span class="p">,</span><span class="n">MACHINES</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            A   B   C   D  E   F   G Total
+due        10  21  15  10  5  15  22      
+duration    5   6   8   4  2   3   2    30
+early       3  10   3   6  3   4   9    38
+finish      7  11  12   4  2  11  13      
+ispastdue   0   0   0   0  0   0   0     0
+machine     3   2   1   1  2   3   2      
+pastdue     0   0   0   0  0   0   0     0
+release     2   5   4   0  0   8   9      
+start       2   5   4   0  0   8  11      
+</pre></div>
+</div>
+<img alt="../../_images/02-machine-bottleneck_16_1.png" src="../../_images/02-machine-bottleneck_16_1.png" />
+</div>
+</div>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb">Critical Path Method</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb">Job Shop Scheduling</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="01-critical-path-method.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Critical Path Method</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="03-job-shop-scheduling.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Job Shop Scheduling</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
