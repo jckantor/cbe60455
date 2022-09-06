@@ -532,234 +532,319 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">()</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">(</span><span class="s2">&quot;Stadium Construction&quot;</span><span class="p">)</span>
 
 <span class="n">m</span><span class="o">.</span><span class="n">TASKS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">tasks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="n">m</span><span class="o">.</span><span class="n">ARCS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">latest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">latest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">slack</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">finish_time</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">minimize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">minimize_finish_time</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">100</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">finish_time</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">slack</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">early</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">finish_time</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">late</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">finish_time</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dur_early</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">+</span> <span class="n">tasks</span><span class="p">[</span><span class="n">task</span><span class="p">][</span><span class="s2">&quot;dur&quot;</span><span class="p">]</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dur_late</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">+</span> <span class="n">tasks</span><span class="p">[</span><span class="n">task</span><span class="p">][</span><span class="s2">&quot;dur&quot;</span><span class="p">]</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">slack_def</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">slack</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]</span>
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">arc_early</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">arc_late</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_start</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;cbc&quot;</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">:</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">task</span><span class="p">,</span> <span class="s2">&quot;earliest start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">task</span><span class="p">,</span> <span class="s2">&quot;earliest finish&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">task</span><span class="p">,</span> <span class="s2">&quot;latest start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_start</span><span class="p">[</span><span class="n">task</span><span class="p">]()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">task</span><span class="p">,</span> <span class="s2">&quot;latest finish&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span><span class="p">[</span><span class="n">task</span><span class="p">]()</span>    
     
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;slack&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;latest start&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;earliest start&quot;</span><span class="p">]</span>
 
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;slack&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mf">0.1</span><span class="p">])</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;slack&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T01 T02
-T02 T03
-T02 T04
-T02 T14
-T03 T05
-T04 T07
-T04 T10
-T04 T09
-T04 T06
-T04 T15
-T05 T06
-T06 T09
-T06 T11
-T06 T08
-T07 T13
-T08 T16
-T09 T12
-T11 T16
-T12 T17
-T14 T16
-T14 T15
-T17 T18
-TASKS : Size=1, Index=None, Ordered=Insertion
-    Key  : Dimen : Domain : Size : Members
-    None :     1 :    Any :   18 : {&#39;T01&#39;, &#39;T02&#39;, &#39;T03&#39;, &#39;T04&#39;, &#39;T05&#39;, &#39;T06&#39;, &#39;T07&#39;, &#39;T08&#39;, &#39;T09&#39;, &#39;T10&#39;, &#39;T11&#39;, &#39;T12&#39;, &#39;T13&#39;, &#39;T14&#39;, &#39;T15&#39;, &#39;T16&#39;, &#39;T17&#39;, &#39;T18&#39;}
-ARCS : Size=1, Index=None, Ordered=Insertion
-    Key  : Dimen : Domain : Size : Members
-    None :     2 :    Any :   22 : {(&#39;T01&#39;, &#39;T02&#39;), (&#39;T02&#39;, &#39;T03&#39;), (&#39;T02&#39;, &#39;T04&#39;), (&#39;T02&#39;, &#39;T14&#39;), (&#39;T03&#39;, &#39;T05&#39;), (&#39;T04&#39;, &#39;T07&#39;), (&#39;T04&#39;, &#39;T10&#39;), (&#39;T04&#39;, &#39;T09&#39;), (&#39;T04&#39;, &#39;T06&#39;), (&#39;T04&#39;, &#39;T15&#39;), (&#39;T05&#39;, &#39;T06&#39;), (&#39;T06&#39;, &#39;T09&#39;), (&#39;T06&#39;, &#39;T11&#39;), (&#39;T06&#39;, &#39;T08&#39;), (&#39;T07&#39;, &#39;T13&#39;), (&#39;T08&#39;, &#39;T16&#39;), (&#39;T09&#39;, &#39;T12&#39;), (&#39;T11&#39;, &#39;T16&#39;), (&#39;T12&#39;, &#39;T17&#39;), (&#39;T14&#39;, &#39;T16&#39;), (&#39;T14&#39;, &#39;T15&#39;), (&#39;T17&#39;, &#39;T18&#39;)}
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m ProjectCPM.mod -d /dev/stdin -y ProjectCPM.txt --out output
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-param : TASKS : dur desc :=
-   T01   2.0  &#39;Installing the contruction site&#39;
-   T02  16.0  &#39;Terracing&#39;
-   T03   9.0  &#39;Constructing the foundations&#39;
-   T04   8.0  &#39;Access roads and other networks&#39;
-   T05  10.0  &#39;Erecting the basement&#39;
-   T06   6.0  &#39;Main floor&#39;
-   T07   2.0  &#39;Dividing up the changing rooms&#39;
-   T08   2.0  &#39;Electrifying the terraces&#39;
-   T09   9.0  &#39;Constructing the roof&#39;
-   T10   5.0  &#39;Lighting the stadium&#39;
-   T11   3.0  &#39;Installing the terraces&#39;
-   T12   2.0  &#39;Sealing the roof&#39;
-   T13   1.0  &#39;Finishing the changing rooms&#39;
-   T14   7.0  &#39;Constructing the ticket office&#39;
-   T15   4.0  &#39;Secondary access roads&#39;
-   T16   3.0  &#39;Means of signaling&#39;
-   T17   9.0  &#39;Lawn and sports accessories&#39;
-   T18   1.0  &#39;Handing over the building&#39; ;
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-set ARCS := 
-   T01  T02
-   T02  T03
-   T02  T04
-   T02  T14
-   T03  T05
-   T04  T07
-   T04  T10
-   T04  T09
-   T04  T06
-   T04  T15
-   T05  T06
-   T06  T09
-   T06  T11
-   T06  T08
-   T07  T13
-   T08  T16
-   T09  T12
-   T11  T16
-   T12  T17
-   T14  T16
-   T14  T15
-   T17  T18 ;
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dur</th>
+      <th>desc</th>
+      <th>earliest start</th>
+      <th>earliest finish</th>
+      <th>latest start</th>
+      <th>latest finish</th>
+      <th>slack</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T01</th>
+      <td>2.0</td>
+      <td>Installing the contruction site</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T02</th>
+      <td>16.0</td>
+      <td>Terracing</td>
+      <td>2.0</td>
+      <td>18.0</td>
+      <td>2.0</td>
+      <td>18.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T03</th>
+      <td>9.0</td>
+      <td>Constructing the foundations</td>
+      <td>18.0</td>
+      <td>27.0</td>
+      <td>18.0</td>
+      <td>27.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T05</th>
+      <td>10.0</td>
+      <td>Erecting the basement</td>
+      <td>27.0</td>
+      <td>37.0</td>
+      <td>27.0</td>
+      <td>37.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T06</th>
+      <td>6.0</td>
+      <td>Main floor</td>
+      <td>37.0</td>
+      <td>43.0</td>
+      <td>37.0</td>
+      <td>43.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T09</th>
+      <td>9.0</td>
+      <td>Constructing the roof</td>
+      <td>43.0</td>
+      <td>52.0</td>
+      <td>43.0</td>
+      <td>52.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T12</th>
+      <td>2.0</td>
+      <td>Sealing the roof</td>
+      <td>52.0</td>
+      <td>54.0</td>
+      <td>52.0</td>
+      <td>54.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T17</th>
+      <td>9.0</td>
+      <td>Lawn and sports accessories</td>
+      <td>54.0</td>
+      <td>63.0</td>
+      <td>54.0</td>
+      <td>63.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>T18</th>
+      <td>1.0</td>
+      <td>Handing over the building</td>
+      <td>63.0</td>
+      <td>64.0</td>
+      <td>63.0</td>
+      <td>64.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-end;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ProjectCPM.mod
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="c1"># Example: ProjectCPM.mod</span>
-
-<span class="nb">set</span> <span class="n">TASKS</span><span class="p">;</span>
-<span class="nb">set</span> <span class="n">ARCS</span> <span class="n">within</span> <span class="p">{</span><span class="n">TASKS</span> <span class="n">cross</span> <span class="n">TASKS</span><span class="p">};</span>
-
-<span class="o">/*</span> <span class="n">Parameters</span> <span class="n">are</span> <span class="n">the</span> <span class="n">durations</span> <span class="k">for</span> <span class="n">each</span> <span class="n">task</span> <span class="o">*/</span>
-<span class="n">param</span> <span class="n">dur</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">param</span> <span class="n">desc</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="n">symbolic</span><span class="p">;</span>
-
-<span class="o">/*</span> <span class="n">Decision</span> <span class="n">Variables</span> <span class="n">associated</span> <span class="k">with</span> <span class="n">each</span> <span class="n">task</span><span class="o">*/</span>
-<span class="n">var</span> <span class="n">Tes</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1"># Earliest Start</span>
-<span class="n">var</span> <span class="n">Tef</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1"># Earliest Finish</span>
-<span class="n">var</span> <span class="n">Tls</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1"># Latest Start</span>
-<span class="n">var</span> <span class="n">Tlf</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1"># Latest Finish</span>
-<span class="n">var</span> <span class="n">Tsl</span><span class="p">{</span><span class="n">TASKS</span><span class="p">}</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1"># Slacks</span>
-
-<span class="o">/*</span> <span class="n">Global</span> <span class="n">finish</span> <span class="n">time</span> <span class="o">*/</span>
-<span class="n">var</span> <span class="n">Tf</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>
-
-<span class="o">/*</span> <span class="n">Minimize</span> <span class="n">the</span> <span class="k">global</span> <span class="n">finish</span> <span class="n">time</span> <span class="ow">and</span><span class="p">,</span> <span class="n">secondarily</span><span class="p">,</span> <span class="n">maximize</span> <span class="n">slacks</span> <span class="o">*/</span>
-<span class="n">minimize</span> <span class="n">ProjectFinish</span> <span class="p">:</span> <span class="n">card</span><span class="p">(</span><span class="n">TASKS</span><span class="p">)</span><span class="o">*</span><span class="n">Tf</span> <span class="o">-</span> <span class="nb">sum</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-
-<span class="o">/*</span> <span class="n">Finish</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">least</span> <span class="n">upper</span> <span class="n">bound</span> <span class="n">on</span> <span class="n">the</span> <span class="n">finish</span> <span class="n">time</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">tasks</span> <span class="o">*/</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Efnsh</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tef</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tf</span><span class="p">;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Lfnsh</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tlf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tf</span><span class="p">;</span>
-
-<span class="o">/*</span> <span class="n">Relationship</span> <span class="n">between</span> <span class="n">start</span> <span class="ow">and</span> <span class="n">finish</span> <span class="n">times</span> <span class="k">for</span> <span class="n">each</span> <span class="n">task</span> <span class="o">*/</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Estrt</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tef</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">dur</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Lstrt</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tlf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">dur</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-
-<span class="o">/*</span> <span class="n">Slacks</span> <span class="o">*/</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Slack</span> <span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tls</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-
-<span class="o">/*</span> <span class="n">Task</span> <span class="n">ordering</span> <span class="o">*/</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Eordr</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ARCS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tef</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<span class="n">s</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">Lordr</span> <span class="p">{(</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ARCS</span><span class="p">}</span> <span class="p">:</span> <span class="n">Tlf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tls</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
-
-<span class="o">/*</span> <span class="n">Compute</span> <span class="n">Solution</span>  <span class="o">*/</span>
-<span class="n">solve</span><span class="p">;</span>
-
-<span class="o">/*</span> <span class="n">Print</span> <span class="n">Report</span> <span class="o">*/</span>
-<span class="n">printf</span> <span class="s1">&#39;PROJECT LENGTH = </span><span class="si">%8g</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">Tf</span><span class="p">;</span>
-
-<span class="o">/*</span> <span class="n">Critical</span> <span class="n">Tasks</span> <span class="n">are</span> <span class="n">those</span> <span class="k">with</span> <span class="n">zero</span> <span class="n">slack</span> <span class="o">*/</span>
-
-<span class="o">/*</span> <span class="n">Rank</span><span class="o">-</span><span class="n">order</span> <span class="n">tasks</span> <span class="n">on</span> <span class="n">the</span> <span class="n">critical</span> <span class="n">path</span> <span class="n">by</span> <span class="n">earliest</span> <span class="n">start</span> <span class="n">time</span> <span class="o">*/</span>
-<span class="n">param</span> <span class="n">r</span><span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">{</span><span class="n">k</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}</span>
-   <span class="k">if</span> <span class="p">(</span><span class="n">Tes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="n">then</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="n">printf</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">CRITICAL PATH</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-<span class="n">printf</span> <span class="s1">&#39;  TASK  DUR    Start   Finish  Description</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-<span class="n">printf</span> <span class="p">{</span><span class="n">k</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">card</span><span class="p">(</span><span class="n">TASKS</span><span class="p">),</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">k</span><span class="o">==</span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">]}</span>
-   <span class="s1">&#39;</span><span class="si">%6s</span><span class="s1"> </span><span class="si">%4g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1">  </span><span class="si">%-25s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">dur</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">Tef</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">desc</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-
-<span class="o">/*</span> <span class="n">Noncritical</span> <span class="n">Tasks</span> <span class="n">have</span> <span class="n">positive</span> <span class="n">slack</span> <span class="o">*/</span>
-
-<span class="o">/*</span> <span class="n">Rank</span><span class="o">-</span><span class="n">order</span> <span class="n">tasks</span> <span class="ow">not</span> <span class="n">on</span> <span class="n">the</span> <span class="n">critical</span> <span class="n">path</span> <span class="n">by</span> <span class="n">earliest</span> <span class="n">start</span> <span class="n">time</span> <span class="o">*/</span>
-<span class="n">param</span> <span class="n">s</span><span class="p">{</span><span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="o">:=</span> <span class="nb">sum</span><span class="p">{</span><span class="n">k</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}</span>
-   <span class="k">if</span> <span class="p">(</span><span class="n">Tes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="n">then</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="n">printf</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">NON-CRITICAL TASKS</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-<span class="n">printf</span> <span class="s1">&#39;            Earliest Earliest   Latest   Latest </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-<span class="n">printf</span> <span class="s1">&#39;  TASK  DUR    Start   Finish    Start   Finish    Slack  Description</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-<span class="n">printf</span> <span class="p">{</span><span class="n">k</span> <span class="ow">in</span> <span class="mf">1.</span><span class="o">.</span><span class="n">card</span><span class="p">(</span><span class="n">TASKS</span><span class="p">),</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="p">:</span> <span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">k</span><span class="o">==</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]}</span>
-   <span class="s1">&#39;</span><span class="si">%6s</span><span class="s1"> </span><span class="si">%4g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1"> </span><span class="si">%8g</span><span class="s1">  </span><span class="si">%-25s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> 
-   <span class="n">j</span><span class="p">,</span><span class="n">dur</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">Tes</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">Tef</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">Tls</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">Tlf</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">Tsl</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">desc</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<span class="n">printf</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-
-<span class="n">end</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting ProjectCPM.mod
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ProjectCPM.txt&#39;</span><span class="p">)</span>
-<span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PROJECT LENGTH =       64
-
-CRITICAL PATH
-  TASK  DUR    Start   Finish  Description
-   T01    2        0        2  Installing the contruction site
-   T02   16        2       18  Terracing                
-   T03    9       18       27  Constructing the foundations
-   T05   10       27       37  Erecting the basement    
-   T06    6       37       43  Main floor               
-   T09    9       43       52  Constructing the roof    
-   T12    2       52       54  Sealing the roof         
-   T17    9       54       63  Lawn and sports accessories
-   T18    1       63       64  Handing over the building
-
-NON-CRITICAL TASKS
-            Earliest Earliest   Latest   Latest 
-  TASK  DUR    Start   Finish    Start   Finish    Slack  Description
-   T04    8       18       26       29       37       11  Access roads and other networks
-   T07    2       26       28       61       63       35  Dividing up the changing rooms
-   T10    5       26       31       59       64       33  Lighting the stadium     
-   T14    7       18       25       53       60       35  Constructing the ticket office
-   T15    4       26       30       60       64       34  Secondary access roads   
-   T13    1       28       29       63       64       35  Finishing the changing rooms
-   T08    2       43       45       59       61       16  Electrifying the terraces
-   T11    3       43       46       58       61       15  Installing the terraces  
-   T16    3       46       49       61       64       15  Means of signaling       
-</pre></div>
-</div>
-</div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dur</th>
+      <th>desc</th>
+      <th>earliest start</th>
+      <th>earliest finish</th>
+      <th>latest start</th>
+      <th>latest finish</th>
+      <th>slack</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T04</th>
+      <td>8.0</td>
+      <td>Access roads and other networks</td>
+      <td>18.0</td>
+      <td>26.0</td>
+      <td>29.0</td>
+      <td>37.0</td>
+      <td>11.0</td>
+    </tr>
+    <tr>
+      <th>T07</th>
+      <td>2.0</td>
+      <td>Dividing up the changing rooms</td>
+      <td>26.0</td>
+      <td>28.0</td>
+      <td>61.0</td>
+      <td>63.0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>T08</th>
+      <td>2.0</td>
+      <td>Electrifying the terraces</td>
+      <td>43.0</td>
+      <td>45.0</td>
+      <td>59.0</td>
+      <td>61.0</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>T10</th>
+      <td>5.0</td>
+      <td>Lighting the stadium</td>
+      <td>26.0</td>
+      <td>31.0</td>
+      <td>59.0</td>
+      <td>64.0</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>T11</th>
+      <td>3.0</td>
+      <td>Installing the terraces</td>
+      <td>43.0</td>
+      <td>46.0</td>
+      <td>58.0</td>
+      <td>61.0</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>T13</th>
+      <td>1.0</td>
+      <td>Finishing the changing rooms</td>
+      <td>28.0</td>
+      <td>29.0</td>
+      <td>63.0</td>
+      <td>64.0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>T14</th>
+      <td>7.0</td>
+      <td>Constructing the ticket office</td>
+      <td>18.0</td>
+      <td>25.0</td>
+      <td>53.0</td>
+      <td>60.0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>T15</th>
+      <td>4.0</td>
+      <td>Secondary access roads</td>
+      <td>26.0</td>
+      <td>30.0</td>
+      <td>60.0</td>
+      <td>64.0</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <th>T16</th>
+      <td>3.0</td>
+      <td>Means of signaling</td>
+      <td>46.0</td>
+      <td>49.0</td>
+      <td>61.0</td>
+      <td>64.0</td>
+      <td>15.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="visualization">
@@ -767,53 +852,20 @@ NON-CRITICAL TASKS
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="n">G</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="s1">&#39;T01&#39;</span><span class="p">,</span><span class="s1">&#39;T02&#39;</span><span class="p">,</span><span class="s1">&#39;T03&#39;</span><span class="p">,</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T05&#39;</span><span class="p">,</span><span class="s1">&#39;T06&#39;</span><span class="p">,</span><span class="s1">&#39;T07&#39;</span><span class="p">,</span><span class="s1">&#39;T08&#39;</span><span class="p">,</span>\
-    <span class="s1">&#39;T09&#39;</span><span class="p">,</span><span class="s1">&#39;T10&#39;</span><span class="p">,</span><span class="s1">&#39;T11&#39;</span><span class="p">,</span><span class="s1">&#39;T12&#39;</span><span class="p">,</span><span class="s1">&#39;T13&#39;</span><span class="p">,</span><span class="s1">&#39;T14&#39;</span><span class="p">,</span><span class="s1">&#39;T15&#39;</span><span class="p">,</span><span class="s1">&#39;T16&#39;</span><span class="p">,</span><span class="s1">&#39;T18&#39;</span><span class="p">])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T01&#39;</span><span class="p">,</span><span class="s1">&#39;T02&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T02&#39;</span><span class="p">,</span><span class="s1">&#39;T03&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T02&#39;</span><span class="p">,</span><span class="s1">&#39;T04&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T02&#39;</span><span class="p">,</span><span class="s1">&#39;T14&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T03&#39;</span><span class="p">,</span><span class="s1">&#39;T05&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T07&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T10&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T09&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T06&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T04&#39;</span><span class="p">,</span><span class="s1">&#39;T15&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T05&#39;</span><span class="p">,</span><span class="s1">&#39;T06&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T06&#39;</span><span class="p">,</span><span class="s1">&#39;T09&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T06&#39;</span><span class="p">,</span><span class="s1">&#39;T11&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T06&#39;</span><span class="p">,</span><span class="s1">&#39;T08&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T07&#39;</span><span class="p">,</span><span class="s1">&#39;T13&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T08&#39;</span><span class="p">,</span><span class="s1">&#39;T16&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T09&#39;</span><span class="p">,</span><span class="s1">&#39;T12&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T11&#39;</span><span class="p">,</span><span class="s1">&#39;T16&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T12&#39;</span><span class="p">,</span><span class="s1">&#39;T17&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T14&#39;</span><span class="p">,</span><span class="s1">&#39;T16&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T14&#39;</span><span class="p">,</span><span class="s1">&#39;T15&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;T17&#39;</span><span class="p">,</span><span class="s1">&#39;T18&#39;</span><span class="p">)</span> <span class="p">;</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="p">:</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jeff/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:650: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors_original != str(&#39;face&#39;):
-/Users/jeff/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors == str(&#39;face&#39;):
-</pre></div>
-</div>
-<img alt="../../_images/01-critical-path-method_13_1.png" src="../../_images/01-critical-path-method_13_1.png" />
+<img alt="../../_images/01-critical-path-method_10_0.png" src="../../_images/01-critical-path-method_10_0.png" />
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.00-Scheduling.ipynb">Scheduling</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb">Machine Bottleneck</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 

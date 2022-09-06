@@ -73,108 +73,91 @@ pred = [
 ]
 
 
-# In[12]:
+# In[59]:
 
 
 import pyomo.environ as pyo
 
-m = pyo.ConcreteModel()
+m = pyo.ConcreteModel("Stadium Construction")
 
 m.TASKS = pyo.Set(initialize=tasks.keys())
 m.ARCS = pyo.Set(initialize=pred)
 
-m.earliest_start = pyo.Var(m.TASKS, domain=pyo.NonNegaiveReals)
-m.latest_start = pyo.Var(m.TASKS, domain=pyo.NonNegaiveReals)
-m.earliest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegaiveReals)
-m.latest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegaiveReals)
+m.earliest_start = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.earliest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.latest_start = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.latest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.slack = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+
+m.finish_time = pyo.Var(domain=pyo.NonNegativeReals)
+
+@m.Objective(sense=pyo.minimize)
+def minimize_finish_time(m):
+    return 100*m.finish_time - sum(m.slack[task] for task in m.TASKS)
+
+@m.Constraint(m.TASKS)
+def early(m, task):
+    return m.earliest_finish[task] <= m.finish_time
+
+@m.Constraint(m.TASKS)
+def late(m, task):
+    return m.latest_finish[task] <= m.finish_time
+
+@m.Constraint(m.TASKS)
+def dur_early(m, task):
+    return m.earliest_finish[task] == m.earliest_start[task] + tasks[task]["dur"]
+
+@m.Constraint(m.TASKS)
+def dur_late(m, task):
+    return m.latest_finish[task] == m.latest_start[task] + tasks[task]["dur"]
+
+@m.Constraint(m.TASKS)
+def slack_def(m, task):
+    return m.slack[task] == m.latest_start[task] - m.earliest_start[task]
 
 @m.Constraint(m.ARCS)
-def order(m, a, b):
-    print(a, b)
-    return m.earliest_start[b] >= m.earliest_finish[a]
+def arc_early(m, a, b):
+    return m.earliest_finish[a] <= m.earliest_start[b]
+
+@m.Constraint(m.ARCS)
+def arc_late(m, a, b):
+    return m.latest_finish[a] <= m.latest_start[b]
+
+solver = pyo.SolverFactory("cbc")
+solver.solve(m);
+
+
+# In[62]:
+
+
+import pandas as pd
+
+df = pd.DataFrame(tasks).T
+
+for task in m.TASKS:
+    df.loc[task, "earliest start"] = m.earliest_start[task]()
+    df.loc[task, "earliest finish"] = m.earliest_finish[task]()
+    df.loc[task, "latest start"] = m.latest_start[task]()
+    df.loc[task, "latest finish"] = m.latest_finish[task]()    
     
+df["slack"] = df["latest start"] - df["earliest start"]
 
+display(df[df["slack"] <= 0.1])
 
-m.TASKS.display()
-m.ARCS.display()
-
-
-# In[2]:
-
-
-get_ipython().run_cell_magic('script', 'glpsol -m ProjectCPM.mod -d /dev/stdin -y ProjectCPM.txt --out output', "\nparam : TASKS : dur desc :=\n   T01   2.0  'Installing the contruction site'\n   T02  16.0  'Terracing'\n   T03   9.0  'Constructing the foundations'\n   T04   8.0  'Access roads and other networks'\n   T05  10.0  'Erecting the basement'\n   T06   6.0  'Main floor'\n   T07   2.0  'Dividing up the changing rooms'\n   T08   2.0  'Electrifying the terraces'\n   T09   9.0  'Constructing the roof'\n   T10   5.0  'Lighting the stadium'\n   T11   3.0  'Installing the terraces'\n   T12   2.0  'Sealing the roof'\n   T13   1.0  'Finishing the changing rooms'\n   T14   7.0  'Constructing the ticket office'\n   T15   4.0  'Secondary access roads'\n   T16   3.0  'Means of signaling'\n   T17   9.0  'Lawn and sports accessories'\n   T18   1.0  'Handing over the building' ;\n\nset ARCS := \n   T01  T02\n   T02  T03\n   T02  T04\n   T02  T14\n   T03  T05\n   T04  T07\n   T04  T10\n   T04  T09\n   T04  T06\n   T04  T15\n   T05  T06\n   T06  T09\n   T06  T11\n   T06  T08\n   T07  T13\n   T08  T16\n   T09  T12\n   T11  T16\n   T12  T17\n   T14  T16\n   T14  T15\n   T17  T18 ;\n\nend;")
-
-
-# In[ ]:
-
-
-
-
-
-# In[1]:
-
-
-get_ipython().run_cell_magic('writefile', 'ProjectCPM.mod', "\n# Example: ProjectCPM.mod\n\nset TASKS;\nset ARCS within {TASKS cross TASKS};\n\n/* Parameters are the durations for each task */\nparam dur{TASKS} >= 0;\nparam desc{TASKS} symbolic;\n\n/* Decision Variables associated with each task*/\nvar Tes{TASKS} >= 0;     # Earliest Start\nvar Tef{TASKS} >= 0;     # Earliest Finish\nvar Tls{TASKS} >= 0;     # Latest Start\nvar Tlf{TASKS} >= 0;     # Latest Finish\nvar Tsl{TASKS} >= 0;     # Slacks\n\n/* Global finish time */\nvar Tf >= 0;\n\n/* Minimize the global finish time and, secondarily, maximize slacks */\nminimize ProjectFinish : card(TASKS)*Tf - sum {j in TASKS} Tsl[j];\n\n/* Finish is the least upper bound on the finish time for all tasks */\ns.t. Efnsh {j in TASKS} : Tef[j] <= Tf;\ns.t. Lfnsh {j in TASKS} : Tlf[j] <= Tf;\n\n/* Relationship between start and finish times for each task */\ns.t. Estrt {j in TASKS} : Tef[j] = Tes[j] + dur[j];\ns.t. Lstrt {j in TASKS} : Tlf[j] = Tls[j] + dur[j];\n\n/* Slacks */\ns.t. Slack {j in TASKS} : Tsl[j] = Tls[j] - Tes[j];\n\n/* Task ordering */\ns.t. Eordr {(i,j) in ARCS} : Tef[i] <= Tes[j];\ns.t. Lordr {(j,k) in ARCS} : Tlf[j] <= Tls[k];\n\n/* Compute Solution  */\nsolve;\n\n/* Print Report */\nprintf 'PROJECT LENGTH = %8g\\n',Tf;\n\n/* Critical Tasks are those with zero slack */\n\n/* Rank-order tasks on the critical path by earliest start time */\nparam r{j in TASKS : Tsl[j] = 0} := sum{k in TASKS : Tsl[k] = 0}\n   if (Tes[k] <= Tes[j]) then 1;\n\nprintf '\\nCRITICAL PATH\\n';\nprintf '  TASK  DUR    Start   Finish  Description\\n';\nprintf {k in 1..card(TASKS), j in TASKS : Tsl[j]=0 && k==r[j]}\n   '%6s %4g %8g %8g  %-25s\\n', j, dur[j], Tes[j], Tef[j], desc[j];\n\n/* Noncritical Tasks have positive slack */\n\n/* Rank-order tasks not on the critical path by earliest start time */\nparam s{j in TASKS : Tsl[j] > 0} := sum{k in TASKS : Tsl[k] = 0}\n   if (Tes[k] <= Tes[j]) then 1;\n\nprintf '\\nNON-CRITICAL TASKS\\n';\nprintf '            Earliest Earliest   Latest   Latest \\n';\nprintf '  TASK  DUR    Start   Finish    Start   Finish    Slack  Description\\n';\nprintf {k in 1..card(TASKS), j in TASKS : Tsl[j] > 0 && k==s[j]}\n   '%6s %4g %8g %8g %8g %8g %8g  %-25s\\n', \n   j,dur[j],Tes[j],Tef[j],Tls[j],Tlf[j],Tsl[j],desc[j];\nprintf '\\n';\n\nend;")
-
-
-# In[3]:
-
-
-f = open('ProjectCPM.txt')
-print f.read()
-f.close()
+display(df[df["slack"] > 0.1])
 
 
 # ## Visualization
 
-# In[5]:
+# In[64]:
 
 
 import networkx as nx
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
 
-G=nx.Graph()
-G.add_nodes_from(['T01','T02','T03','T04','T05','T06','T07','T08',    'T09','T10','T11','T12','T13','T14','T15','T16','T18'])
+G = nx.Graph()
 
-G.add_edge('T01','T02')
-G.add_edge('T02','T03')
-G.add_edge('T02','T04')
-G.add_edge('T02','T14')
-G.add_edge('T03','T05')
-G.add_edge('T04','T07')
-G.add_edge('T04','T10')
-G.add_edge('T04','T09')
-G.add_edge('T04','T06')
-G.add_edge('T04','T15')
-G.add_edge('T05','T06')
-G.add_edge('T06','T09')
-G.add_edge('T06','T11')
-G.add_edge('T06','T08')
-G.add_edge('T07','T13')
-G.add_edge('T08','T16')
-G.add_edge('T09','T12')
-G.add_edge('T11','T16')
-G.add_edge('T12','T17')
-G.add_edge('T14','T16')
-G.add_edge('T14','T15')
-G.add_edge('T17','T18') ;
+for a, b in m.ARCS:
+    G.add_edge(a, b)
 
 nx.draw(G)
-plt.show()
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# <!--NAVIGATION-->
-# < [Scheduling](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.00-Scheduling.ipynb) | [Contents](toc.ipynb) | [Machine Bottleneck](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
