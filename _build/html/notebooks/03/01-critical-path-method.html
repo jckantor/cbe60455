@@ -405,11 +405,6 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mathprog-model">
-   MathProg Model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#example-stadium-construction">
    Example: Stadium Construction
   </a>
@@ -444,11 +439,6 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mathprog-model">
-   MathProg Model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#example-stadium-construction">
    Example: Stadium Construction
   </a>
@@ -468,16 +458,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <!--NOTEBOOK_HEADER-->
-<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
-Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
-The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
-and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.00-Scheduling.ipynb">Scheduling</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb">Machine Bottleneck</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.01-Critical-Path-Method.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="critical-path-method">
+  <section class="tex2jax_ignore mathjax_ignore" id="critical-path-method">
 <h1>Critical Path Method<a class="headerlink" href="#critical-path-method" title="Permalink to this headline">#</a></h1>
-<p>This notebook demonstrates the Critical Path Method using GLPK/MathProg.</p>
+<p>This notebook demonstrates the Critical Path Method.</p>
 <section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
 <p>The Critical Path Method is a technique for calculating the shortest time span needed to complete a series of tasks. The tasks are represented by nodes, each labelled with the duration. The precedence order of the task is given by a set of arcs.</p>
@@ -491,11 +474,175 @@ and code is released under the <a class="reference external" href="https://opens
 </ul>
 <p>Tasks on the Critical Path have zero slack.</p>
 </section>
-<section id="mathprog-model">
-<h2>MathProg Model<a class="headerlink" href="#mathprog-model" title="Permalink to this headline">#</a></h2>
+<section id="example-stadium-construction">
+<h2>Example: Stadium Construction<a class="headerlink" href="#example-stadium-construction" title="Permalink to this headline">#</a></h2>
+<p>Stadium Construction, <a class="reference external" href="http://www.maximalsoftware.com/modellib/modXpressMP.html">Example 7.1.1</a> from <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.69.9634&amp;rep=rep1&amp;type=pdf">Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 7, Dash Optimization, 2000</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ProjectCPM.mod
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tasks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;T01&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Installing the contruction site&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T02&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Terracing&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T03&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">9.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Constructing the foundations&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T04&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">8.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Access roads and other networks&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T05&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Erecting the basement&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T06&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">6.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Main floor&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T07&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Dividing up the changing rooms&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T08&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Electrifying the terraces&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T09&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">9.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Constructing the roof&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T10&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">5.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Lighting the stadium&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T11&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Installing the terraces&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T12&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Sealing the roof&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T13&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Finishing the changing rooms&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T14&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">7.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Constructing the ticket office&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T15&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">4.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Secondary access roads&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T16&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Means of signaling&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T17&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">9.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Lawn and sports accessories&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;T18&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dur&quot;</span><span class="p">:</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Handing over the building&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;T01&quot;</span><span class="p">,</span> <span class="s2">&quot;T02&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T02&quot;</span><span class="p">,</span> <span class="s2">&quot;T03&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T02&quot;</span><span class="p">,</span> <span class="s2">&quot;T04&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T02&quot;</span><span class="p">,</span> <span class="s2">&quot;T14&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T03&quot;</span><span class="p">,</span> <span class="s2">&quot;T05&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T04&quot;</span><span class="p">,</span> <span class="s2">&quot;T07&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T04&quot;</span><span class="p">,</span> <span class="s2">&quot;T10&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T04&quot;</span><span class="p">,</span> <span class="s2">&quot;T09&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T04&quot;</span><span class="p">,</span> <span class="s2">&quot;T06&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T04&quot;</span><span class="p">,</span> <span class="s2">&quot;T15&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T05&quot;</span><span class="p">,</span> <span class="s2">&quot;T06&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T06&quot;</span><span class="p">,</span> <span class="s2">&quot;T09&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T06&quot;</span><span class="p">,</span> <span class="s2">&quot;T11&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T06&quot;</span><span class="p">,</span> <span class="s2">&quot;T08&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T07&quot;</span><span class="p">,</span> <span class="s2">&quot;T13&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T08&quot;</span><span class="p">,</span> <span class="s2">&quot;T16&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T09&quot;</span><span class="p">,</span> <span class="s2">&quot;T12&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T11&quot;</span><span class="p">,</span> <span class="s2">&quot;T16&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T12&quot;</span><span class="p">,</span> <span class="s2">&quot;T17&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T14&quot;</span><span class="p">,</span> <span class="s2">&quot;T16&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T14&quot;</span><span class="p">,</span> <span class="s2">&quot;T15&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;T17&quot;</span><span class="p">,</span> <span class="s2">&quot;T18&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">()</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">TASKS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">tasks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">m</span><span class="o">.</span><span class="n">ARCS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">latest_start</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">latest_finish</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegaiveReals</span><span class="p">)</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_start</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">earliest_finish</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+    
+
+
+<span class="n">m</span><span class="o">.</span><span class="n">TASKS</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">ARCS</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T01 T02
+T02 T03
+T02 T04
+T02 T14
+T03 T05
+T04 T07
+T04 T10
+T04 T09
+T04 T06
+T04 T15
+T05 T06
+T06 T09
+T06 T11
+T06 T08
+T07 T13
+T08 T16
+T09 T12
+T11 T16
+T12 T17
+T14 T16
+T14 T15
+T17 T18
+TASKS : Size=1, Index=None, Ordered=Insertion
+    Key  : Dimen : Domain : Size : Members
+    None :     1 :    Any :   18 : {&#39;T01&#39;, &#39;T02&#39;, &#39;T03&#39;, &#39;T04&#39;, &#39;T05&#39;, &#39;T06&#39;, &#39;T07&#39;, &#39;T08&#39;, &#39;T09&#39;, &#39;T10&#39;, &#39;T11&#39;, &#39;T12&#39;, &#39;T13&#39;, &#39;T14&#39;, &#39;T15&#39;, &#39;T16&#39;, &#39;T17&#39;, &#39;T18&#39;}
+ARCS : Size=1, Index=None, Ordered=Insertion
+    Key  : Dimen : Domain : Size : Members
+    None :     2 :    Any :   22 : {(&#39;T01&#39;, &#39;T02&#39;), (&#39;T02&#39;, &#39;T03&#39;), (&#39;T02&#39;, &#39;T04&#39;), (&#39;T02&#39;, &#39;T14&#39;), (&#39;T03&#39;, &#39;T05&#39;), (&#39;T04&#39;, &#39;T07&#39;), (&#39;T04&#39;, &#39;T10&#39;), (&#39;T04&#39;, &#39;T09&#39;), (&#39;T04&#39;, &#39;T06&#39;), (&#39;T04&#39;, &#39;T15&#39;), (&#39;T05&#39;, &#39;T06&#39;), (&#39;T06&#39;, &#39;T09&#39;), (&#39;T06&#39;, &#39;T11&#39;), (&#39;T06&#39;, &#39;T08&#39;), (&#39;T07&#39;, &#39;T13&#39;), (&#39;T08&#39;, &#39;T16&#39;), (&#39;T09&#39;, &#39;T12&#39;), (&#39;T11&#39;, &#39;T16&#39;), (&#39;T12&#39;, &#39;T17&#39;), (&#39;T14&#39;, &#39;T16&#39;), (&#39;T14&#39;, &#39;T15&#39;), (&#39;T17&#39;, &#39;T18&#39;)}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m ProjectCPM.mod -d /dev/stdin -y ProjectCPM.txt --out output
+
+param : TASKS : dur desc :=
+   T01   2.0  &#39;Installing the contruction site&#39;
+   T02  16.0  &#39;Terracing&#39;
+   T03   9.0  &#39;Constructing the foundations&#39;
+   T04   8.0  &#39;Access roads and other networks&#39;
+   T05  10.0  &#39;Erecting the basement&#39;
+   T06   6.0  &#39;Main floor&#39;
+   T07   2.0  &#39;Dividing up the changing rooms&#39;
+   T08   2.0  &#39;Electrifying the terraces&#39;
+   T09   9.0  &#39;Constructing the roof&#39;
+   T10   5.0  &#39;Lighting the stadium&#39;
+   T11   3.0  &#39;Installing the terraces&#39;
+   T12   2.0  &#39;Sealing the roof&#39;
+   T13   1.0  &#39;Finishing the changing rooms&#39;
+   T14   7.0  &#39;Constructing the ticket office&#39;
+   T15   4.0  &#39;Secondary access roads&#39;
+   T16   3.0  &#39;Means of signaling&#39;
+   T17   9.0  &#39;Lawn and sports accessories&#39;
+   T18   1.0  &#39;Handing over the building&#39; ;
+
+set ARCS := 
+   T01  T02
+   T02  T03
+   T02  T04
+   T02  T14
+   T03  T05
+   T04  T07
+   T04  T10
+   T04  T09
+   T04  T06
+   T04  T15
+   T05  T06
+   T06  T09
+   T06  T11
+   T06  T08
+   T07  T13
+   T08  T16
+   T09  T12
+   T11  T16
+   T12  T17
+   T14  T16
+   T14  T15
+   T17  T18 ;
+
+end;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ProjectCPM.mod
 
 <span class="c1"># Example: ProjectCPM.mod</span>
 
@@ -575,66 +722,9 @@ and code is released under the <a class="reference external" href="https://opens
 </div>
 </div>
 </div>
-</section>
-<section id="example-stadium-construction">
-<h2>Example: Stadium Construction<a class="headerlink" href="#example-stadium-construction" title="Permalink to this headline">#</a></h2>
-<p>Stadium Construction, <a class="reference external" href="http://www.maximalsoftware.com/modellib/modXpressMP.html">Example 7.1.1</a> from <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.69.9634&amp;rep=rep1&amp;type=pdf">Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 7, Dash Optimization, 2000</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m ProjectCPM.mod -d /dev/stdin -y ProjectCPM.txt --out output
-
-param : TASKS : dur desc :=
-   T01   2.0  &#39;Installing the contruction site&#39;
-   T02  16.0  &#39;Terracing&#39;
-   T03   9.0  &#39;Constructing the foundations&#39;
-   T04   8.0  &#39;Access roads and other networks&#39;
-   T05  10.0  &#39;Erecting the basement&#39;
-   T06   6.0  &#39;Main floor&#39;
-   T07   2.0  &#39;Dividing up the changing rooms&#39;
-   T08   2.0  &#39;Electrifying the terraces&#39;
-   T09   9.0  &#39;Constructing the roof&#39;
-   T10   5.0  &#39;Lighting the stadium&#39;
-   T11   3.0  &#39;Installing the terraces&#39;
-   T12   2.0  &#39;Sealing the roof&#39;
-   T13   1.0  &#39;Finishing the changing rooms&#39;
-   T14   7.0  &#39;Constructing the ticket office&#39;
-   T15   4.0  &#39;Secondary access roads&#39;
-   T16   3.0  &#39;Means of signaling&#39;
-   T17   9.0  &#39;Lawn and sports accessories&#39;
-   T18   1.0  &#39;Handing over the building&#39; ;
-
-set ARCS := 
-   T01  T02
-   T02  T03
-   T02  T04
-   T02  T14
-   T03  T05
-   T04  T07
-   T04  T10
-   T04  T09
-   T04  T06
-   T04  T15
-   T05  T06
-   T06  T09
-   T06  T11
-   T06  T08
-   T07  T13
-   T08  T16
-   T09  T12
-   T11  T16
-   T12  T17
-   T14  T16
-   T14  T15
-   T17  T18 ;
-
-end;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ProjectCPM.txt&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ProjectCPM.txt&#39;</span><span class="p">)</span>
 <span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -676,7 +766,7 @@ NON-CRITICAL TASKS
 <h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
@@ -739,13 +829,13 @@ NON-CRITICAL TASKS
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python2",
+            kernelName: "python3",
             path: "./notebooks/03"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python2'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
