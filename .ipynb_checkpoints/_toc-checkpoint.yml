@@ -11,3 +11,9 @@ chapters:
   - file: notebooks/02/02-agent-based-models.ipynb
   - file: notebooks/02/03-queuing-systems.ipynb
   - file: notebooks/02/04-batch-process-prompt.ipynb
+
+- file: notebooks/02/00-scheduling.ipynb
+  sections:
+  - file: notebooks/02/01-critical-path-method.ipynb
+  - file: notebooks/02/02-machine-bottleneck.ipynb
+  - file: notebooks/02/03-job-shop-scheduling.ipynb
