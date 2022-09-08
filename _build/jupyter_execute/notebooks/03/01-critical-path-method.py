@@ -19,11 +19,17 @@
 # 
 # Tasks on the Critical Path have zero slack.
 
+# In[9]:
+
+
+get_ipython().system('pip install cplex')
+
+
 # ## Example: Stadium Construction
 
 # Stadium Construction, [Example 7.1.1](http://www.maximalsoftware.com/modellib/modXpressMP.html) from [Christelle Gueret, Christian Prins, Marc Sevaux, "Applications of Optimization with Xpress-MP," Chapter 7, Dash Optimization, 2000](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.69.9634&rep=rep1&type=pdf).
 
-# In[13]:
+# In[1]:
 
 
 tasks = {
@@ -73,7 +79,79 @@ pred = [
 ]
 
 
-# In[59]:
+# In[10]:
+
+
+import pyomo.environ as pyo
+
+m = pyo.ConcreteModel("Stadium Construction")
+
+m.TASKS = pyo.Set(initialize=tasks.keys())
+m.ARCS = pyo.Set(initialize=pred)
+
+m.earliest_start = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.earliest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.latest_start = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.latest_finish = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+m.slack = pyo.Var(m.TASKS, domain=pyo.NonNegativeReals)
+
+m.finish_time = pyo.Var(domain=pyo.NonNegativeReals)
+
+@m.Objective(sense=pyo.minimize)
+def minimize_finish_time(m):
+    return m.finish_time
+
+@m.Constraint(m.TASKS)
+def early(m, task):
+    return m.earliest_finish[task] <= m.finish_time
+
+@m.Constraint(m.TASKS)
+def late(m, task):
+    return m.latest_finish[task] <= m.finish_time
+
+@m.Constraint(m.TASKS)
+def dur_early(m, task):
+    return m.earliest_finish[task] == m.earliest_start[task] + tasks[task]["dur"]
+
+@m.Constraint(m.TASKS)
+def dur_late(m, task):
+    return m.latest_finish[task] == m.latest_start[task] + tasks[task]["dur"]
+
+@m.Constraint(m.ARCS)
+def arc_early(m, a, b):
+    return m.earliest_finish[a] <= m.earliest_start[b]
+
+@m.Constraint(m.ARCS)
+def arc_late(m, a, b):
+    return m.latest_finish[a] <= m.latest_start[b]
+
+solver = pyo.SolverFactory("mosek")
+solver.solve(m).write()
+
+
+# In[12]:
+
+
+import pandas as pd
+
+df = pd.DataFrame(tasks).T
+
+for task in m.TASKS:
+    df.loc[task, "earliest start"] = m.earliest_start[task]()
+    df.loc[task, "earliest finish"] = m.earliest_finish[task]()
+    df.loc[task, "latest start"] = m.latest_start[task]()
+    df.loc[task, "latest finish"] = m.latest_finish[task]()  
+    
+df
+
+
+# In[ ]:
+
+
+
+
+
+# In[8]:
 
 
 import pyomo.environ as pyo
@@ -126,6 +204,8 @@ def arc_late(m, a, b):
 solver = pyo.SolverFactory("cbc")
 solver.solve(m);
 
+
+# ## Identifying the Critical Path
 
 # In[62]:
 
