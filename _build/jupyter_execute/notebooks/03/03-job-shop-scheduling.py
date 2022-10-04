@@ -15,7 +15,7 @@
 # 
 # In this example, there are three printed paper products that must pass through color printing presses in a particular order. The given data consists of a flowsheet showing the order in which each job passes through the color presses
 # 
-# ![jobshopdiagram.jpg](attachment:jobshopdiagram.jpg)
+# ![jobshopdiagram.jpg](../../media/jobshopdiagram.jpg)
 # 
 # and a table of data showing, in minutes, the amount of time each job requires on each machine.
 # 
