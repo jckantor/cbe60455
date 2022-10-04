@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <!--NOTEBOOK_HEADER-->
-# *This notebook contains course material from [CBE40455](https://jckantor.github.io/CBE40455) by
-# Jeffrey Kantor (jeff at nd.edu); the content is available [on Github](https://github.com/jckantor/CBE40455.git).
-# The text is released under the [CC-BY-NC-ND-4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode),
-# and code is released under the [MIT license](https://opensource.org/licenses/MIT).*
-
-# <!--NAVIGATION-->
-# < [Machine Bottleneck](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb) | [Contents](toc.ipynb) | [Jesuit Volunteer Corps](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.04-Jesuit-Volunteer-Corps.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.03-Job-Shop-Scheduling.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
-
 # # Job Shop Scheduling
 
 # ## Background
@@ -122,17 +113,19 @@ def JobShop(TASKS, solver='glpk'):
 
     JOBS = set()
     MACHINES = set()
-    for (j,m) in TASKS.keys():
+    for (j, m) in TASKS.keys():
         JOBS.add(j)
         MACHINES.add(m)
         
     BigM = 1 + sum([TASKS[(j,m)]['dur'] for (j,m) in TASKS.keys()])
     
-    model.start = Var(JOBS, MACHINES, domain = NonNegativeReals)
+    model.start = Var(JOBS, MACHINES, domain=NonNegativeReals)
     model.makespan = Var(domain=NonNegativeReals)
-    model.y = Var(JOBS,JOBS,MACHINES, domain = Boolean)
+    model.y = Var(JOBS,JOBS,MACHINES, domain=Boolean)
 
-    model.Obj = Objective(expr = model.makespan, sense = minimize)
+    @model.Objective(sense=minimize)
+    def Obj(m):
+        return model.makespan
 
     model.cons = ConstraintList()
     for (j,m) in TASKS.keys():
@@ -154,11 +147,11 @@ def JobShop(TASKS, solver='glpk'):
     SolverFactory(solver).solve(model)
     
     # create pandas dataframe with the optimal schedule
-    results = [[j,m,model.start[j,m](),TASKS[(j,m)]['dur'], model.start[j,m]() + TASKS[(j,m)]['dur']] 
-             for (j,m) in TASKS]
-    schedule = pd.DataFrame(results,columns=['Job','Machine','Start','Duration','Finish'])
+    results = [[j, m, model.start[j, m](), TASKS[(j, m)]['dur'], model.start[j, m]() + TASKS[(j, m)]['dur']] 
+             for (j, m) in TASKS]
+    schedule = pd.DataFrame(results, columns=['Job', 'Machine', 'Start', 'Duration', 'Finish'])
     schedule = schedule.sort_values(by='Start')
-    schedule.set_index(['Job',"Machine"], inplace=True)
+    schedule.set_index(['Job', "Machine"], inplace=True)
     
     return schedule
 
@@ -266,48 +259,6 @@ def Visualize(schedule):
 Visualize(schedule)
 
 
-# ## Benchmark Problem LA19
-# 
-# Lawrence 1984
-# Solved in 1991
-
-# In[6]:
-
-
-data = """
-2  44  3   5  5  58  4  97  0   9  7  84  8  77  9  96  1  58  6  89
-4  15  7  31  1  87  8  57  0  77  3  85  2  81  5  39  9  73  6  21
-9  82  6  22  4  10  3  70  1  49  0  40  8  34  2  48  7  80  5  71
-1  91  2  17  7  62  5  75  8  47  4  11  3   7  6  72  9  35  0  55
-6  71  1  90  3  75  0  64  2  94  8  15  4  12  7  67  9  20  5  50
-7  70  5  93  8  77  2  29  4  58  6  93  3  68  1  57  9   7  0  52
-6  87  1  63  4  26  5   6  2  82  3  27  7  56  8  48  9  36  0  95
-0  36  5  15  8  41  9  78  3  76  6  84  4  30  7  76  2  36  1   8
-5  88  2  81  3  13  6  82  4  54  7  13  8  29  9  40  1  78  0  75
-9  88  4  54  6  64  7  32  0  52  2   6  8  54  5  82  3   6  1  26
-"""
-
-TASKS = {}
-prec = ''
-
-lines = data.splitlines()
-job= 0
-for line in lines[1:]:
-    j = "J{0:1d}".format(job)
-    nums = line.split()
-    prec = ''
-    for m,dur in zip(nums[::2],nums[1::2]):
-        task = (j,'M{0:s}'.format(m))
-        if prec:
-            TASKS[task] = {'dur':int(dur), 'prec':prec}
-        else:
-            TASKS[task] = {'dur':int(dur)}
-        prec = task
-    job += 1
-    
-Visualize(JobShop(TASKS, solver='gurobi'))
-
-
 # ## Application to Scheduling of Batch Processes
 # 
 # We will now turn our attention to the application of the job shop scheduling problem to the short term scheduling of batch processes. We illustrate these techniques using an example from Dunn (2013).
@@ -327,22 +278,22 @@ Visualize(JobShop(TASKS, solver='gurobi'))
 # In[7]:
 
 
-def Recipe(jobs,machines,durations):
+def Recipe(jobs, machines, durations):
     TASKS = {}
     for j in jobs:
-        prec = (None,None)
-        for m,d in zip(machines,durations):
-            task = (j,m)
-            if prec == (None,None):
-                TASKS.update({(j,m): {'dur': d}})
+        prec = (None, None)
+        for m, d in zip(machines, durations):
+            task = (j, m)
+            if prec == (None, None):
+                TASKS.update({(j, m): {'dur': d}})
             else:
-                TASKS.update({(j,m): {'dur': d, 'prec': prec}})
+                TASKS.update({(j, m): {'dur': d, 'prec': prec}})
             prec = task
     return TASKS
         
-RecipeA = Recipe('A',['Mixer','Reactor','Separator','Packaging'],[1,5,4,1.5])
-RecipeB = Recipe('B',['Separator','Packaging'],[4.5,1])
-RecipeC = Recipe('C',['Separator','Reactor','Packaging'],[5,3,1.5])
+RecipeA = Recipe('A', ['Mixer', 'Reactor', 'Separator',' Packaging'], [1, 5, 4, 1.5])
+RecipeB = Recipe('B', ['Separator', 'Packaging'], [4.5, 1])
+RecipeC = Recipe('C', ['Separator', 'Reactor', 'Packaging'], [5, 3, 1.5])
 
 
 # In[8]:
@@ -371,7 +322,7 @@ Visualize(JobShop(RecipeC))
 
 
 TASKS = Recipe(['A1','A2'],['Mixer','Reactor','Separator','Packaging'],[1,5,4,1.5])
-schedule = JobShop(TASKS,solver='gurobi')
+schedule = JobShop(TASKS, solver='gurobi')
 Visualize(schedule)
 print(schedule['Finish'].max())
 
@@ -387,7 +338,7 @@ TASKS = RecipeA
 TASKS.update(RecipeB)
 TASKS.update(RecipeC)
 
-schedule = JobShop(TASKS,solver='gurobi')
+schedule = JobShop(TASKS, solver='cbc')
 Visualize(schedule)
 print(schedule['Finish'].max())
 
@@ -567,7 +518,6 @@ def JobShop(TASKS, solver='glpk', tclean = 0, ZW = False):
     
     return schedule
 
-
 TASKS = Recipe(['A1','A2'],['Mixer','Reactor','Separator','Packaging'],[1,5,4,1.5])
 TASKS.update(Recipe(['B1','B2'],['Separator','Packaging'],[4.5,1]))
 TASKS.update(Recipe(['C1','C2'],['Separator','Reactor','Packaging'],[5,3,1.5]))
@@ -577,11 +527,50 @@ Visualize(schedule)
 print("Makespan = ", schedule['Finish'].max())
 
 
+# ## Benchmark Problem LA19
+# 
+# Lawrence 1984,
+# Solved in 1991. This cell can be very long running ... minutes to hours. Delete the comment tag on the last line only if you wish to run the cell to see the outcome of a long and challenging calculation that represented the state-of-the-art several decades ago.
+
+# In[ ]:
+
+
+data = """
+2  44  3   5  5  58  4  97  0   9  7  84  8  77  9  96  1  58  6  89
+4  15  7  31  1  87  8  57  0  77  3  85  2  81  5  39  9  73  6  21
+9  82  6  22  4  10  3  70  1  49  0  40  8  34  2  48  7  80  5  71
+1  91  2  17  7  62  5  75  8  47  4  11  3   7  6  72  9  35  0  55
+6  71  1  90  3  75  0  64  2  94  8  15  4  12  7  67  9  20  5  50
+7  70  5  93  8  77  2  29  4  58  6  93  3  68  1  57  9   7  0  52
+6  87  1  63  4  26  5   6  2  82  3  27  7  56  8  48  9  36  0  95
+0  36  5  15  8  41  9  78  3  76  6  84  4  30  7  76  2  36  1   8
+5  88  2  81  3  13  6  82  4  54  7  13  8  29  9  40  1  78  0  75
+9  88  4  54  6  64  7  32  0  52  2   6  8  54  5  82  3   6  1  26
+"""
+
+TASKS = {}
+prec = ''
+
+lines = data.splitlines()
+job= 0
+for line in lines[1:]:
+    j = "J{0:1d}".format(job)
+    nums = line.split()
+    prec = ''
+    for m,dur in zip(nums[::2],nums[1::2]):
+        task = (j,'M{0:s}'.format(m))
+        if prec:
+            TASKS[task] = {'dur':int(dur), 'prec':prec}
+        else:
+            TASKS[task] = {'dur':int(dur)}
+        prec = task
+    job += 1
+    
+#Visualize(JobShop(TASKS, solver='mosek'))
+
+
 # In[ ]:
 
 
 
 
-
-# <!--NAVIGATION-->
-# < [Machine Bottleneck](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb) | [Contents](toc.ipynb) | [Jesuit Volunteer Corps](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.04-Jesuit-Volunteer-Corps.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.03-Job-Shop-Scheduling.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>

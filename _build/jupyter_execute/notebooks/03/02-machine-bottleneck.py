@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <!--NOTEBOOK_HEADER-->
-# *This notebook contains course material from [CBE40455](https://jckantor.github.io/CBE40455) by
-# Jeffrey Kantor (jeff at nd.edu); the content is available [on Github](https://github.com/jckantor/CBE40455.git).
-# The text is released under the [CC-BY-NC-ND-4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode),
-# and code is released under the [MIT license](https://opensource.org/licenses/MIT).*
-
-# <!--NAVIGATION-->
-# < [Critical Path Method](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb) | [Contents](toc.ipynb) | [Job Shop Scheduling](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
-
 # # Machine Bottleneck
 # 
 # This notebook demonstrates the formulation and solution of the a machine bottleneck problem using Pyomo/GLPK. The task is to schedule a set of jobs on a single machine given the release time, duration, and due time for each job. Date for the example problem is from Christelle Gueret, Christian Prins, Marc Sevaux, "Applications of Optimization with Xpress-MP," Chapter 5, Dash Optimization, 2000.
@@ -380,12 +371,3 @@ visualize_machines(JOBS,MACHINES)
 
 
 
-
-# In[ ]:
-
-
-
-
-
-# <!--NAVIGATION-->
-# < [Critical Path Method](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.01-Critical-Path-Method.ipynb) | [Contents](toc.ipynb) | [Job Shop Scheduling](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/04.03-Job-Shop-Scheduling.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/04.02-Machine-Bottleneck.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>

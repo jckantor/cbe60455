@@ -79,7 +79,7 @@ pred = [
 ]
 
 
-# In[10]:
+# In[27]:
 
 
 import pyomo.environ as pyo
@@ -99,7 +99,7 @@ m.finish_time = pyo.Var(domain=pyo.NonNegativeReals)
 
 @m.Objective(sense=pyo.minimize)
 def minimize_finish_time(m):
-    return m.finish_time
+    return 1400*m.finish_time - sum(m.slack[task] for task in m.TASKS)
 
 @m.Constraint(m.TASKS)
 def early(m, task):
@@ -117,6 +117,10 @@ def dur_early(m, task):
 def dur_late(m, task):
     return m.latest_finish[task] == m.latest_start[task] + tasks[task]["dur"]
 
+@m.Constraint(m.TASKS)
+def slack_def(m, task):
+    return m.slack[task] == m.latest_start[task] - m.earliest_start[task]
+    
 @m.Constraint(m.ARCS)
 def arc_early(m, a, b):
     return m.earliest_finish[a] <= m.earliest_start[b]
@@ -125,11 +129,13 @@ def arc_early(m, a, b):
 def arc_late(m, a, b):
     return m.latest_finish[a] <= m.latest_start[b]
 
-solver = pyo.SolverFactory("mosek")
+
+
+solver = pyo.SolverFactory("cbc")
 solver.solve(m).write()
 
 
-# In[12]:
+# In[28]:
 
 
 import pandas as pd
@@ -141,14 +147,21 @@ for task in m.TASKS:
     df.loc[task, "earliest finish"] = m.earliest_finish[task]()
     df.loc[task, "latest start"] = m.latest_start[task]()
     df.loc[task, "latest finish"] = m.latest_finish[task]()  
+    df.loc[task, "slack"] = m.slack[task]()
     
 df
 
 
-# In[ ]:
+# In[29]:
 
 
+df[df["slack"] <= 0.001]
 
+
+# In[30]:
+
+
+df[df["slack"] > 0.001]
 
 
 # In[8]:
@@ -225,19 +238,4 @@ df["slack"] = df["latest start"] - df["earliest start"]
 display(df[df["slack"] <= 0.1])
 
 display(df[df["slack"] > 0.1])
-
-
-# ## Visualization
-
-# In[64]:
-
-
-import networkx as nx
-
-G = nx.Graph()
-
-for a, b in m.ARCS:
-    G.add_edge(a, b)
-
-nx.draw(G)
 
