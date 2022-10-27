@@ -5,6 +5,15 @@
 # 
 # The State-Task Network (STN) is an approach to modeling multipurpose batch process for the purpose of short term scheduling. It was first developed by Kondili, et al., in 1993, and subsequently developed and extended by others. 
 
+# In[8]:
+
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+from pyomo.environ import *
+
+
 # ## Bibliographic Notes
 # 
 # Original development --
@@ -13,7 +22,9 @@
 # 
 # * Shah, N., Pantelides, C. C., & Sargent, R. W. H. (1993). A general algorithm for short-term scheduling of batch operations—II. Computational issues. Computers & chemical engineering, 17(2), 229-244. [[pdf](https://www.sciencedirect.com/science/article/abs/pii/009813549380016G)]
 # 
-# Applications and further developments --
+# Process applications and further developments --
+# 
+# * [[pdf](https://www.eq.uc.pt/~marco/eps/Edicao_2016_2017/Aulas_12_15/Pantelides_1994.pdf)]
 # 
 # * Floudas, C. A., & Lin, X. (2005). Mixed integer linear programming in process scheduling: Modeling, algorithms, and applications. Annals of Operations Research, 139(1), 131-162.
 # 
@@ -21,7 +32,13 @@
 # 
 # * Méndez, C. A., Cerdá, J., Grossmann, I. E., Harjunkoski, I., & Fahl, M. (2006). State-of-the-art review of optimization methods for short-term scheduling of batch processes. Computers & Chemical Engineering, 30(6), 913-946.
 # 
-# * Wassick, J. M., & Ferrio, J. (2011). Extending the resource task network for industrial applications. Computers & chemical engineering, 35(10), 2124-2140.
+# * Wassick, J. M., & Ferrio, J. (2011). Extending the resource task network for industrial applications. Computers & chemical engineering, 35(10), 2124-2140. [[pdf](https://reader.elsevier.com/reader/sd/pii/S0098135411000123)]
+# 
+# Supply chain applications --
+# 
+# * Castro, P. M., Sun, L., & Harjunkoski, I. (2013). Resource–task network formulations for industrial demand side management of a steel plant. Industrial & Engineering Chemistry Research, 52(36), 13046-13058. [[pubs.acs.org](https://pubs.acs.org/doi/full/10.1021/ie401044q)]
+# 
+# * Ba, B. H., Prins, C., & Prodhon, C. (2018). A generic tactical planning model to supply a biorefinery with biomass. Pesquisa Operacional, 38, 1-30.Ba, B. H., Prins, C., & Prodhon, C. (2018). A generic tactical planning model to supply a biorefinery with biomass. Pesquisa Operacional, 38, 1-30. [[pdf](https://www.scielo.br/j/pope/a/wrqnhVjLs9xS34YMzwt9Hsf/abstract/?lang=enhttps://www.scielo.br/j/pope/a/wrqnhVjLs9xS34YMzwt9Hsf/abstract/?lang=en)]
 # 
 # Python Coding Examples --
 # 
@@ -62,7 +79,7 @@
 # 
 # The basic data structure specifies the states, tasks, and units comprising a state-task network. The intention is for all relevant problem data to be contained in a single JSON-like structure.
 
-# In[123]:
+# In[44]:
 
 
 # planning horizon
@@ -71,19 +88,19 @@ H = 10
 # STN Data Structure
 Kondili = {
     # time grid
-    'TIME':  range(0, H+1),
+    'TIME':  list(range(0, H+1)),
     
     # states
     'STATES': {
-        'Feed_A'   : {'capacity': 500, 'initial': 500, 'price':  0},
-        'Feed_B'   : {'capacity': 500, 'initial': 500, 'price':  0},
-        'Feed_C'   : {'capacity': 500, 'initial': 500, 'price':  0},
-        'Hot_A'    : {'capacity': 100, 'initial':   0, 'price': -1},
-        'Int_AB'   : {'capacity': 200, 'initial':   0, 'price': -1},
-        'Int_BC'   : {'capacity': 150, 'initial':   0, 'price': -1},
-        'Impure_E' : {'capacity': 100, 'initial':   0, 'price': -1},
-        'Product_1': {'capacity': 500, 'initial':   0, 'price': 10},
-        'Product_2': {'capacity': 500, 'initial':   0, 'price': 10},
+        'Feed_A'   : {'capacity': 500, 'initial': 500, 'price':   0},
+        'Feed_B'   : {'capacity': 500, 'initial': 500, 'price':   0},
+        'Feed_C'   : {'capacity': 500, 'initial': 500, 'price':   0},
+        'Hot_A'    : {'capacity': 100, 'initial':   0, 'price': -10},
+        'Int_AB'   : {'capacity': 200, 'initial':   0, 'price': -10},
+        'Int_BC'   : {'capacity': 150, 'initial':   0, 'price': -10},
+        'Impure_E' : {'capacity': 100, 'initial':   0, 'price': -10},
+        'Product_1': {'capacity': 500, 'initial':   0, 'price':  10},
+        'Product_2': {'capacity': 500, 'initial':   0, 'price':  1000},
     },
     
     # state to task arcs indexed by (state, task)
@@ -101,8 +118,8 @@ Kondili = {
     # task to state arcs indexed by (task, state)
     'TS_ARCS': {
         ('Heating',    'Hot_A')    : {'dur': 1, 'rho': 1.0},
-        ('Reaction_2', 'Product_1'): {'dur': 1.5, 'rho': 0.4},
-        ('Reaction_2', 'Int_AB')   : {'dur': 1.5, 'rho': 0.6},
+        ('Reaction_2', 'Product_1'): {'dur': 2, 'rho': 0.4},
+        ('Reaction_2', 'Int_AB')   : {'dur': 2, 'rho': 0.6},
         ('Reaction_1', 'Int_BC')   : {'dur': 2, 'rho': 1.0},
         ('Reaction_3', 'Impure_E') : {'dur': 1, 'rho': 1.0},
         ('Separation', 'Int_AB')   : {'dur': 2, 'rho': 0.1},
@@ -127,7 +144,7 @@ Kondili = {
 # 
 # The following computations can be done on any time grid, including real-valued time points. TIME is a list of time points commencing at 0.
 
-# ## Creating a Pyomo Model
+# ## Mathematical Model
 # 
 # The following Pyomo model closely follows the development in Kondili, et al. (1993). In particular, the first step in the model is to process the STN data to create sets as given in Kondili.  
 # 
@@ -158,9 +175,9 @@ Kondili = {
 # B_{ij}^{min}W_{ijt} & \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall j, \forall i\in I_j, \forall t
 # \end{align*}
 
-# ### Characterization of Tasks
+# ## Organizing Problem Data Structures
 
-# In[124]:
+# In[45]:
 
 
 STN = Kondili
@@ -170,194 +187,316 @@ ST_ARCS = STN['ST_ARCS']
 TS_ARCS = STN['TS_ARCS']
 UNIT_TASKS = STN['UNIT_TASKS']
 TIME = STN['TIME']
+
+
+# ### Characterizing Time
+
+# In[46]:
+
+
 H = max(TIME)
+print(TIME)
 
 
-# In[125]:
+# ### Characterizing Tasks
+
+# In[47]:
 
 
-TASKS = set([i for (j,i) in UNIT_TASKS])                         # set of all tasks 
+# set of all tasks 
+TASKS = set([i for (_, i) in UNIT_TASKS])
 
-S = {i: set() for i in TASKS}                                    # S[i] input set of states which feed task i
-for (s,i) in ST_ARCS:
+# S[i] set of states which feed task i
+S = {i: set() for i in TASKS}
+for s, i in ST_ARCS:
     S[i].add(s)
 
-S_ = {i: set() for i in TASKS}                                   # S_[i] output set of states fed by task i
-for (i,s) in TS_ARCS:
+# S_[i] set of states fed by task i
+S_ = {i: set() for i in TASKS}
+for i, s in TS_ARCS:
     S_[i].add(s)
 
-rho = {(i,s): ST_ARCS[(s,i)]['rho'] for (s,i) in ST_ARCS}        # rho[(i,s)] input fraction of task i from state s
+# rho[(i, s)] input fraction of task i from state s
+rho = {(i, s): ST_ARCS[(s, i)]['rho'] for (s, i) in ST_ARCS}
 
-rho_ = {(i,s): TS_ARCS[(i,s)]['rho'] for (i,s) in TS_ARCS}       # rho_[(i,s)] output fraction of task i to state s
+# rho_[(i,s)] output fraction of task i to state s
+rho_ = {(i, s): TS_ARCS[(i, s)]['rho'] for (i, s) in TS_ARCS}
 
-P = {(i,s): TS_ARCS[(i,s)]['dur'] for (i,s) in TS_ARCS}          # P[(i,s)] time for task i output to state s   
+# P[(i,s)] time for task i output to state s 
+P = {(i, s): TS_ARCS[(i, s)]['dur'] for (i, s) in TS_ARCS}  
 
-p = {i: max([P[(i,s)] for s in S_[i]]) for i in TASKS}           # p[i] completion time for task i
+# p[i] completion time for task i
+p = {i: max([P[(i, s)] for s in S_[i]]) for i in TASKS}
 
-K = {i: set() for i in TASKS}                                    # K[i] set of units capable of task i
-for (j,i) in UNIT_TASKS:
+# K[i] set of units capable of task i
+K = {i: set() for i in TASKS}
+for (j, i) in UNIT_TASKS:
     K[i].add(j) 
 
+# verify
+for i in TASKS:
+    print(f"TASK {i:10s}   duration = {p[i]:4.1f}")
+    for s in S[i]:
+        print(f"     Input State {s:10s}    rho = {rho[i, s]:5.1f}")
+    for s in S_[i]:
+        print(f"    Output State {s:10s}    rho = {rho_[i, s]:5.1f}   dur = {P[i, s]:5.1f}")
+    for j in K[i]:
+        print(f"            Unit {j:10s}   {UNIT_TASKS[(j, i)]}")
+    print()
 
-# ### Characterization of States
 
-# In[126]:
+# ### Characterizing States
+
+# In[48]:
 
 
-T = {s: set() for s in STATES}                                   # T[s] set of tasks receiving material from state s 
-for (s,i) in ST_ARCS:
+# T[s] set of tasks receiving material from state s 
+T = {s: set() for s in STATES}
+for (s, i) in ST_ARCS:
     T[s].add(i)
 
-T_ = {s: set() for s in STATES}                                  # set of tasks producing material for state s
-for (i,s) in TS_ARCS:
+# set of tasks producing material for state s
+T_ = {s: set() for s in STATES}
+for (i, s) in TS_ARCS:
     T_[s].add(i)
 
-C = {s: STATES[s]['capacity'] for s in STATES}                   # C[s] storage capacity for state s
+# C[s] storage capacity for state s
+C = {s: STATES[s]['capacity'] for s in STATES}
+
+# verify
+for s in STATES:
+    print(f"\nSTATE {s:10s}  capacity = {C[s]:5.1f}  ic = {STATES[s]['initial']:5.1f}  price = {STATES[s]['price']:5.2f}")
+    for i in T_[s]:
+        print(f"    Input from task {i:10s}")
+    for i in T[s]:
+        print(f"     Output to task {i:10s}")
 
 
-# ### Characterization of Units
+# ### Characterizing the Processing Units
 
-# In[127]:
+# In[49]:
 
 
-UNITS = set([j for (j,i) in UNIT_TASKS])
+# set of all units
+UNITS = set([j for (j, _) in UNIT_TASKS])
 
-I = {j: set() for j in UNITS}                                     # I[j] set of tasks performed with unit j
-for (j,i) in UNIT_TASKS:
+# create indexed set where I[j] is the set of tasks performed with unit j
+I = {j: set() for j in UNITS}
+for (j, i) in UNIT_TASKS:
     I[j].add(i)
 
-Bmax = {(i,j):UNIT_TASKS[(j,i)]['Bmax'] for (j,i) in UNIT_TASKS}  # Bmax[(i,j)] maximum capacity of unit j for task i
-Bmin = {(i,j):UNIT_TASKS[(j,i)]['Bmin'] for (j,i) in UNIT_TASKS}  # Bmin[(i,j)] minimum capacity of unit j for task i
+# Bmin[(i, j)] minimum capacity of unit j for task i
+Bmin = {(i, j): UNIT_TASKS[j, i]['Bmin'] for j, i in UNIT_TASKS}
+
+# Bmax[(i, j)] maximum capacity of unit j for task i
+Bmax = {(i, j): UNIT_TASKS[j, i]['Bmax'] for j, i in UNIT_TASKS}
+
+
+# verify
+for j in UNITS:
+    print(f"\nUNIT {j:10s}")
+    for i in I[j]:
+        print(f"   TASK {i:10s}   Bmin = {Bmin[i, j]:5.2f}    Bmax = {Bmax[i, j]:5.1f}") 
+        
 
 
 # ### Pyomo Model
 
-# In[135]:
+# In[50]:
 
 
-from pyomo.environ import *
-import numpy as np
+m = ConcreteModel()
 
-TIME = np.array(TIME)
+# W[i, j, t] logical variable to start task i starts on unit j at time t
+m.W = Var(TASKS, UNITS, TIME, domain=Boolean)
 
-model = ConcreteModel()
+# B[i, j, t,] size of batch assigned to task i on unit j at time t
+m.B = Var(TASKS, UNITS, TIME, domain=NonNegativeReals)
 
-model.W = Var(TASKS, UNITS, TIME, domain=Boolean)             # W[i,j,t] 1 if task i starts in unit j at time t
-model.B = Var(TASKS, UNITS, TIME, domain=NonNegativeReals)    # B[i,j,t,] size of batch assigned to task i in unit j at time t
-model.S = Var(STATES.keys(), TIME, domain=NonNegativeReals)   # S[s,t] inventory of state s at time t
-model.Q = Var(UNITS, TIME, domain=NonNegativeReals)           # Q[j,t] inventory of unit j at time t
-model.Cost = Var(domain=NonNegativeReals)
-model.Value = Var(domain=NonNegativeReals)
+# S[s, t] inventory of state s from t to t+1
+m.S = Var(STATES.keys(), TIME, domain=NonNegativeReals)
+
+# Q[j,t] inventory of unit j from time t to t+1
+m.Q = Var(UNITS, TIME, domain=NonNegativeReals)           
 
 # Objective is to maximize the value of the final state (see Kondili, Sec. 5)
-model.Obj = Objective(expr = model.Value - model.Cost, sense = maximize)
 
-# Constraints
-model.cons = ConstraintList()
-model.cons.add(model.Value == sum([STATES[s]['price']*model.S[s,H] for s in STATES]))
-model.cons.add(model.Cost == sum([UNIT_TASKS[(j,i)]['Cost']*model.W[i,j,t] +
-        UNIT_TASKS[(j,i)]['vCost']*model.B[i,j,t] for i in TASKS for j in K[i] for t in TIME])) 
+@m.Expression()
+def value_of_states(m):
+    return sum([STATES[s]['price'] * m.S[s, H] for s in STATES])
 
-# unit constraints
-for j in UNITS:
-    rhs = 0
+@m.Expression()
+def cost_of_operation(m):
+    return sum([UNIT_TASKS[j, i]['Cost'] * m.W[i, j, t] for i in TASKS for j in K[i] for t in TIME]) +            sum([UNIT_TASKS[j, i]['vCost'] * m.B[i, j, t] for i in TASKS for j in K[i] for t in TIME])
+
+@m.Objective(sense=maximize)
+def profit(m):
+    return m.value_of_states - m.cost_of_operation
+
+# state capacity constraint
+@m.Constraint(STATES, TIME)
+def state_capacity(m, s, t):
+    return m.S[s, t] <= C[s]
+
+# unit capacity constraints
+@m.Constraint(TASKS, UNITS, TIME)
+def unit_capacity_min(m, i, j, t):
+    if i in I[j]:
+        return m.B[i, j, t] >= m.W[i , j, t] * Bmin[i,j]
+    return Constraint.Skip
+
+@m.Constraint(TASKS, UNITS, TIME)
+def unit_capacity_max(m, i, j, t):
+    if i in I[j]:
+        return m.B[i, j, t] <= m.W[i,j,t] * Bmax[i,j]
+    return Constraint.Skip
+
+# constraint to avoid assigning j to more than one task at time t
+@m.Constraint(UNITS, TIME)
+def assignment(m, j, t):
+    return 1 >= sum(m.W[i, j, tp] for i in I[j] for tp in TIME if tp >= (t - p[i] + 1 - UNIT_TASKS[j, i]['Tclean']) and tp <= t)
+
+# mass balances on each state
+@m.Constraint(STATES, TIME)
+def state_balance(m, s, t):
+    mass_in = sum(rho_[i, s] * m.B[i, j, t - P[i, s]] for i in T_[s] for j in K[i] if t >= P[i, s])
+    mass_out = sum(rho[i, s] * m.B[i, j, t] for i in T[s] for j in K[i])
+    if t == TIME[0]:
+        return m.S[s, t] == STATES[s]['initial'] + mass_in - mass_out
+    return m.S[s, t] == m.S[s, t-1] + mass_in - mass_out
+
+# mass balance on each unit
+@m.Constraint(UNITS, TIME)
+def unit_balance(m, j, t):
+    mass_in = sum(m.B[i, j, t] for i in I[j])
+    mass_out = sum(rho_[i,s] * m.B[i, j, t - P[i,s]] for i in I[j] for s in S_[i] if t >= P[i,s])
+    if t == TIME[0]:
+        return m.Q[j, t] == mass_in - mass_out
+    return m.Q[j, t] == m.Q[j, t-1] + mass_in - mass_out
+
+@m.Constraint(UNITS)
+def terminal(m, j):
+    return m.Q[j, H] == 0
+
+SolverFactory('cbc').solve(m).write()
+
+
+# In[51]:
+
+
+# Unit Schedules
+for j in sorted(UNITS):
+    print(f"\nUNIT {j:10s} Start  Finish     Batch")
     for t in TIME:
-        # a unit can only be allocated to one task 
-        lhs = 0
-        for i in I[j]:
-            for tprime in TIME:
-                if tprime >= (t-p[i]+1-UNIT_TASKS[(j,i)]['Tclean']) and tprime <= t:
-                    lhs += model.W[i,j,tprime]
-        model.cons.add(lhs <= 1)
-
-        # capacity constraints (see Konkili, Sec. 3.1.2)
-        for i in I[j]:
-            model.cons.add(model.W[i,j,t]*Bmin[i,j] <= model.B[i,j,t])
-            model.cons.add(model.B[i,j,t] <= model.W[i,j,t]*Bmax[i,j])
-
-        # unit mass balance
-        rhs += sum([model.B[i,j,t] for i in I[j]])
-        for i in I[j]:
-            for s in S_[i]:
-                if t >= P[(i,s)]:
-                    rhs -= rho_[(i,s)]*model.B[i,j,max(TIME[TIME <= t-P[(i,s)]])]
-        model.cons.add(model.Q[j,t] == rhs)
-        rhs = model.Q[j,t]
-        
-    # terminal condition  
-    model.cons.add(model.Q[j,H] == 0)
-
-# state constraints
-for s in STATES.keys():
-    rhs = STATES[s]['initial']
-    for t in TIME:
-        # state capacity constraint
-        model.cons.add(model.S[s,t] <= C[s])
-        
-        # state mass balanace
-        for i in T_[s]:
-            for j in K[i]:
-                if t >= P[(i,s)]: 
-                    rhs += rho_[(i,s)]*model.B[i,j,max(TIME[TIME <= t-P[(i,s)]])]             
-        for i in T[s]:
-            rhs -= rho[(i,s)]*sum([model.B[i,j,t] for j in K[i]])
-        model.cons.add(model.S[s,t] == rhs)
-        rhs = model.S[s,t] 
-        
-# additional production constraints      
-model.cons.add(model.S['Product_2',H] >= 250)
+        for i in TASKS:
+            if m.W[i, j, t]() is not None:
+                if m.W[i, j, t]() > 0.5: 
+                    print(f"    {i:10s}    {t:3d}     {t + p[i]:3d}     {m.B[i, j, t]():5.1f}")
 
 
-SolverFactory('gurobi').solve(model).write()
+# In[52]:
 
 
+print("   Time   ", end="")
+for j in sorted(UNITS):
+    print(f"  {j:>8s}", end="")
+for t in TIME:
+    print(f"\n    {t:3d}", end="")
+    for j in sorted(UNITS):
+        print(f"      {m.Q[j, t]():5.1f}", end="")
+
+
+# In[53]:
+
+
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(1, 1, figsize=(12, 6))
+
+gap = H/500
+idx = 1
+lbls = []
+ticks = []
+for j in sorted(UNITS):
+    idx -= 1
+    for i in sorted(I[j]):
+        idx -= 1
+        ticks.append(idx)
+        lbls.append("{0:s} -> {1:s}".format(j,i))
+        ax.plot([0, H],[idx, idx], lw=20, alpha=.3, color='y')
+        for t in TIME:
+            if m.W[i, j, t]() > 0:
+                ax.plot([t + gap, t + p[i] - gap], [idx, idx], 'b', lw=20, solid_capstyle='butt')
+                txt = "{0:.2f}".format(m.B[i,j,t]())
+                ax.text(t + p[i]/2, idx, txt, color='white', weight='bold', ha='center', va='center')
+
+ax.set_xlim(0,H)
+ax.set_yticks(ticks)
+ax.set_yticklabels(lbls);
+
+
+# In[54]:
+
+
+df = pd.DataFrame([[m.S[s,t]() for s in STATES] for t in TIME], columns = STATES, index = TIME)
+df = df.sort_index()
+df.display()
+
+
+# import matplotlib.pyplot as plt
+# import pandas as pd
+# from IPython.display import display, HTML
 # ## Analysis
+
+# In[25]:
+
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import display, HTML
+
 
 # ### Profitability
 # 
 # 
 
-# In[136]:
+# In[33]:
 
 
-print("Value of State Inventories = {0:12.2f}".format(model.Value()))
-print("  Cost of Unit Assignments = {0:12.2f}".format(model.Cost()))
-print("             Net Objective = {0:12.2f}".format(model.Value() - model.Cost()))
+print(f"Value of State Inventories = {m.value_of_states():12.2f}")
+print(f"  Cost of Unit Assignments = {m.cost_of_operation():12.2f}")
+print(f"             Net Objective = {m.value_of_states() - m.cost_of_operation():12.2f}")
 
 
 # ### State Inventories
 
-# In[137]:
+# In[34]:
 
 
-get_ipython().run_line_magic('matplotlib', 'inline')
-import matplotlib.pyplot as plt
-import pandas as pd
-from IPython.display import display, HTML
-
-pd.DataFrame([[model.S[s,t]() for s in STATES.keys()] for t in TIME], columns = STATES.keys(), index = TIME)
+df = pd.DataFrame([[m.S[s,t]() for s in STATES] for t in TIME], columns = STATES, index = TIME)
+df = df.sort_index()
+df
 
 
-# In[138]:
+# In[35]:
 
 
 plt.figure(figsize=(10,6))
-for (s,idx) in zip(STATES.keys(),range(0,len(STATES.keys()))):
-    plt.subplot(ceil(len(STATES.keys())/3),3,idx+1)
-    tlast,ylast = 0,STATES[s]['initial']
-    for (t,y) in zip(list(TIME),[model.S[s,t]() for t in TIME]):
-        plt.plot([tlast,t,t],[ylast,ylast,y],'b')
-        #plt.plot([tlast,t],[ylast,y],'b.',ms=10)
-        tlast,ylast = t,y
-    plt.ylim(0,1.1*C[s])
-    plt.plot([0,H],[C[s],C[s]],'r--')
+for (s, idx) in zip(STATES, range(0, len(STATES))):
+    plt.subplot(ceil(len(STATES)/3), 3, idx+1)
+    tlast, ylast = 0, STATES[s]['initial']
+    for (t, y) in zip(list(TIME), [m.S[s,t]() for t in TIME]):
+        plt.plot([tlast, t, t], [ylast, ylast, y],'b')
+        tlast, ylast = t, y
+    plt.ylim(0, 1.1*C[s])
+    plt.plot([0, H], [C[s], C[s]],'r--')
     plt.title(s)
 plt.tight_layout()
 
 
 # ### Unit Assignment
 
-# In[139]:
+# In[38]:
 
 
 UnitAssignment = pd.DataFrame({j:[None for t in TIME] for j in UNITS},index=TIME)
@@ -367,18 +506,18 @@ for t in TIME:
         for i in I[j]:
             for s in S_[i]:
                 if t-p[i] >= 0:
-                    if model.W[i,j,max(TIME[TIME <= t-p[i]])]() > 0:
+                    if m.W[i, j, max(np.array(TIME)[np.array(TIME) <= t-p[i]])]() > 0:
                         UnitAssignment.loc[t,j] = None               
         for i in I[j]:
-            if model.W[i,j,t]() > 0:
-                UnitAssignment.loc[t,j] = (i,model.B[i,j,t]())
+            if m.W[i,j,t]() > 0:
+                UnitAssignment.loc[t,j] = (i, m.B[i,j,t]())
 
 UnitAssignment
 
 
 # ### Unit Batch Inventories
 
-# In[140]:
+# In[364]:
 
 
 pd.DataFrame([[model.Q[j,t]() for j in UNITS] for t in TIME], columns = UNITS, index = TIME)
@@ -386,10 +525,9 @@ pd.DataFrame([[model.Q[j,t]() for j in UNITS] for t in TIME], columns = UNITS, i
 
 # ### Gannt Chart
 
-# In[141]:
+# In[365]:
 
 
-get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(12,6))
@@ -406,9 +544,9 @@ for j in sorted(UNITS):
         lbls.append("{0:s} -> {1:s}".format(j,i))
         plt.plot([0,H],[idx,idx],lw=20,alpha=.3,color='y')
         for t in TIME:
-            if model.W[i,j,t]() > 0:
+            if m.W[i,j,t]() > 0:
                 plt.plot([t+gap,t+p[i]-gap], [idx,idx],'b', lw=20, solid_capstyle='butt')
-                txt = "{0:.2f}".format(model.B[i,j,t]())
+                txt = "{0:.2f}".format(m.B[i,j,t]())
                 plt.text(t+p[i]/2, idx, txt, color='white', weight='bold', ha='center', va='center')
 plt.xlim(0,H)
 plt.gca().set_yticks(ticks)
@@ -417,7 +555,7 @@ plt.gca().set_yticklabels(lbls);
 
 # ## Trace of Events and States
 
-# In[13]:
+# In[366]:
 
 
 sep = '\n--------------------------------------------------------------------------------------------\n'
@@ -468,7 +606,7 @@ for t in TIME:
     print("\n    Unit Assignments are now:")
     for j in UNITS:
         if units[j]['assignment'] != 'None':
-            fmt = "        {0:s} performs the {1:s} task with a {2:.2f} kg batch for hour {3:d} of {4:d}"
+            fmt = "        {0:s} performs the {1:s} task with a {2:.2f} kg batch for hour {3:f} of {4:f}"
             i = units[j]['assignment']
             print(fmt.format(j,i,model.Q[j,t](),units[j]['t'],p[i]))
             
@@ -477,6 +615,12 @@ print('Final Conditions')
 print("    Final Inventories:")            
 for s in STATES.keys():
         print("        {0:10s}  {1:6.1f} kg".format(s,model.S[s,H]()))
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:

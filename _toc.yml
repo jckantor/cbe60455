@@ -18,3 +18,8 @@ chapters:
   - file: notebooks/03/02-machine-bottleneck.ipynb
   - file: notebooks/03/03-job-shop-scheduling.ipynb
   - file: notebooks/03/07-State-Task-Networks.ipynb
+  
+- file: notebooks/04/00-uncertainty.md
+  sections:
+  - file: notebooks/04/01-Newsvendor-Problem.ipynb
+  - file: notebooks/04/airline-seating.ipynb

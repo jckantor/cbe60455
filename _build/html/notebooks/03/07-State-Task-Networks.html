@@ -56,6 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>mermaid.initialize({startOnLoad:true});</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Optimization under Uncertainty" href="../04/00-uncertainty.html" />
     <link rel="prev" title="Job Shop Scheduling" href="03-job-shop-scheduling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -177,6 +178,28 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/01-Newsvendor-Problem.html">
+     Newsvendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
     </a>
    </li>
   </ul>
@@ -435,23 +458,33 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-a-pyomo-model">
-   Creating a Pyomo Model
+  <a class="reference internal nav-link" href="#mathematical-model">
+   Mathematical Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#organizing-problem-data-structures">
+   Organizing Problem Data Structures
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-tasks">
-     Characterization of Tasks
+    <a class="reference internal nav-link" href="#characterizing-time">
+     Characterizing Time
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-states">
-     Characterization of States
+    <a class="reference internal nav-link" href="#characterizing-tasks">
+     Characterizing Tasks
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-units">
-     Characterization of Units
+    <a class="reference internal nav-link" href="#characterizing-states">
+     Characterizing States
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#characterizing-the-processing-units">
+     Characterizing the Processing Units
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -547,23 +580,33 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-a-pyomo-model">
-   Creating a Pyomo Model
+  <a class="reference internal nav-link" href="#mathematical-model">
+   Mathematical Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#organizing-problem-data-structures">
+   Organizing Problem Data Structures
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-tasks">
-     Characterization of Tasks
+    <a class="reference internal nav-link" href="#characterizing-time">
+     Characterizing Time
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-states">
-     Characterization of States
+    <a class="reference internal nav-link" href="#characterizing-tasks">
+     Characterizing Tasks
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#characterization-of-units">
-     Characterization of Units
+    <a class="reference internal nav-link" href="#characterizing-states">
+     Characterizing States
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#characterizing-the-processing-units">
+     Characterizing the Processing Units
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -623,6 +666,16 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="scheduling-multipurpose-batch-processes-using-state-task-networks">
 <h1>Scheduling Multipurpose Batch Processes using State-Task Networks<a class="headerlink" href="#scheduling-multipurpose-batch-processes-using-state-task-networks" title="Permalink to this headline">#</a></h1>
 <p>The State-Task Network (STN) is an approach to modeling multipurpose batch process for the purpose of short term scheduling. It was first developed by Kondili, et al., in 1993, and subsequently developed and extended by others.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="bibliographic-notes">
 <h2>Bibliographic Notes<a class="headerlink" href="#bibliographic-notes" title="Permalink to this headline">#</a></h2>
 <p>Original development –</p>
@@ -630,12 +683,18 @@ title="Print to PDF"
 <li><p>Kondili, E., Pantelides, C. C., &amp; Sargent, R. W. H. (1993). A general algorithm for short-term scheduling of batch operations—I. MILP formulation. Computers &amp; Chemical Engineering, 17(2), 211-227. [<a class="reference external" href="https://www.researchgate.net/profile/Roger-Sargent/publication/222159161_A_General_Algorithm_for_Short-Term_Scheduling_of_Batch_Operations-i_MILP_Formulation/links/5a19d9be0f7e9be37f9a5af1/A-General-Algorithm-for-Short-Term-Scheduling-of-Batch-Operations-i-MILP-Formulation.pdf">pdf</a>]</p></li>
 <li><p>Shah, N., Pantelides, C. C., &amp; Sargent, R. W. H. (1993). A general algorithm for short-term scheduling of batch operations—II. Computational issues. Computers &amp; chemical engineering, 17(2), 229-244. [<a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/009813549380016G">pdf</a>]</p></li>
 </ul>
-<p>Applications and further developments –</p>
+<p>Process applications and further developments –</p>
 <ul class="simple">
+<li><p>[<a class="reference external" href="https://www.eq.uc.pt/~marco/eps/Edicao_2016_2017/Aulas_12_15/Pantelides_1994.pdf">pdf</a>]</p></li>
 <li><p>Floudas, C. A., &amp; Lin, X. (2005). Mixed integer linear programming in process scheduling: Modeling, algorithms, and applications. Annals of Operations Research, 139(1), 131-162.</p></li>
 <li><p>Harjunkoski, I., Maravelias, C. T., Bongers, P., Castro, P. M., Engell, S., Grossmann, I. E., … &amp; Wassick, J. (2014). Scope for industrial applications of production scheduling models and solution methods. Computers &amp; Chemical Engineering, 62, 161-193.</p></li>
 <li><p>Méndez, C. A., Cerdá, J., Grossmann, I. E., Harjunkoski, I., &amp; Fahl, M. (2006). State-of-the-art review of optimization methods for short-term scheduling of batch processes. Computers &amp; Chemical Engineering, 30(6), 913-946.</p></li>
-<li><p>Wassick, J. M., &amp; Ferrio, J. (2011). Extending the resource task network for industrial applications. Computers &amp; chemical engineering, 35(10), 2124-2140.</p></li>
+<li><p>Wassick, J. M., &amp; Ferrio, J. (2011). Extending the resource task network for industrial applications. Computers &amp; chemical engineering, 35(10), 2124-2140. [<a class="reference external" href="https://reader.elsevier.com/reader/sd/pii/S0098135411000123">pdf</a>]</p></li>
+</ul>
+<p>Supply chain applications –</p>
+<ul class="simple">
+<li><p>Castro, P. M., Sun, L., &amp; Harjunkoski, I. (2013). Resource–task network formulations for industrial demand side management of a steel plant. Industrial &amp; Engineering Chemistry Research, 52(36), 13046-13058. [<a class="reference external" href="https://pubs.acs.org/doi/full/10.1021/ie401044q">pubs.acs.org</a>]</p></li>
+<li><p>Ba, B. H., Prins, C., &amp; Prodhon, C. (2018). A generic tactical planning model to supply a biorefinery with biomass. Pesquisa Operacional, 38, <a class="reference external" href="http://1-30.Ba">1-30.Ba</a>, B. H., Prins, C., &amp; Prodhon, C. (2018). A generic tactical planning model to supply a biorefinery with biomass. Pesquisa Operacional, 38, 1-30. [<a class="reference external" href="https://www.scielo.br/j/pope/a/wrqnhVjLs9xS34YMzwt9Hsf/abstract/?lang=enhttps://www.scielo.br/j/pope/a/wrqnhVjLs9xS34YMzwt9Hsf/abstract/?lang=en">pdf</a>]</p></li>
 </ul>
 <p>Python Coding Examples –</p>
 <ul class="simple">
@@ -676,19 +735,19 @@ title="Print to PDF"
 <span class="c1"># STN Data Structure</span>
 <span class="n">Kondili</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># time grid</span>
-    <span class="s1">&#39;TIME&#39;</span><span class="p">:</span>  <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">H</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;TIME&#39;</span><span class="p">:</span>  <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">H</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span>
     
     <span class="c1"># states</span>
     <span class="s1">&#39;STATES&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;Feed_A&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="mi">0</span><span class="p">},</span>
-        <span class="s1">&#39;Feed_B&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="mi">0</span><span class="p">},</span>
-        <span class="s1">&#39;Feed_C&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="mi">0</span><span class="p">},</span>
-        <span class="s1">&#39;Hot_A&#39;</span>    <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-        <span class="s1">&#39;Int_AB&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-        <span class="s1">&#39;Int_BC&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-        <span class="s1">&#39;Impure_E&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
-        <span class="s1">&#39;Product_1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
-        <span class="s1">&#39;Product_2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Feed_A&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">},</span>
+        <span class="s1">&#39;Feed_B&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">},</span>
+        <span class="s1">&#39;Feed_C&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">},</span>
+        <span class="s1">&#39;Hot_A&#39;</span>    <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Int_AB&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Int_BC&#39;</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Impure_E&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Product_1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="mi">10</span><span class="p">},</span>
+        <span class="s1">&#39;Product_2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;capacity&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;initial&#39;</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="mi">1000</span><span class="p">},</span>
     <span class="p">},</span>
     
     <span class="c1"># state to task arcs indexed by (state, task)</span>
@@ -706,8 +765,8 @@ title="Print to PDF"
     <span class="c1"># task to state arcs indexed by (task, state)</span>
     <span class="s1">&#39;TS_ARCS&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="p">(</span><span class="s1">&#39;Heating&#39;</span><span class="p">,</span>    <span class="s1">&#39;Hot_A&#39;</span><span class="p">)</span>    <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
-        <span class="p">(</span><span class="s1">&#39;Reaction_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Product_1&#39;</span><span class="p">):</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
-        <span class="p">(</span><span class="s1">&#39;Reaction_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Int_AB&#39;</span><span class="p">)</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
+        <span class="p">(</span><span class="s1">&#39;Reaction_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Product_1&#39;</span><span class="p">):</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
+        <span class="p">(</span><span class="s1">&#39;Reaction_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Int_AB&#39;</span><span class="p">)</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
         <span class="p">(</span><span class="s1">&#39;Reaction_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Int_BC&#39;</span><span class="p">)</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
         <span class="p">(</span><span class="s1">&#39;Reaction_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Impure_E&#39;</span><span class="p">)</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
         <span class="p">(</span><span class="s1">&#39;Separation&#39;</span><span class="p">,</span> <span class="s1">&#39;Int_AB&#39;</span><span class="p">)</span>   <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;dur&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
@@ -735,8 +794,8 @@ title="Print to PDF"
 <p>The following computations can be done on any time grid, including real-valued time points. TIME is a list of time points commencing at 0.</p>
 </section>
 </section>
-<section id="creating-a-pyomo-model">
-<h2>Creating a Pyomo Model<a class="headerlink" href="#creating-a-pyomo-model" title="Permalink to this headline">#</a></h2>
+<section id="mathematical-model">
+<h2>Mathematical Model<a class="headerlink" href="#mathematical-model" title="Permalink to this headline">#</a></h2>
 <p>The following Pyomo model closely follows the development in Kondili, et al. (1993). In particular, the first step in the model is to process the STN data to create sets as given in Kondili.</p>
 <p>One important difference from Kondili is the adoption of a more natural time scale that starts at <span class="math notranslate nohighlight">\(t = 0\)</span> and extends to <span class="math notranslate nohighlight">\(t = H\)</span> (rather than from 1 to H+1).</p>
 <p>A second difference is the introduction of an additional decision variable denoted by <span class="math notranslate nohighlight">\(Q_{j,t}\)</span> indicating the amount of material in unit <span class="math notranslate nohighlight">\(j\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>. A material balance then reads</p>
@@ -756,8 +815,9 @@ Q_{j,H} &amp; = 0 \qquad \forall j
 <p>\begin{align*}
 B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall j, \forall i\in I_j, \forall t
 \end{align*}</p>
-<section id="characterization-of-tasks">
-<h3>Characterization of Tasks<a class="headerlink" href="#characterization-of-tasks" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="organizing-problem-data-structures">
+<h2>Organizing Problem Data Structures<a class="headerlink" href="#organizing-problem-data-structures" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">STN</span> <span class="o">=</span> <span class="n">Kondili</span>
@@ -767,69 +827,220 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 <span class="n">TS_ARCS</span> <span class="o">=</span> <span class="n">STN</span><span class="p">[</span><span class="s1">&#39;TS_ARCS&#39;</span><span class="p">]</span>
 <span class="n">UNIT_TASKS</span> <span class="o">=</span> <span class="n">STN</span><span class="p">[</span><span class="s1">&#39;UNIT_TASKS&#39;</span><span class="p">]</span>
 <span class="n">TIME</span> <span class="o">=</span> <span class="n">STN</span><span class="p">[</span><span class="s1">&#39;TIME&#39;</span><span class="p">]</span>
-<span class="n">H</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="characterizing-time">
+<h3>Characterizing Time<a class="headerlink" href="#characterizing-time" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TASKS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">])</span>                         <span class="c1"># set of all tasks </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">H</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="characterizing-tasks">
+<h3>Characterizing Tasks<a class="headerlink" href="#characterizing-tasks" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set of all tasks </span>
+<span class="n">TASKS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">])</span>
 
-<span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>                                    <span class="c1"># S[i] input set of states which feed task i</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">:</span>
+<span class="c1"># S[i] set of states which feed task i</span>
+<span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">:</span>
     <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-<span class="n">S_</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>                                   <span class="c1"># S_[i] output set of states fed by task i</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">:</span>
+<span class="c1"># S_[i] set of states fed by task i</span>
+<span class="n">S_</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">:</span>
     <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-<span class="n">rho</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">):</span> <span class="n">ST_ARCS</span><span class="p">[(</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">}</span>        <span class="c1"># rho[(i,s)] input fraction of task i from state s</span>
+<span class="c1"># rho[(i, s)] input fraction of task i from state s</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span> <span class="n">ST_ARCS</span><span class="p">[(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">)][</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">}</span>
 
-<span class="n">rho_</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">):</span> <span class="n">TS_ARCS</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)][</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">}</span>       <span class="c1"># rho_[(i,s)] output fraction of task i to state s</span>
+<span class="c1"># rho_[(i,s)] output fraction of task i to state s</span>
+<span class="n">rho_</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span> <span class="n">TS_ARCS</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)][</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">}</span>
 
-<span class="n">P</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">):</span> <span class="n">TS_ARCS</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)][</span><span class="s1">&#39;dur&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">}</span>          <span class="c1"># P[(i,s)] time for task i output to state s   </span>
+<span class="c1"># P[(i,s)] time for task i output to state s </span>
+<span class="n">P</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span> <span class="n">TS_ARCS</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)][</span><span class="s1">&#39;dur&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">}</span>  
 
-<span class="n">p</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">max</span><span class="p">([</span><span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>           <span class="c1"># p[i] completion time for task i</span>
+<span class="c1"># p[i] completion time for task i</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">max</span><span class="p">([</span><span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>
 
-<span class="n">K</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>                                    <span class="c1"># K[i] set of units capable of task i</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">:</span>
+<span class="c1"># K[i] set of units capable of task i</span>
+<span class="n">K</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">:</span>
     <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> 
+
+<span class="c1"># verify</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TASK </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">   duration = </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     Input State </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">    rho = </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Output State </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">    rho = </span><span class="si">{</span><span class="n">rho_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">   dur = </span><span class="si">{</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;            Unit </span><span class="si">{</span><span class="n">j</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK Separation   duration =  2.0
+     Input State Impure_E      rho =   1.0
+    Output State Int_AB        rho =   0.1   dur =   2.0
+    Output State Product_2     rho =   0.9   dur =   1.0
+            Unit Still        {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 200, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+
+TASK Reaction_2   duration =  2.0
+     Input State Int_BC        rho =   0.6
+     Input State Hot_A         rho =   0.4
+    Output State Int_AB        rho =   0.6   dur =   2.0
+    Output State Product_1     rho =   0.4   dur =   2.0
+            Unit Reactor_2    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+            Unit Reactor_1    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+
+TASK Reaction_1   duration =  2.0
+     Input State Feed_C        rho =   0.5
+     Input State Feed_B        rho =   0.5
+    Output State Int_BC        rho =   1.0   dur =   2.0
+            Unit Reactor_2    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+            Unit Reactor_1    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+
+TASK Reaction_3   duration =  1.0
+     Input State Int_AB        rho =   0.8
+     Input State Feed_C        rho =   0.2
+    Output State Impure_E      rho =   1.0   dur =   1.0
+            Unit Reactor_2    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+            Unit Reactor_1    {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 80, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
+
+TASK Heating      duration =  1.0
+     Input State Feed_A        rho =   1.0
+    Output State Hot_A         rho =   1.0   dur =   1.0
+            Unit Heater       {&#39;Bmin&#39;: 0, &#39;Bmax&#39;: 100, &#39;Cost&#39;: 1, &#39;vCost&#39;: 0, &#39;Tclean&#39;: 0}
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="characterization-of-states">
-<h3>Characterization of States<a class="headerlink" href="#characterization-of-states" title="Permalink to this headline">#</a></h3>
+<section id="characterizing-states">
+<h3>Characterizing States<a class="headerlink" href="#characterizing-states" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>                                   <span class="c1"># T[s] set of tasks receiving material from state s </span>
-<span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># T[s] set of tasks receiving material from state s </span>
+<span class="n">T</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ST_ARCS</span><span class="p">:</span>
     <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-<span class="n">T_</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>                                  <span class="c1"># set of tasks producing material for state s</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">:</span>
+<span class="c1"># set of tasks producing material for state s</span>
+<span class="n">T_</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TS_ARCS</span><span class="p">:</span>
     <span class="n">T_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-<span class="n">C</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;capacity&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>                   <span class="c1"># C[s] storage capacity for state s</span>
+<span class="c1"># C[s] storage capacity for state s</span>
+<span class="n">C</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;capacity&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">}</span>
+
+<span class="c1"># verify</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">STATE </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">  capacity = </span><span class="si">{</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">  ic = </span><span class="si">{</span><span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">  price = </span><span class="si">{</span><span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">5.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T_</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Input from task </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     Output to task </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STATE Feed_A      capacity = 500.0  ic = 500.0  price =  0.00
+     Output to task Heating   
+
+STATE Feed_B      capacity = 500.0  ic = 500.0  price =  0.00
+     Output to task Reaction_1
+
+STATE Feed_C      capacity = 500.0  ic = 500.0  price =  0.00
+     Output to task Reaction_3
+     Output to task Reaction_1
+
+STATE Hot_A       capacity = 100.0  ic =   0.0  price = -10.00
+    Input from task Heating   
+     Output to task Reaction_2
+
+STATE Int_AB      capacity = 200.0  ic =   0.0  price = -10.00
+    Input from task Separation
+    Input from task Reaction_2
+     Output to task Reaction_3
+
+STATE Int_BC      capacity = 150.0  ic =   0.0  price = -10.00
+    Input from task Reaction_1
+     Output to task Reaction_2
+
+STATE Impure_E    capacity = 100.0  ic =   0.0  price = -10.00
+    Input from task Reaction_3
+     Output to task Separation
+
+STATE Product_1   capacity = 500.0  ic =   0.0  price = 10.00
+    Input from task Reaction_2
+
+STATE Product_2   capacity = 500.0  ic =   0.0  price = 1000.00
+    Input from task Separation
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="characterization-of-units">
-<h3>Characterization of Units<a class="headerlink" href="#characterization-of-units" title="Permalink to this headline">#</a></h3>
+<section id="characterizing-the-processing-units">
+<h3>Characterizing the Processing Units<a class="headerlink" href="#characterizing-the-processing-units" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UNITS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set of all units</span>
+<span class="n">UNITS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">])</span>
 
-<span class="n">I</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">}</span>                                     <span class="c1"># I[j] set of tasks performed with unit j</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">:</span>
+<span class="c1"># create indexed set where I[j] is the set of tasks performed with unit j</span>
+<span class="n">I</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">:</span>
     <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-<span class="n">Bmax</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span><span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;Bmax&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">}</span>  <span class="c1"># Bmax[(i,j)] maximum capacity of unit j for task i</span>
-<span class="n">Bmin</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span><span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;Bmin&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">}</span>  <span class="c1"># Bmin[(i,j)] minimum capacity of unit j for task i</span>
+<span class="c1"># Bmin[(i, j)] minimum capacity of unit j for task i</span>
+<span class="n">Bmin</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> <span class="n">UNIT_TASKS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;Bmin&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">}</span>
+
+<span class="c1"># Bmax[(i, j)] maximum capacity of unit j for task i</span>
+<span class="n">Bmax</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> <span class="n">UNIT_TASKS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;Bmax&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">UNIT_TASKS</span><span class="p">}</span>
+
+
+<span class="c1"># verify</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">UNIT </span><span class="si">{</span><span class="n">j</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   TASK </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">   Bmin = </span><span class="si">{</span><span class="n">Bmin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">5.2f</span><span class="si">}</span><span class="s2">    Bmax = </span><span class="si">{</span><span class="n">Bmax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> 
+        
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UNIT Reactor_2 
+   TASK Reaction_3   Bmin =  0.00    Bmax =  80.0
+   TASK Reaction_2   Bmin =  0.00    Bmax =  80.0
+   TASK Reaction_1   Bmin =  0.00    Bmax =  80.0
+
+UNIT Reactor_1 
+   TASK Reaction_3   Bmin =  0.00    Bmax =  80.0
+   TASK Reaction_2   Bmin =  0.00    Bmax =  80.0
+   TASK Reaction_1   Bmin =  0.00    Bmax =  80.0
+
+UNIT Heater    
+   TASK Heating      Bmin =  0.00    Bmax = 100.0
+
+UNIT Still     
+   TASK Separation   Bmin =  0.00    Bmax = 200.0
 </pre></div>
 </div>
 </div>
@@ -839,80 +1050,81 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 <h3>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
 
-<span class="n">TIME</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># W[i, j, t] logical variable to start task i starts on unit j at time t</span>
+<span class="n">m</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Boolean</span><span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+<span class="c1"># B[i, j, t,] size of batch assigned to task i on unit j at time t</span>
+<span class="n">m</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
 
-<span class="n">model</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">Boolean</span><span class="p">)</span>             <span class="c1"># W[i,j,t] 1 if task i starts in unit j at time t</span>
-<span class="n">model</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>    <span class="c1"># B[i,j,t,] size of batch assigned to task i in unit j at time t</span>
-<span class="n">model</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>   <span class="c1"># S[s,t] inventory of state s at time t</span>
-<span class="n">model</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>           <span class="c1"># Q[j,t] inventory of unit j at time t</span>
-<span class="n">model</span><span class="o">.</span><span class="n">Cost</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+<span class="c1"># S[s, t] inventory of state s from t to t+1</span>
+<span class="n">m</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+<span class="c1"># Q[j,t] inventory of unit j from time t to t+1</span>
+<span class="n">m</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>           
 
 <span class="c1"># Objective is to maximize the value of the final state (see Kondili, Sec. 5)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">Obj</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Value</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">Cost</span><span class="p">,</span> <span class="n">sense</span> <span class="o">=</span> <span class="n">maximize</span><span class="p">)</span>
 
-<span class="c1"># Constraints</span>
-<span class="n">model</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Value</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">([</span><span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">H</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">]))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Cost</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">([</span><span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;Cost&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span>
-        <span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;vCost&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">]))</span> 
+<span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">value_of_states</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">H</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">])</span>
 
-<span class="c1"># unit constraints</span>
-<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">:</span>
-    <span class="n">rhs</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
-        <span class="c1"># a unit can only be allocated to one task </span>
-        <span class="n">lhs</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-            <span class="k">for</span> <span class="n">tprime</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">tprime</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">UNIT_TASKS</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="s1">&#39;Tclean&#39;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">tprime</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="p">:</span>
-                    <span class="n">lhs</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">tprime</span><span class="p">]</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lhs</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">cost_of_operation</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">UNIT_TASKS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;Cost&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">])</span> <span class="o">+</span> \
+           <span class="nb">sum</span><span class="p">([</span><span class="n">UNIT_TASKS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;vCost&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">])</span>
 
-        <span class="c1"># capacity constraints (see Konkili, Sec. 3.1.2)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">Bmin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">])</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">Bmax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">maximize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">profit</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">value_of_states</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">cost_of_operation</span>
 
-        <span class="c1"># unit mass balance</span>
-        <span class="n">rhs</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]])</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]:</span>
-                    <span class="n">rhs</span> <span class="o">-=</span> <span class="n">rho_</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">[</span><span class="n">TIME</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">-</span><span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]])]</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">)</span>
-        <span class="n">rhs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span>
-        
-    <span class="c1"># terminal condition  </span>
-    <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">H</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># state capacity constraint</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">STATES</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">state_capacity</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
 
-<span class="c1"># state constraints</span>
-<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-    <span class="n">rhs</span> <span class="o">=</span> <span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
-        <span class="c1"># state capacity constraint</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
-        
-        <span class="c1"># state mass balanace</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T_</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]:</span> 
-                    <span class="n">rhs</span> <span class="o">+=</span> <span class="n">rho_</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">[</span><span class="n">TIME</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">-</span><span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]])]</span>             
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span>
-            <span class="n">rhs</span> <span class="o">-=</span> <span class="n">rho</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span><span class="o">*</span><span class="nb">sum</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">)</span>
-        <span class="n">rhs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> 
-        
-<span class="c1"># additional production constraints      </span>
-<span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="s1">&#39;Product_2&#39;</span><span class="p">,</span><span class="n">H</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">250</span><span class="p">)</span>
+<span class="c1"># unit capacity constraints</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">unit_capacity_min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span> <span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">Bmin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
 
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">unit_capacity_max</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">Bmax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
 
-<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;gurobi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="c1"># constraint to avoid assigning j to more than one task at time t</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assignment</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tp</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">tp</span> <span class="ow">in</span> <span class="n">TIME</span> <span class="k">if</span> <span class="n">tp</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">UNIT_TASKS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;Tclean&#39;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">tp</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># mass balances on each state</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">STATES</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">state_balance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">mass_in</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rho_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="o">-</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">])</span>
+    <span class="n">mass_out</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">K</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mass_in</span> <span class="o">-</span> <span class="n">mass_out</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">mass_in</span> <span class="o">-</span> <span class="n">mass_out</span>
+
+<span class="c1"># mass balance on each unit</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">UNITS</span><span class="p">,</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">unit_balance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">mass_in</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    <span class="n">mass_out</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rho_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="o">-</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">mass_in</span> <span class="o">-</span> <span class="n">mass_out</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">mass_in</span> <span class="o">-</span> <span class="n">mass_out</span>
+
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">UNITS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">terminal</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">H</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -924,29 +1136,34 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 #   Problem Information
 # ----------------------------------------------------------
 Problem: 
-- Name: x586
-  Lower bound: 4060.0
-  Upper bound: 4060.0
+- Name: unknown
+  Lower bound: 194457.66666667
+  Upper bound: 194457.66666667
   Number of objectives: 1
-  Number of constraints: 470
-  Number of variables: 322
+  Number of constraints: 123
+  Number of variables: 175
   Number of binary variables: 88
   Number of integer variables: 88
-  Number of continuous variables: 234
-  Number of nonzeros: 1286
+  Number of nonzeros: 93
   Sense: maximize
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Return code: 0
-  Message: Model was solved to optimality (subject to tolerances), and an optimal solution is available.
+  User time: -1.0
+  System time: 0.26
+  Wallclock time: 0.33
   Termination condition: optimal
   Termination message: Model was solved to optimality (subject to tolerances), and an optimal solution is available.
-  Wall time: 0.0322110652924
+  Statistics: 
+    Branch and bound: 
+      Number of bounded subproblems: 0
+      Number of created subproblems: 0
+    Black box: 
+      Number of iterations: 82
   Error rc: 0
-  Time: 0.0985100269317627
+  Time: 0.39389705657958984
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -957,24 +1174,168 @@ Solution:
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
-<section id="profitability">
-<h3>Profitability<a class="headerlink" href="#profitability" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of State Inventories = </span><span class="si">{0:12.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Value</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Cost of Unit Assignments = </span><span class="si">{0:12.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Cost</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;             Net Objective = </span><span class="si">{0:12.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Value</span><span class="p">()</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">Cost</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unit Schedules</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">UNITS</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">UNIT </span><span class="si">{</span><span class="n">j</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2"> Start  Finish     Batch&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span> 
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">    </span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">     </span><span class="si">{</span><span class="n">t</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">     </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]()</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value of State Inventories =      4076.00
-  Cost of Unit Assignments =        16.00
-             Net Objective =      4060.00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UNIT Heater     Start  Finish     Batch
+    Heating         1       2      64.0
+    Heating         4       5      42.7
+
+UNIT Reactor_1  Start  Finish     Batch
+    Reaction_1      0       2      80.0
+    Reaction_2      2       4      80.0
+    Reaction_3      4       5      40.0
+    Reaction_2      5       7      26.7
+    Reaction_3      7       8      15.0
+
+UNIT Reactor_2  Start  Finish     Batch
+    Reaction_1      0       2      80.0
+    Reaction_2      2       4      80.0
+    Reaction_3      4       5      80.0
+    Reaction_2      5       7      80.0
+    Reaction_3      7       8      80.0
+
+UNIT Still      Start  Finish     Batch
+    Separation      5       7     120.0
+    Separation      8      10      95.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Time   &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">UNITS</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">j</span><span class="si">:</span><span class="s2">&gt;8s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">UNITS</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]()</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Time       Heater  Reactor_1  Reactor_2     Still
+      0        0.0       80.0       80.0        0.0
+      1       64.0       80.0       80.0        0.0
+      2        0.0       80.0       80.0        0.0
+      3        0.0       80.0       80.0        0.0
+      4       42.7       40.0       80.0        0.0
+      5        0.0       26.7       80.0      120.0
+      6        0.0       26.7       80.0       12.0
+      7        0.0       15.0       80.0        0.0
+      8        0.0        0.0        0.0       95.0
+      9        0.0        0.0        0.0        9.5
+     10        0.0        0.0        0.0        0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">gap</span> <span class="o">=</span> <span class="n">H</span><span class="o">/</span><span class="mi">500</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">lbls</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ticks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">UNITS</span><span class="p">):</span>
+    <span class="n">idx</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+        <span class="n">idx</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">ticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">lbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:s}</span><span class="s2"> -&gt; </span><span class="si">{1:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">H</span><span class="p">],[</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t</span> <span class="o">+</span> <span class="n">gap</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">gap</span><span class="p">],</span> <span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">solid_capstyle</span><span class="o">=</span><span class="s1">&#39;butt&#39;</span><span class="p">)</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]())</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">H</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">lbls</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/07-State-Task-Networks_23_0.png" src="../../_images/07-State-Task-Networks_23_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">Input In [54],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">df</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/generic.py:5583,</span> in <span class="ni">NDFrame.__getattr__</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5576</span> <span class="k">if</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">5577</span>     <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_names_set</span>
+<span class="g g-Whitespace">   </span><span class="mi">5578</span>     <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span>
+<span class="g g-Whitespace">   </span><span class="mi">5579</span>     <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accessors</span>
+<span class="g g-Whitespace">   </span><span class="mi">5580</span>     <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info_axis</span><span class="o">.</span><span class="n">_can_hold_identifiers_and_holds_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5581</span> <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">5582</span>     <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">5583</span> <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;display&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import display, HTML</p>
+</section>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="profitability">
+<h3>Profitability<a class="headerlink" href="#profitability" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value of State Inventories = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">value_of_states</span><span class="p">()</span><span class="si">:</span><span class="s2">12.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Cost of Unit Assignments = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">cost_of_operation</span><span class="p">()</span><span class="si">:</span><span class="s2">12.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;             Net Objective = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">value_of_states</span><span class="p">()</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">cost_of_operation</span><span class="p">()</span><span class="si">:</span><span class="s2">12.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value of State Inventories =      2906.67
+  Cost of Unit Assignments =        14.00
+             Net Objective =      2892.67
 </pre></div>
 </div>
 </div>
@@ -984,28 +1345,25 @@ Solution:
 <h3>State Inventories<a class="headerlink" href="#state-inventories" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
-
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1026,135 +1384,135 @@ Solution:
   <tbody>
     <tr>
       <th>0</th>
-      <td>500.0</td>
+      <td>500.00000</td>
       <td>420.0</td>
       <td>420.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>400.0</td>
+      <td>436.00000</td>
       <td>420.0</td>
       <td>420.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>400.0</td>
+      <td>436.00000</td>
       <td>420.0</td>
       <td>420.0</td>
-      <td>36.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>64.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>380.0</td>
-      <td>4.0</td>
-      <td>0.0</td>
-      <td>16.0</td>
+      <td>436.00000</td>
+      <td>420.0</td>
+      <td>420.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>64.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>364.0</td>
-      <td>64.0</td>
-      <td>32.0</td>
-      <td>16.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>396.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>64.0</td>
+      <td>0.0</td>
+      <td>64.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>364.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>396.0</td>
       <td>0.0</td>
-      <td>80.0</td>
       <td>0.0</td>
-      <td>80.0</td>
-      <td>96.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>64.00000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>356.0</td>
-      <td>0.0</td>
-      <td>48.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>396.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>96.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>64.00000</td>
+      <td>108.0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>324.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>377.0</td>
       <td>0.0</td>
-      <td>16.0</td>
       <td>0.0</td>
-      <td>40.0</td>
-      <td>160.0</td>
-      <td>72.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>106.66667</td>
+      <td>108.0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>324.0</td>
-      <td>0.0</td>
-      <td>24.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>377.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>160.0</td>
-      <td>72.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>106.66667</td>
+      <td>108.0</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>324.0</td>
-      <td>0.0</td>
-      <td>24.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>377.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>160.0</td>
-      <td>252.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>106.66667</td>
+      <td>193.5</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>340.0</td>
-      <td>380.0</td>
-      <td>324.0</td>
+      <td>393.33333</td>
+      <td>420.0</td>
+      <td>377.0</td>
       <td>0.0</td>
-      <td>44.0</td>
+      <td>9.5</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>160.0</td>
-      <td>252.0</td>
+      <td>106.66667</td>
+      <td>193.5</td>
     </tr>
   </tbody>
 </table>
@@ -1163,22 +1521,21 @@ Solution:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">STATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span><span class="mi">3</span><span class="p">,</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">tlast</span><span class="p">,</span><span class="n">ylast</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TIME</span><span class="p">),[</span><span class="n">model</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">]):</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">tlast</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">],[</span><span class="n">ylast</span><span class="p">,</span><span class="n">ylast</span><span class="p">,</span><span class="n">y</span><span class="p">],</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-        <span class="c1">#plt.plot([tlast,t],[ylast,y],&#39;b.&#39;,ms=10)</span>
-        <span class="n">tlast</span><span class="p">,</span><span class="n">ylast</span> <span class="o">=</span> <span class="n">t</span><span class="p">,</span><span class="n">y</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.1</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">H</span><span class="p">],[</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">]],</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">STATES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">STATES</span><span class="p">))):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">STATES</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tlast</span><span class="p">,</span> <span class="n">ylast</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">STATES</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TIME</span><span class="p">),</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">]):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">tlast</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="p">[</span><span class="n">ylast</span><span class="p">,</span> <span class="n">ylast</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+        <span class="n">tlast</span><span class="p">,</span> <span class="n">ylast</span> <span class="o">=</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">H</span><span class="p">],</span> <span class="p">[</span><span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="n">s</span><span class="p">]],</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-State-Task-Networks_22_0.png" src="../../_images/07-State-Task-Networks_22_0.png" />
+<img alt="../../_images/07-State-Task-Networks_31_0.png" src="../../_images/07-State-Task-Networks_31_0.png" />
 </div>
 </div>
 </section>
@@ -1193,11 +1550,11 @@ Solution:
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">t</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">[</span><span class="n">TIME</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]])]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">TIME</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]])]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">UnitAssignment</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>               
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">UnitAssignment</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]())</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">UnitAssignment</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]())</span>
 
 <span class="n">UnitAssignment</span>
 </pre></div>
@@ -1205,27 +1562,27 @@ Solution:
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Heater</th>
+      <th>Still</th>
       <th>Reactor_1</th>
       <th>Reactor_2</th>
-      <th>Still</th>
+      <th>Heater</th>
     </tr>
   </thead>
   <tbody>
@@ -1238,10 +1595,10 @@ Solution:
     </tr>
     <tr>
       <th>1</th>
-      <td>(Heating, 100.0)</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
+      <td>(Heating, 64.0)</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1252,45 +1609,45 @@ Solution:
     </tr>
     <tr>
       <th>3</th>
-      <td>(Heating, 60.0)</td>
-      <td>(Reaction_2, 80.0)</td>
-      <td>(Reaction_1, 80.0)</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
       <th>4</th>
       <td>None</td>
+      <td>(Reaction_3, 40.0)</td>
       <td>(Reaction_3, 80.0)</td>
-      <td>None</td>
-      <td>None</td>
+      <td>(Heating, 42.666667)</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>None</td>
-      <td>(Reaction_2, 80.0)</td>
+      <td>(Separation, 120.0)</td>
+      <td>(Reaction_2, 26.666667)</td>
       <td>(Reaction_2, 80.0)</td>
       <td>None</td>
     </tr>
     <tr>
       <th>6</th>
       <td>None</td>
-      <td>(Reaction_3, 40.0)</td>
       <td>None</td>
-      <td>(Separation, 80.0)</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>7</th>
       <td>None</td>
-      <td>(Reaction_3, 80.0)</td>
+      <td>(Reaction_3, 15.0)</td>
       <td>(Reaction_3, 80.0)</td>
       <td>None</td>
     </tr>
     <tr>
       <th>8</th>
+      <td>(Separation, 95.0)</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
-      <td>(Separation, 200.0)</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1321,17 +1678,17 @@ Solution:
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1339,67 +1696,67 @@ Solution:
     <tr style="text-align: right;">
       <th></th>
       <th>Still</th>
-      <th>Reactor_1</th>
       <th>Heater</th>
       <th>Reactor_2</th>
+      <th>Reactor_1</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>0.0</td>
+      <td>96.0</td>
       <td>80.0</td>
-      <td>0.0</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.0</td>
+      <td>0.0</td>
       <td>80.0</td>
-      <td>100.0</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.0</td>
-      <td>80.0</td>
       <td>0.0</td>
+      <td>80.0</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.0</td>
+      <td>64.0</td>
       <td>160.0</td>
-      <td>60.0</td>
       <td>160.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.0</td>
-      <td>160.0</td>
       <td>0.0</td>
+      <td>160.0</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.0</td>
       <td>80.0</td>
       <td>0.0</td>
+      <td>80.0</td>
       <td>80.0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>80.0</td>
-      <td>120.0</td>
+      <td>8.0</td>
       <td>0.0</td>
       <td>80.0</td>
+      <td>160.0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>8.0</td>
-      <td>80.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>80.0</td>
+      <td>40.0</td>
     </tr>
     <tr>
       <th>8</th>
@@ -1431,8 +1788,7 @@ Solution:
 <h3>Gannt Chart<a class="headerlink" href="#gannt-chart" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 
@@ -1448,9 +1804,9 @@ Solution:
         <span class="n">lbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:s}</span><span class="s2"> -&gt; </span><span class="si">{1:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">H</span><span class="p">],[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span><span class="n">lw</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">t</span><span class="o">+</span><span class="n">gap</span><span class="p">,</span><span class="n">t</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">gap</span><span class="p">],</span> <span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="n">idx</span><span class="p">],</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">solid_capstyle</span><span class="o">=</span><span class="s1">&#39;butt&#39;</span><span class="p">)</span>
-                <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]())</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]())</span>
                 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">H</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
@@ -1459,7 +1815,7 @@ Solution:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-State-Task-Networks_28_0.png" src="../../_images/07-State-Task-Networks_28_0.png" />
+<img alt="../../_images/07-State-Task-Networks_37_0.png" src="../../_images/07-State-Task-Networks_37_0.png" />
 </div>
 </div>
 </section>
@@ -1516,7 +1872,7 @@ Solution:
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    Unit Assignments are now:&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">units</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;assignment&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;None&#39;</span><span class="p">:</span>
-            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;        </span><span class="si">{0:s}</span><span class="s2"> performs the </span><span class="si">{1:s}</span><span class="s2"> task with a </span><span class="si">{2:.2f}</span><span class="s2"> kg batch for hour </span><span class="si">{3:d}</span><span class="s2"> of </span><span class="si">{4:d}</span><span class="s2">&quot;</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;        </span><span class="si">{0:s}</span><span class="s2"> performs the </span><span class="si">{1:s}</span><span class="s2"> task with a </span><span class="si">{2:.2f}</span><span class="s2"> kg batch for hour </span><span class="si">{3:f}</span><span class="s2"> of </span><span class="si">{4:f}</span><span class="s2">&quot;</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">units</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;assignment&#39;</span><span class="p">]</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">](),</span><span class="n">units</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;t&#39;</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
             
@@ -1547,19 +1903,19 @@ Starting Conditions
 
 Time = 0 hr
     Instructions:
-        Assign Reactor_1 with capacity 80 kg to task Reaction_1 for 2 hours
-        Transfer 38.0 kg from Feed_B to Reactor_1
-        Transfer 38.0 kg from Feed_C to Reactor_1
         Assign Heater with capacity 100 kg to task Heating for 1 hours
-        Transfer 36.0 kg from Feed_A to Heater
-        Assign Reactor_2 with capacity 50 kg to task Reaction_1 for 2 hours
-        Transfer 25.0 kg from Feed_B to Reactor_2
-        Transfer 25.0 kg from Feed_C to Reactor_2
+        Transfer 96.0 kg from Feed_A to Heater
+        Assign Reactor_2 with capacity 80 kg to task Reaction_1 for 2 hours
+        Transfer 40.0 kg from Feed_C to Reactor_2
+        Transfer 40.0 kg from Feed_B to Reactor_2
+        Assign Reactor_1 with capacity 80 kg to task Reaction_1 for 2 hours
+        Transfer 40.0 kg from Feed_C to Reactor_1
+        Transfer 40.0 kg from Feed_B to Reactor_1
 
     Inventories are now:
-        Feed_A       464.0 kg
-        Feed_B       437.0 kg
-        Feed_C       437.0 kg
+        Feed_A       404.0 kg
+        Feed_B       420.0 kg
+        Feed_C       420.0 kg
         Hot_A          0.0 kg
         Int_AB         0.0 kg
         Int_BC         0.0 kg
@@ -1568,301 +1924,26 @@ Time = 0 hr
         Product_2      0.0 kg
 
     Unit Assignments are now:
-        Reactor_1 performs the Reaction_1 task with a 76.00 kg batch for hour 1 of 2
-        Heater performs the Heating task with a 36.00 kg batch for hour 1 of 1
-        Reactor_2 performs the Reaction_1 task with a 50.00 kg batch for hour 1 of 2
+        Heater performs the Heating task with a 96.00 kg batch for hour 1.000000 of 1.000000
+        Reactor_2 performs the Reaction_1 task with a 80.00 kg batch for hour 1.000000 of 2.000000
+        Reactor_1 performs the Reaction_1 task with a 80.00 kg batch for hour 1.000000 of 2.000000
 
 --------------------------------------------------------------------------------------------
 
 Time = 1 hr
     Instructions:
-        Transfer 36.0 kg from Heater to Hot_A
-        Release Heater from Heating
-        Assign Heater with capacity 100 kg to task Heating for 1 hours
-        Transfer 100.0 kg from Feed_A to Heater
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [366],</span> in <span class="ni">&lt;cell line: 10&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S_</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="k">if</span> <span class="n">t</span><span class="o">-</span><span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">20</span>         <span class="n">amt</span> <span class="o">=</span> <span class="n">rho_</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">[</span><span class="n">TIME</span> <span class="o">&lt;=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">P</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">)]])]()</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>         <span class="k">if</span> <span class="n">amt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;        Transfer&quot;</span><span class="p">,</span> <span class="n">amt</span><span class="p">,</span> <span class="s2">&quot;kg from&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       437.0 kg
-        Feed_C       437.0 kg
-        Hot_A         36.0 kg
-        Int_AB         0.0 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1      0.0 kg
-        Product_2      0.0 kg
-
-    Unit Assignments are now:
-        Reactor_1 performs the Reaction_1 task with a 76.00 kg batch for hour 2 of 2
-        Heater performs the Heating task with a 100.00 kg batch for hour 1 of 1
-        Reactor_2 performs the Reaction_1 task with a 50.00 kg batch for hour 2 of 2
-
---------------------------------------------------------------------------------------------
-
-Time = 2 hr
-    Instructions:
-        Transfer 76.0 kg from Reactor_1 to Int_BC
-        Transfer 100.0 kg from Heater to Hot_A
-        Transfer 50.0 kg from Reactor_2 to Int_BC
-        Release Reactor_1 from Reaction_1
-        Assign Reactor_1 with capacity 80 kg to task Reaction_2 for 2 hours
-        Transfer 48.0 kg from Int_BC to Reactor_1
-        Transfer 32.0 kg from Hot_A to Reactor_1
-        Release Heater from Heating
-        Release Reactor_2 from Reaction_1
-        Assign Reactor_2 with capacity 50 kg to task Reaction_2 for 2 hours
-        Transfer 30.0 kg from Int_BC to Reactor_2
-        Transfer 20.0 kg from Hot_A to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       437.0 kg
-        Feed_C       437.0 kg
-        Hot_A         84.0 kg
-        Int_AB         0.0 kg
-        Int_BC        48.0 kg
-        Impure_E       0.0 kg
-        Product_1      0.0 kg
-        Product_2      0.0 kg
-
-    Unit Assignments are now:
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 1 of 2
-        Reactor_2 performs the Reaction_2 task with a 50.00 kg batch for hour 1 of 2
-
---------------------------------------------------------------------------------------------
-
-Time = 3 hr
-    Instructions:
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       437.0 kg
-        Feed_C       437.0 kg
-        Hot_A         84.0 kg
-        Int_AB         0.0 kg
-        Int_BC        48.0 kg
-        Impure_E       0.0 kg
-        Product_1      0.0 kg
-        Product_2      0.0 kg
-
-    Unit Assignments are now:
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 2 of 2
-        Reactor_2 performs the Reaction_2 task with a 50.00 kg batch for hour 2 of 2
-
---------------------------------------------------------------------------------------------
-
-Time = 4 hr
-    Instructions:
-        Transfer 32.0 kg from Reactor_1 to Product_1
-        Transfer 48.0 kg from Reactor_1 to Int_AB
-        Transfer 20.0 kg from Reactor_2 to Product_1
-        Transfer 30.0 kg from Reactor_2 to Int_AB
-        Release Reactor_1 from Reaction_2
-        Assign Reactor_1 with capacity 80 kg to task Reaction_2 for 2 hours
-        Transfer 48.0 kg from Int_BC to Reactor_1
-        Transfer 32.0 kg from Hot_A to Reactor_1
-        Release Reactor_2 from Reaction_2
-        Assign Reactor_2 with capacity 50 kg to task Reaction_3 for 1 hours
-        Transfer 10.0 kg from Feed_C to Reactor_2
-        Transfer 40.0 kg from Int_AB to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       437.0 kg
-        Feed_C       427.0 kg
-        Hot_A         52.0 kg
-        Int_AB        38.0 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1     52.0 kg
-        Product_2      0.0 kg
-
-    Unit Assignments are now:
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 1 of 2
-        Reactor_2 performs the Reaction_3 task with a 50.00 kg batch for hour 1 of 1
-
---------------------------------------------------------------------------------------------
-
-Time = 5 hr
-    Instructions:
-        Transfer 50.0 kg from Reactor_2 to Impure_E
-        Assign Still with capacity 200 kg to task Separation for 2 hours
-        Transfer 50.0 kg from Impure_E to Still
-        Release Reactor_2 from Reaction_3
-        Assign Reactor_2 with capacity 50 kg to task Reaction_3 for 1 hours
-        Transfer 9.5 kg from Feed_C to Reactor_2
-        Transfer 38.0 kg from Int_AB to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       437.0 kg
-        Feed_C       417.5 kg
-        Hot_A         52.0 kg
-        Int_AB         0.0 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1     52.0 kg
-        Product_2      0.0 kg
-
-    Unit Assignments are now:
-        Still performs the Separation task with a 50.00 kg batch for hour 1 of 2
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 2 of 2
-        Reactor_2 performs the Reaction_3 task with a 47.50 kg batch for hour 1 of 1
-
---------------------------------------------------------------------------------------------
-
-Time = 6 hr
-    Instructions:
-        Transfer 45.0 kg from Still to Product_2
-        Transfer 32.0 kg from Reactor_1 to Product_1
-        Transfer 48.0 kg from Reactor_1 to Int_AB
-        Transfer 47.5 kg from Reactor_2 to Impure_E
-        Release Reactor_1 from Reaction_2
-        Assign Reactor_1 with capacity 80 kg to task Reaction_1 for 2 hours
-        Transfer 39.0 kg from Feed_B to Reactor_1
-        Transfer 39.0 kg from Feed_C to Reactor_1
-        Release Reactor_2 from Reaction_3
-        Assign Reactor_2 with capacity 50 kg to task Reaction_3 for 1 hours
-        Transfer 3.25 kg from Feed_C to Reactor_2
-        Transfer 13.0 kg from Int_AB to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       375.2 kg
-        Hot_A         52.0 kg
-        Int_AB        35.0 kg
-        Int_BC         0.0 kg
-        Impure_E      47.5 kg
-        Product_1     84.0 kg
-        Product_2     45.0 kg
-
-    Unit Assignments are now:
-        Still performs the Separation task with a 5.00 kg batch for hour 2 of 2
-        Reactor_1 performs the Reaction_1 task with a 78.00 kg batch for hour 1 of 2
-        Reactor_2 performs the Reaction_3 task with a 16.25 kg batch for hour 1 of 1
-
---------------------------------------------------------------------------------------------
-
-Time = 7 hr
-    Instructions:
-        Transfer 5.0 kg from Still to Int_AB
-        Transfer 16.25 kg from Reactor_2 to Impure_E
-        Release Still from Separation
-        Release Reactor_2 from Reaction_3
-        Assign Reactor_2 with capacity 50 kg to task Reaction_3 for 1 hours
-        Transfer 10.0 kg from Feed_C to Reactor_2
-        Transfer 40.0 kg from Int_AB to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       365.2 kg
-        Hot_A         52.0 kg
-        Int_AB         0.0 kg
-        Int_BC         0.0 kg
-        Impure_E      63.8 kg
-        Product_1     84.0 kg
-        Product_2     45.0 kg
-
-    Unit Assignments are now:
-        Reactor_1 performs the Reaction_1 task with a 78.00 kg batch for hour 2 of 2
-        Reactor_2 performs the Reaction_3 task with a 50.00 kg batch for hour 1 of 1
-
---------------------------------------------------------------------------------------------
-
-Time = 8 hr
-    Instructions:
-        Transfer 78.0 kg from Reactor_1 to Int_BC
-        Transfer 50.0 kg from Reactor_2 to Impure_E
-        Assign Still with capacity 200 kg to task Separation for 2 hours
-        Transfer 113.75 kg from Impure_E to Still
-        Release Reactor_1 from Reaction_1
-        Assign Reactor_1 with capacity 80 kg to task Reaction_2 for 2 hours
-        Transfer 48.0 kg from Int_BC to Reactor_1
-        Transfer 32.0 kg from Hot_A to Reactor_1
-        Release Reactor_2 from Reaction_3
-        Assign Reactor_2 with capacity 50 kg to task Reaction_2 for 2 hours
-        Transfer 30.0 kg from Int_BC to Reactor_2
-        Transfer 20.0 kg from Hot_A to Reactor_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       365.2 kg
-        Hot_A          0.0 kg
-        Int_AB         0.0 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1     84.0 kg
-        Product_2     45.0 kg
-
-    Unit Assignments are now:
-        Still performs the Separation task with a 113.75 kg batch for hour 1 of 2
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 1 of 2
-        Reactor_2 performs the Reaction_2 task with a 50.00 kg batch for hour 1 of 2
-
---------------------------------------------------------------------------------------------
-
-Time = 9 hr
-    Instructions:
-        Transfer 102.375 kg from Still to Product_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       365.2 kg
-        Hot_A          0.0 kg
-        Int_AB         0.0 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1     84.0 kg
-        Product_2    147.4 kg
-
-    Unit Assignments are now:
-        Still performs the Separation task with a 11.38 kg batch for hour 2 of 2
-        Reactor_1 performs the Reaction_2 task with a 80.00 kg batch for hour 2 of 2
-        Reactor_2 performs the Reaction_2 task with a 50.00 kg batch for hour 2 of 2
-
---------------------------------------------------------------------------------------------
-
-Time = 10 hr
-    Instructions:
-        Transfer 11.375 kg from Still to Int_AB
-        Transfer 32.0 kg from Reactor_1 to Product_1
-        Transfer 48.0 kg from Reactor_1 to Int_AB
-        Transfer 20.0 kg from Reactor_2 to Product_1
-        Transfer 30.0 kg from Reactor_2 to Int_AB
-        Release Still from Separation
-        Release Reactor_1 from Reaction_2
-        Release Reactor_2 from Reaction_2
-
-    Inventories are now:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       365.2 kg
-        Hot_A          0.0 kg
-        Int_AB        89.4 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1    136.0 kg
-        Product_2    147.4 kg
-
-    Unit Assignments are now:
-
---------------------------------------------------------------------------------------------
-
-Final Conditions
-    Final Inventories:
-        Feed_A       364.0 kg
-        Feed_B       398.0 kg
-        Feed_C       365.2 kg
-        Hot_A          0.0 kg
-        Int_AB        89.4 kg
-        Int_BC         0.0 kg
-        Impure_E       0.0 kg
-        Product_1    136.0 kg
-        Product_2    147.4 kg
+<span class="ne">TypeError</span>: &#39;&lt;=&#39; not supported between instances of &#39;list&#39; and &#39;int&#39;
 </pre></div>
 </div>
 </div>
@@ -1903,6 +1984,13 @@ Final Conditions
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Job Shop Scheduling</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="../04/00-uncertainty.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Optimization under Uncertainty</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
