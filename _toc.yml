@@ -21,5 +21,6 @@ chapters:
   
 - file: notebooks/04/00-uncertainty.md
   sections:
-  - file: notebooks/04/01-Newsvendor-Problem.ipynb
+  - file: notebooks/04/vendor-problem.ipynb
   - file: notebooks/04/airline-seating.ipynb
+  - file: notebooks/04/farmer-project.ipynb
