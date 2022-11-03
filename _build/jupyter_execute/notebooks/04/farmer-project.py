@@ -7,7 +7,7 @@
 # 
 # * Birge, John R., and Francois Louveaux. Introduction to stochastic programming. Springer Science & Business Media, 2011.
 
-# In[1]:
+# In[2]:
 
 
 # install Pyomo and solvers
@@ -24,7 +24,7 @@ helper.install_cbc()
 helper.install_ipopt()
 
 
-# In[2]:
+# In[3]:
 
 
 import pyomo.environ as pyo
@@ -77,3 +77,78 @@ import matplotlib.pyplot as plt
 # | Beets extra | 10 | - | - | 0 | 260 |
 # 
 # (a) Implement the extensive form of stochastic LP corresponding to the farmer's problem in Pyomo and solve it.
+
+# ## Model Building
+
+# In[5]:
+
+
+import pandas as pd
+
+M = 10000
+commodity_data = {
+    "wheat": {"sell price": 170, "market demand": 10000, "buy price": 238, "feed": 200, "cost": 150},
+    "corn": {"sell price": 150, "market demand": 10000, "buy price": 210, "feed": 240, "cost": 230},
+    "beets": {"sell price": 36, "market demand": 6000, "buy price": 0, "feed": M, "cost": 260},
+    "more beets": {"sell price": 10, "market demand": 10000, "buy price": 0, "feed": M, "cost": 260},
+}
+
+commodities = pd.DataFrame(commodity_data).T
+display(commodities)
+
+yield_data = {
+    "good": {"wheat": 3, "corn": 3.6, "beets": 24, "more beets": 24},
+    "average": {"wheat": 2.5, "corn": 3.0, "beets": 20, "more beets": 20},
+    "poor": {"wheat": 2, "corn": 2.4, "beets": 16, "more beets": 16},
+}
+
+yields = pd.DataFrame(yield_data).T
+display(yields)
+
+
+# ## Pyomo Model Development
+
+# In[28]:
+
+
+import pyomo.environ as pyo
+
+m = pyo.ConcreteModel("Farmer's Problem")
+
+m.CROPS = pyo.Set(initialize=commodities.index)
+m.SCENARIOS = pyo.Set(initialize=yields.index)
+
+# mutable parameters
+m.total_land = pyo.Param(initialize=500, mutable=True)
+
+# here and now (first stage) decision variables
+m.L = pyo.Var(m.CROPS, domain=pyo.NonNegativeReals, bounds=(0, m.total_land))
+
+# wait and see (recourse, or second stage) decision variables
+m.produce = pyo.Var(m.SCENARIOS, m.CROPS, domain=pyo.NonNegativeReals)
+
+@m.Expression()
+def planting_cost(m):
+    return sum(m.L[c] * commodities.loc[c, "cost"] for c in m.CROPS)
+
+@m.Constraint(m.SCENARIOS, m.CROPS)
+def production(m, s, c):
+    return m.produce[s, c] == yields.loc[s, c] * m.L[c]
+
+@m.Objective(sense=pyo.maximize)
+def mean_profit(m):
+    return -m.planting_cost
+
+pyo.SolverFactory('cbc').solve(m)
+
+
+
+
+m.pprint()
+
+
+# In[ ]:
+
+
+
+
