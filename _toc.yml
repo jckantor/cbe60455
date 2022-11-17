@@ -27,6 +27,12 @@ chapters:
   
 - file: notebooks/05/00-finance.md
   sections:
-  - file: notebooks/05/measuring-return.ipynb
-  - file: notebooks/05/geometric-brownian-motion.ipynb
-  - file: notebooks/05/binomial-model-for-pricing-options
+  - file: notebooks/05/01-measuring-return.ipynb
+  - file: notebooks/05/02-geometric-brownian-motion.ipynb
+  - file: notebooks/05/03-binomial-model-for-pricing-options.ipynb
+  - file: notebooks/05/04-real-options.ipynb
+  - file: notebooks/05/05-portfolio-optimization.ipynb
+  - file: notebooks/05/06-portfolio-optimization-using-mean-absolute-deviation.ipynb
+  - file: notebooks/05/07-MAD-portfolio-optimization.ipynb
+  - file: notebooks/05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb
+  - file: notebooks/05/09-Log-Optimal-Portfolios

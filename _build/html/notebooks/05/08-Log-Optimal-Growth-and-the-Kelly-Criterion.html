@@ -1,0 +1,1073 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Log-Optimal Growth and the Kelly Criterion &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Log-Optimal Portfolios" href="09-Log-Optimal-Portfolios.html" />
+    <link rel="prev" title="Portfolio Optimization" href="07-MAD-portfolio-optimization.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03/00-scheduling.html">
+   Scheduling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/02-machine-bottleneck.html">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/07-State-Task-Networks.html">
+     Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/vendor-problem.html">
+     The Vendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/farmer-project.html">
+     Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-measuring-return.html">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06-portfolio-optimization-using-mean-absolute-deviation.html">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09-Log-Optimal-Portfolios.html">
+     Log-Optimal Portfolios
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initializations">
+   Initializations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-are-the-issues-in-managing-for-optimal-growth">
+   What are the Issues in Managing for Optimal Growth?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-maximizing-expected-wealth-is-a-bad-idea">
+   Why Maximizing Expected Wealth is a Bad Idea
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#utility-functions">
+     Utility Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximizing-growth">
+     Maximizing Growth
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kelly-s-criterion-maximizing-growth-for-a-game-with-arbitrary-odds">
+   Kelly’s Criterion: Maximizing Growth for a Game with Arbitrary Odds
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#volatility-pumping">
+   Volatility Pumping
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Log-Optimal Growth and the Kelly Criterion</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initializations">
+   Initializations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-are-the-issues-in-managing-for-optimal-growth">
+   What are the Issues in Managing for Optimal Growth?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-maximizing-expected-wealth-is-a-bad-idea">
+   Why Maximizing Expected Wealth is a Bad Idea
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise">
+     Exercise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#utility-functions">
+     Utility Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximizing-growth">
+     Maximizing Growth
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kelly-s-criterion-maximizing-growth-for-a-game-with-arbitrary-odds">
+   Kelly’s Criterion: Maximizing Growth for a Game with Arbitrary Odds
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#volatility-pumping">
+   Volatility Pumping
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <!--NOTEBOOK_HEADER-->
+<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
+Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
+The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
+and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb">Log-Optimal Portfolios</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="log-optimal-growth-and-the-kelly-criterion">
+<h1>Log-Optimal Growth and the Kelly Criterion<a class="headerlink" href="#log-optimal-growth-and-the-kelly-criterion" title="Permalink to this headline">#</a></h1>
+<p>This <a class="reference external" href="http://ipython.org/notebook.html">IPython notebook</a> demonstrates the Kelly criterion and other phenomena associated with log-optimal growth.</p>
+<section id="initializations">
+<h2>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-are-the-issues-in-managing-for-optimal-growth">
+<h2>What are the Issues in Managing for Optimal Growth?<a class="headerlink" href="#what-are-the-issues-in-managing-for-optimal-growth" title="Permalink to this headline">#</a></h2>
+<p>Consider a continuing ‘investment opportunity’ for which, at each stage, an invested dollar will yield either two dollars with probability <span class="math notranslate nohighlight">\(p\)</span> or nothing with probability <span class="math notranslate nohighlight">\(1-p\)</span>. You can think of this as a gambling game if you like, or as sequence of business investment decisions.</p>
+<p><img alt="Kelly_Criterion_Fig1" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig1.png?raw=true" /></p>
+<p>Let <span class="math notranslate nohighlight">\(W_k\)</span> be the wealth after <span class="math notranslate nohighlight">\(k\)</span> stages in this sequence of decisions. At each stage <span class="math notranslate nohighlight">\(k\)</span> there will be an associated return <span class="math notranslate nohighlight">\(R_k\)</span> so that</p>
+<div class="math notranslate nohighlight">
+\[W_k = R_k W_{k-1}\]</div>
+<p>Starting with a wealth <span class="math notranslate nohighlight">\(W_0\)</span>, after <span class="math notranslate nohighlight">\(k\)</span> stages our wealth will be</p>
+<div class="math notranslate nohighlight">
+\[W_k = R_kR_{k-1}\cdots R_2R_1W_0\]</div>
+<p>Now let’s consider a specific investment strategy. To avoid risking total loss of wealth in a single stage, we’ll consider a strategy where we invest a fraction <span class="math notranslate nohighlight">\(\alpha\)</span> of our remaining wealth, and retain a fraction <span class="math notranslate nohighlight">\(1-\alpha\)</span> for future use. Under this strategy, the return <span class="math notranslate nohighlight">\(R_k\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}R_k = \begin{cases} 1+\alpha &amp; \mbox{with probability}\quad p \\ 1-\alpha &amp; \mbox{with probability}\quad 1-p\end{cases}\end{split}\]</div>
+<p>How should we pick <span class="math notranslate nohighlight">\(\alpha\)</span>? A small value means that wealth will grow slowly.  A large value will risk more of our wealth in each trial.</p>
+</section>
+<section id="why-maximizing-expected-wealth-is-a-bad-idea">
+<h2>Why Maximizing Expected Wealth is a Bad Idea<a class="headerlink" href="#why-maximizing-expected-wealth-is-a-bad-idea" title="Permalink to this headline">#</a></h2>
+<p>At first glance, maximizing expected wealth seems like a reasonable investment objective. Suppose  after <span class="math notranslate nohighlight">\(k\)</span> stages we have witnessed <span class="math notranslate nohighlight">\(u\)</span> profitable outcomes (i.e., ‘wins’), and <span class="math notranslate nohighlight">\(k-u\)</span> outcomes showing a loss. The remaining wealth will be given by</p>
+<div class="math notranslate nohighlight">
+\[W_k/W_0 = (1+\alpha)^u(1-\alpha)^{k-u}\]</div>
+<p>The binomial distribution gives the probability of observing <span class="math notranslate nohighlight">\(u\)</span> ‘wins’ in <span class="math notranslate nohighlight">\(k\)</span> trials</p>
+<div class="math notranslate nohighlight">
+\[Pr(u \mbox{ wins in } k \mbox{ trials}) = {k\choose{u}}p^u (1-p)^{k-u}\]</div>
+<p>So the expected value of <span class="math notranslate nohighlight">\(W_k\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[E[W_k/W_0] = \sum_{u=0}^{k} {k\choose{u}}p^u (1-p)^{k-u}(1+\alpha)^u(1-\alpha)^{k-u}\]</div>
+<p>Next we plot <span class="math notranslate nohighlight">\(E[W_k/W_0]\)</span> as a function of <span class="math notranslate nohighlight">\(\alpha\)</span>. If you run this notebook on your own server, you can adjust <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(K\)</span> to see the impact of changing parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">comb</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span>
+
+<span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="n">K</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.55</span><span class="p">):</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">([</span><span class="n">comb</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="p">))</span><span class="o">**</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="p">(((</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">K</span><span class="o">-</span><span class="n">u</span><span class="p">))</span> \
+              <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;E[W(</span><span class="si">{:d}</span><span class="s1">)/W(0)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Expected Wealth after </span><span class="si">{:d}</span><span class="s1"> trials&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.01</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "90f394624e7448e6a425e2f5a18ad4ee"}
+</script></div>
+</div>
+<p>This simulation suggests that if each stage is, on average, a winning proposition with <span class="math notranslate nohighlight">\(p &gt; 0.5\)</span>, then expected wealth after <span class="math notranslate nohighlight">\(K\)</span> stages is maximized by setting <span class="math notranslate nohighlight">\(\alpha = 1\)</span>. This is a very risky strategy.</p>
+<p>To show how risky, the following cell simulates the behavior of this process for as a function of <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(p\)</span>, and <span class="math notranslate nohighlight">\(K\)</span>. Try different values of <span class="math notranslate nohighlight">\(\alpha\)</span> in the range from 0 to 1 to see what happens.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of simulations to run</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="k">def</span> <span class="nf">sim2</span><span class="p">(</span><span class="n">K</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="mf">0.55</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Stage k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraction of Initial Wealth&#39;</span><span class="p">);</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+        <span class="c1"># Compute an array of future returns</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">alpha</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">)])</span>
+        <span class="c1"># Use returns to compute fraction of wealth that remains</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mf">1.0</span><span class="p">],</span><span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">R</span><span class="p">)))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> 
+
+<span class="n">interact</span><span class="p">(</span><span class="n">sim2</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "00de5525a9e84114a4d03dcd75f5468d"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.sim2&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Attempting to maximize wealth leads to a risky strategy where all wealth is put at risk at each stage hoping for a string of <span class="math notranslate nohighlight">\(k\)</span> wins.  The very high rewards for this one outcome mask the fact that the most common outcome is to lose everything. If you’re not convinced of this, go back and run the simulation a few more times for values of alpha in the range 0.8 to 1.0.</p>
+<p>If <span class="math notranslate nohighlight">\(\alpha =1\)</span>, the probability of still having money after <span class="math notranslate nohighlight">\(k\)</span> stages is <span class="math notranslate nohighlight">\((1-p)^k\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.55</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="p">[(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Probability of non-zero wealth after k stages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Stage k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_14_0.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_14_0.png" />
+</div>
+</div>
+<p>The problem with maximizing expected wealth is that the objective ignores the associated financial risks. For the type of application being analyzed here, the possibility of a few very large outcomes are averaged with many others showing loss. While the average outcome make look fine, the most likely outcome is a very different result.</p>
+<p>It’s like the case of buying into a high stakes lottery. The average outcome is calculated by including the rare outcome of the winning ticket together millions of tickets where there is no payout whatsoever. Buying lottery tickets shouldn’t be anyone’s notion of a good business plan!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">comb</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
+<span class="kn">from</span> <span class="nn">IPython.html.widgets</span> <span class="kn">import</span> <span class="n">interact</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="k">def</span> <span class="nf">Wpdf</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">binom</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">Pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">rv</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">U</span><span class="p">])</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([((</span><span class="mi">1</span><span class="o">+</span><span class="n">alpha</span><span class="p">)</span><span class="o">**</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="p">(((</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">K</span><span class="o">-</span><span class="n">u</span><span class="p">))</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">U</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">U</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;W(u)/W(0)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Final Return W(K=</span><span class="si">{0}</span><span class="s1">)/W(0) vs. u for alpha = </span><span class="si">{1:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">alpha</span><span class="p">))</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">U</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">Pr</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prob(u)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Binomial Distribution K = </span><span class="si">{0}</span><span class="s1">, p = </span><span class="si">{1:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">Pr</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;W(K=</span><span class="si">{0}</span><span class="s1">)/W(0)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prob(W(K=</span><span class="si">{0}</span><span class="s1">)/W(0)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution for Total Return W(K=</span><span class="si">{0}</span><span class="s1">)/W(0)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">])</span>
+    <span class="n">Wbar</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pr</span><span class="o">*</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">WVaR</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)]</span>
+    <span class="n">Wmed</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.49</span><span class="p">)]</span> <span class="o">+</span> <span class="n">W</span><span class="p">[</span><span class="n">rv</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.51</span><span class="p">)])</span>
+    <span class="n">ylim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">WVaR</span><span class="p">,</span><span class="n">WVaR</span><span class="p">],</span><span class="mf">0.5</span><span class="o">*</span><span class="n">ylim</span><span class="p">,</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Wbar</span><span class="p">,</span><span class="n">Wbar</span><span class="p">],</span><span class="mf">0.5</span><span class="o">*</span><span class="n">ylim</span><span class="p">,</span><span class="s1">&#39;b--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">Wbar</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39; Average = </span><span class="si">{0:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Wbar</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">Wmed</span><span class="p">,</span><span class="mf">0.75</span><span class="o">*</span><span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39; Median = </span><span class="si">{0:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Wmed</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">WVaR</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;5th Percentile = </span><span class="si">{0:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">WVaR</span><span class="p">),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Wmed</span><span class="p">,</span><span class="n">Wmed</span><span class="p">],</span><span class="n">ylim</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">Wpdf</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.99</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jeff/anaconda/lib/python3.6/site-packages/IPython/html.py:14: ShimWarning: The `IPython.html` package has been deprecated since IPython 4.0. You should import from `notebook` instead. `IPython.html.widgets` has moved to `ipywidgets`.
+  &quot;`IPython.html.widgets` has moved to `ipywidgets`.&quot;, ShimWarning)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8e963fe394924c5f9a581ab56d74066b"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.Wpdf&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">#</a></h3>
+<ol class="simple">
+<li><p>Imagine you’re playing a game of chance in which you expect to win 60% of the time. You expect to play 40 rounds in the game. The initial capital required to enter the game is high enough that losing half of your capital is something you could tolerate only 5% of the time. What fraction of your capital would you be willing to wager on each play of the game?</p></li>
+</ol>
+</section>
+<section id="utility-functions">
+<h3>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">#</a></h3>
+<p>A utility function measures the ‘utility’ of holding some measure of wealth. The key concept is that the marginal utility of wealth decreases as wealth increases.  If you don’t have much money, then finding USD 20 on the sidewalk may have considerable utility since it may mean that you don’t have to walk home from work.  On the other hand, if you’re already quite wealthy, the incremental utility of a USD 20 may not be as high.</p>
+<p>A typical utility function is shown on the following chart.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">U</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plotUtility</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">20.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wealth&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Utility&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Typical Utility Function&#39;</span><span class="p">);</span>
+    
+<span class="n">plotUtility</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_21_0.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_21_0.png" />
+</div>
+</div>
+<p>To see how utilty functions allow us to incorporate risk into an objective function, consider the expected utility of a bet on a single flip of a coin. The bet pays USD 5 if the coin comes up ‘Heads’, and USD 15 if the coin comes up Tails. For a fair coin, the expected wealth is therefore</p>
+<div class="math notranslate nohighlight">
+\[E[W] = 0.5 \times \$5 + 0.5\times\$15 = \$10\]</div>
+<p>which is shown on the chart with the utility function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotUtility</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+<span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">5</span><span class="p">)],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">15</span><span class="p">)],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">10.2</span><span class="p">,</span><span class="n">ymin</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;E[W] = \$10&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_23_0.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_23_0.png" />
+</div>
+</div>
+<p>Finding the expected utility, we can use the utilty function to solve for the ‘certainty equivalent’ value of the game. The certainty equivalent value is the amount of wealth that has the same utility as the expected utility of the game.</p>
+<div class="math notranslate nohighlight">
+\[U(CE) = E[U(W)]\]</div>
+<p>Because the utilty function is concave, the certainty equivalent value is less than the expected value of the game. The difference between the two values is the degree to which we discount the value of the game due to it’s uncertain nature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span>
+
+<span class="n">plotUtility</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+<span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="n">U</span><span class="p">(</span><span class="mi">5</span><span class="p">)],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span><span class="n">U</span><span class="p">(</span><span class="mi">15</span><span class="p">)],</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="n">ymin</span><span class="p">,</span><span class="n">U</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">10.2</span><span class="p">,</span><span class="n">ymin</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;E[W] = \$10&#39;</span><span class="p">);</span>
+
+<span class="n">Uave</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">U</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">+</span><span class="n">U</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">Ceq</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">U</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">Uave</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">Ceq</span><span class="p">,</span><span class="n">Ceq</span><span class="p">],[</span><span class="n">Uave</span><span class="p">,</span><span class="n">Uave</span><span class="p">,</span><span class="n">ymin</span><span class="p">],</span><span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="n">Uave</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;E[U] = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Uave</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">Ceq</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="n">ymin</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span><span class="s1">&#39;CE = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Ceq</span><span class="p">),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_25_0.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_25_0.png" />
+</div>
+</div>
+</section>
+<section id="maximizing-growth">
+<h3>Maximizing Growth<a class="headerlink" href="#maximizing-growth" title="Permalink to this headline">#</a></h3>
+<p>To acheive a different result we need to consider optimization objective that incorporates a measure of risk. For example, the log ratio of current to starting wealth gives a relationship</p>
+<div class="math notranslate nohighlight">
+\[\ln W_K/W_0 = \sum_{k=1}^K \ln R_{k}\]</div>
+<p>Subjectively, the log ratio focuses relative rather than absolute growth which, for many investors, is a better indicator of investment objectives. Rather than risk all for an enormous but unlikely outcome, a strategy optimizing expected  relative growth will tradeoff risky strategies for more robust strategies demonstrating relative growth.</p>
+<p>Taking expectations</p>
+<div class="math notranslate nohighlight">
+\[E[\ln W_K/W_0] = \sum_{k=1}^K E[\ln R_{k}] = K E[\ln R_{k}]\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[E[\ln R_{k}] = p\ln(1+\alpha) + (1-p)\ln(1-\alpha)\]</div>
+<p>With simple calculus we can show that maximizing <span class="math notranslate nohighlight">\(E[\ln W_K/W_0]\)</span> requires</p>
+<div class="math notranslate nohighlight">
+\[\alpha = 2p-1\]</div>
+<p>which yields a growth rate per stage</p>
+<div class="math notranslate nohighlight">
+\[m = E[\ln R_{k}] = \ln 2 + p\ln(p) + (1-p)\ln(1-p)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="mf">0.999</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.0</span><span class="o">*</span><span class="n">q</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">p</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">alpha</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">p</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;E[lnR]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span><span class="s1">&#39;ElnR&#39;</span><span class="p">],</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x109f43a50&gt;
+</pre></div>
+</div>
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_28_1.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_28_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">4000000</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">25000</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10699.131939336632
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="kelly-s-criterion-maximizing-growth-for-a-game-with-arbitrary-odds">
+<h2>Kelly’s Criterion: Maximizing Growth for a Game with Arbitrary Odds<a class="headerlink" href="#kelly-s-criterion-maximizing-growth-for-a-game-with-arbitrary-odds" title="Permalink to this headline">#</a></h2>
+<p><img alt="Kelly_Criterion_Fig2" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig2.png?raw=true" /></p>
+<div class="math notranslate nohighlight">
+\[E[\ln R_{k
+}] = p\ln(1+ b\alpha) + (1-p)\ln(1-\alpha)\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(\alpha\)</span></p>
+<div class="math notranslate nohighlight">
+\[\alpha = \frac{p(b+1)-1}{b}\]</div>
+</section>
+<section id="volatility-pumping">
+<h2>Volatility Pumping<a class="headerlink" href="#volatility-pumping" title="Permalink to this headline">#</a></h2>
+<p><img alt="Kelly_Criterion_Volatility_Pumping" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Volatility_Pumping.png?raw=true" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># payoffs for two states</span>
+<span class="n">u</span> <span class="o">=</span> <span class="mf">1.059</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.54</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="mf">0.004</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">ElnR</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span> <span class="s2">&quot;Expected return = </span><span class="si">{:0.5}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ElnR</span><span class="p">)</span>
+
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">)])</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span><span class="n">R</span><span class="p">)))</span>
+
+
+<span class="n">ElnR</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">alpha</span><span class="p">:</span> <span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">u</span> <span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">rf</span><span class="p">))</span> <span class="o">+</span> \
+    <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">rf</span><span class="p">))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">ElnR</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expected return = 0.004586
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x10d3f8d50&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_34_2.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_34_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fminbound</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">fminbound</span><span class="p">(</span><span class="k">lambda</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span> <span class="o">-</span><span class="n">ElnR</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">alpha</span>
+
+<span class="c1">#plt.plot(alpha, ElnR(alpha),&#39;r.&#39;,ms=10)</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span><span class="n">R</span><span class="p">)))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">S</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">S2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Stock&#39;</span><span class="p">,</span><span class="s1">&#39;Stock + Cash&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+<img alt="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_35_1.png" src="../../_images/08-Log-Optimal-Growth-and-the-Kelly-Criterion_35_1.png" />
+</div>
+</div>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb">Log-Optimal Portfolios</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="07-MAD-portfolio-optimization.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Portfolio Optimization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="09-Log-Optimal-Portfolios.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Log-Optimal Portfolios</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

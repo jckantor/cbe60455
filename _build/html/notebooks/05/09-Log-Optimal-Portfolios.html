@@ -1,0 +1,1063 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Log-Optimal Portfolios &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Log-Optimal Growth and the Kelly Criterion" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03/00-scheduling.html">
+   Scheduling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/02-machine-bottleneck.html">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/07-State-Task-Networks.html">
+     Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/vendor-problem.html">
+     The Vendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/farmer-project.html">
+     Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-measuring-return.html">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06-portfolio-optimization-using-mean-absolute-deviation.html">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Log-Optimal Portfolios
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/05/09-Log-Optimal-Portfolios.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/05/09-Log-Optimal-Portfolios.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/09-Log-Optimal-Portfolios.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/05/09-Log-Optimal-Portfolios.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initializations">
+   Initializations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kelly-s-criterion">
+   Kelly’s Criterion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-1-maximizing-return-for-a-game-with-arbitrary-odds">
+   Example 1. Maximizing Return for a Game with Arbitrary Odds
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-2-betting-wheel">
+   Example 2. Betting Wheel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-3-stock-bond-portfolio-in-continuous-time">
+   Example 3. Stock/Bond Portfolio in Continuous Time
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#volatility-pumping">
+   Volatility Pumping
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Log-Optimal Portfolios</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initializations">
+   Initializations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kelly-s-criterion">
+   Kelly’s Criterion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-1-maximizing-return-for-a-game-with-arbitrary-odds">
+   Example 1. Maximizing Return for a Game with Arbitrary Odds
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-2-betting-wheel">
+   Example 2. Betting Wheel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-3-stock-bond-portfolio-in-continuous-time">
+   Example 3. Stock/Bond Portfolio in Continuous Time
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#volatility-pumping">
+   Volatility Pumping
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <!--NOTEBOOK_HEADER-->
+<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
+Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
+The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
+and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb">Optimization in Google Sheets</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="log-optimal-portfolios">
+<h1>Log-Optimal Portfolios<a class="headerlink" href="#log-optimal-portfolios" title="Permalink to this headline">#</a></h1>
+<p>This notebook demonstrates the Kelly criterion and other phenomena associated with log-optimal growth.</p>
+<section id="initializations">
+<h2>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kelly-s-criterion">
+<h2>Kelly’s Criterion<a class="headerlink" href="#kelly-s-criterion" title="Permalink to this headline">#</a></h2>
+<p>In a nutshell, Kelly’s criterion is to choose strategies that maximize expected log return.</p>
+<div class="math notranslate nohighlight">
+\[\max E[\ln R]\]</div>
+<p>where <span class="math notranslate nohighlight">\(R\)</span> is total return. As we learned, Kelly’s criterion has properties useful in the context of long-term investments.</p>
+</section>
+<section id="example-1-maximizing-return-for-a-game-with-arbitrary-odds">
+<h2>Example 1. Maximizing Return for a Game with Arbitrary Odds<a class="headerlink" href="#example-1-maximizing-return-for-a-game-with-arbitrary-odds" title="Permalink to this headline">#</a></h2>
+<p>Consider a game with two outcomes. For each $1 wagered, a successful outcome with probability <span class="math notranslate nohighlight">\(p\)</span> returns <span class="math notranslate nohighlight">\(b+1\)</span> dollars. An unsuccessful outcome returns nothing. What fraction <span class="math notranslate nohighlight">\(w\)</span> of our portfolio should we wager on each turn of the game?</p>
+<p><img alt="Kelly_Criterion_Fig2" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig2.png?raw=true" /></p>
+<p>There are two outcomes with returns</p>
+<p>\begin{align*}
+R_1 &amp; = w(b+1) + 1 - w = 1+wb &amp; \mbox{with probability }p\
+R_2 &amp; = 1-w &amp; \mbox{with probability }1-p
+\end{align*}</p>
+<p>The expected log return becomes</p>
+<p>\begin{align*}
+E[\ln R] &amp; = p \ln R_1 + (1-p) \ln R_2 \
+&amp; = p\ln(1+ wb) + (1-p)\ln(1-w)
+\end{align*}</p>
+<p>Applying Kelly’s criterion, we seek a value for <span class="math notranslate nohighlight">\(w\)</span> that maximizes <span class="math notranslate nohighlight">\(E[\ln R]\)</span>. Taking derivatives</p>
+<p>\begin{align*}
+\frac{\partial E[\ln R]}{\partial w} = \frac{pb}{1+w_{opt}b} - \frac{1-p}{1-w_{opt}} &amp; = 0\
+\end{align*}</p>
+<p>Solving for <span class="math notranslate nohighlight">\(w\)</span></p>
+<div class="math notranslate nohighlight">
+\[w_{opt} = \frac{p(b+1)-1}{b}\]</div>
+<p>The growth rate is then the value of <span class="math notranslate nohighlight">\(E[\ln R]\)</span> when <span class="math notranslate nohighlight">\(w = w_{opt}\)</span>, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[m = p\ln(1+ w_{opt}b) + (1-p)\ln(1-w_{opt})\]</div>
+<p>You can test how well this works in the following cell.  Fix <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, and let the code do a Monte Carlo simulation to show how well Kelly’s criterion works.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">uniform</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5075</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Kelly criterion</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">b</span>
+
+<span class="c1"># optimal growth rate</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">w</span><span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># number of plays to double wealth</span>
+<span class="n">K</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+
+<span class="c1"># monte carlo simulation and plotting</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">W</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">w</span><span class="o">*</span><span class="n">b</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">W</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">)),</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Kelly Criterion w = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/09-Log-Optimal-Portfolios_8_0.png" src="../../_images/09-Log-Optimal-Portfolios_8_0.png" />
+</div>
+</div>
+</section>
+<section id="example-2-betting-wheel">
+<h2>Example 2. Betting Wheel<a class="headerlink" href="#example-2-betting-wheel" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">w1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">w3</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">p1</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">p3</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span>
+
+<span class="n">R1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">w1</span> <span class="o">-</span> <span class="n">w2</span> <span class="o">-</span> <span class="n">w3</span>
+<span class="n">R2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">w1</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">-</span> <span class="n">w3</span>
+<span class="n">R3</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">w1</span> <span class="o">-</span> <span class="n">w2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">w3</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">p1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">R1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">R2</span><span class="p">)</span> <span class="o">+</span> <span class="n">p3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">R3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:18: RuntimeWarning: divide by zero encountered in log
+</pre></div>
+</div>
+<img alt="../../_images/09-Log-Optimal-Portfolios_10_1.png" src="../../_images/09-Log-Optimal-Portfolios_10_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wheel</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">w1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">w3</span> <span class="o">=</span> <span class="n">w</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-3-stock-bond-portfolio-in-continuous-time">
+<h2>Example 3. Stock/Bond Portfolio in Continuous Time<a class="headerlink" href="#example-3-stock-bond-portfolio-in-continuous-time" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span><span class="p">,</span> <span class="n">wb</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">get_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get_symbol(symbol) uses Yahoo to look up a stock trading symbol and </span>
+<span class="sd">    return a description.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=</span><span class="si">{}</span><span class="s2">&amp;region=1&amp;lang=en&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ResultSet&#39;</span><span class="p">][</span><span class="s1">&#39;Result&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">symbol</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;^GSPC&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mf">1.5</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span><span class="s2">&quot;yahoo&quot;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">rlin</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">rlin</span> <span class="o">=</span> <span class="n">rlin</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">rlog</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">get_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Adjusted Close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rlin</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">rlog</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Log Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/09-Log-Optimal-Portfolios_14_0.png" src="../../_images/09-Log-Optimal-Portfolios_14_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear Returns&#39;</span><span class="p">)</span>
+<span class="n">mu</span><span class="p">,</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   mu = </span><span class="si">{0:12.8f}</span><span class="s1">  (annualized = </span><span class="si">{1:.2f}</span><span class="s1">%)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="mi">252</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sigma = </span><span class="si">{0:12.8f}</span><span class="s1">  (annualized = </span><span class="si">{1:.2f}</span><span class="s1">%)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">252</span><span class="p">)</span><span class="o">*</span><span class="n">sigma</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Log Returns&#39;</span><span class="p">)</span>
+<span class="n">nu</span><span class="p">,</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">rlog</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   nu = </span><span class="si">{0:12.8f}</span><span class="s1">  (annualized = </span><span class="si">{1:.2f}</span><span class="s1">%)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nu</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="mi">252</span><span class="o">*</span><span class="n">nu</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sigma = </span><span class="si">{0:12.8f}</span><span class="s1">  (annualized = </span><span class="si">{1:.2f}</span><span class="s1">%)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">252</span><span class="p">)</span><span class="o">*</span><span class="n">sigma</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Returns
+   mu =   0.00037731  (annualized = 9.51%)
+sigma =   0.00961646  (annualized = 15.27%)
+
+Log Returns
+   nu =   0.00033089  (annualized = 8.34%)
+sigma =   0.00963609  (annualized = 15.30%)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="mi">252</span><span class="o">*</span><span class="n">mu</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mi">252</span><span class="o">*</span><span class="n">nu</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">252</span><span class="p">)</span><span class="o">*</span><span class="n">sigma</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.08</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu</span><span class="o">-</span><span class="n">rf</span><span class="p">)</span><span class="o">/</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">nu_opt</span> <span class="o">=</span> <span class="n">rf</span> <span class="o">+</span> <span class="p">(</span><span class="n">mu</span><span class="o">-</span><span class="n">rf</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">sigma</span><span class="o">/</span><span class="n">sigma</span>
+<span class="n">sigma_opt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mu</span><span class="o">-</span><span class="n">rf</span><span class="p">)</span><span class="o">/</span><span class="n">sigma</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">nu_opt</span><span class="p">,</span><span class="n">sigma_opt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4444444444444445 0.04888888888888889 0.6666666666666667
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="volatility-pumping">
+<h2>Volatility Pumping<a class="headerlink" href="#volatility-pumping" title="Permalink to this headline">#</a></h2>
+<p><img alt="Kelly_Criterion_Volatility_Pumping" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Volatility_Pumping.png?raw=true" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># payoffs for two states</span>
+<span class="n">u</span> <span class="o">=</span> <span class="mf">1.059</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.54</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="mf">0.004</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">ElnR</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Expected return = </span><span class="si">{:0.5}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ElnR</span><span class="p">))</span>
+
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">)])</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span><span class="n">R</span><span class="p">)))</span>
+
+
+<span class="n">ElnR</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">alpha</span><span class="p">:</span> <span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">u</span> <span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">rf</span><span class="p">))</span> <span class="o">+</span> \
+    <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">rf</span><span class="p">))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">ElnR</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expected return = 0.004586
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/units.py</span> in <span class="ni">get_converter</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span>                 <span class="c1"># get_converter</span>
+<span class="ne">--&gt; </span><span class="mi">168</span>                 <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">xravel</span><span class="o">.</span><span class="n">mask</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span>                     <span class="c1"># some elements are not masked</span>
+
+<span class="ne">AttributeError</span>: &#39;numpy.ndarray&#39; object has no attribute &#39;mask&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-11-0b509eb701c5&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> 
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">ElnR</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/pyplot.py</span> in <span class="ni">plot</span><span class="nt">(scalex, scaley, data, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2809</span>     <span class="k">return</span> <span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2810</span>         <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">scalex</span><span class="o">=</span><span class="n">scalex</span><span class="p">,</span> <span class="n">scaley</span><span class="o">=</span><span class="n">scaley</span><span class="p">,</span> <span class="o">**</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span> <span class="k">if</span> <span class="n">data</span>
+<span class="ne">-&gt; </span><span class="mi">2811</span>         <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2812</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2813</span> 
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/__init__.py</span> in <span class="ni">inner</span><span class="nt">(ax, data, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1808</span>                         <span class="s2">&quot;the Matplotlib list!)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label_namer</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1809</span>                         <span class="ne">RuntimeWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1810</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1811</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1812</span>         <span class="n">inner</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_add_data_doc</span><span class="p">(</span><span class="n">inner</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/axes/_axes.py</span> in <span class="ni">plot</span><span class="nt">(self, scalex, scaley, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1609</span>         <span class="n">kwargs</span> <span class="o">=</span> <span class="n">cbook</span><span class="o">.</span><span class="n">normalize_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">mlines</span><span class="o">.</span><span class="n">Line2D</span><span class="o">.</span><span class="n">_alias_map</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1610</span> 
+<span class="ne">-&gt; </span><span class="mi">1611</span>         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lines</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1612</span>             <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1613</span>             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/axes/_base.py</span> in <span class="ni">_grab_next_args</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span>                 <span class="n">this</span> <span class="o">+=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span>                 <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="ne">--&gt; </span><span class="mi">393</span>             <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plot_args</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">394</span> 
+<span class="g g-Whitespace">    </span><span class="mi">395</span> 
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/axes/_base.py</span> in <span class="ni">_plot_args</span><span class="nt">(self, tup, kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span>             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">index_of</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span> 
+<span class="ne">--&gt; </span><span class="mi">370</span>         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xy_from_xy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">371</span> 
+<span class="g g-Whitespace">    </span><span class="mi">372</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s1">&#39;plot&#39;</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/axes/_base.py</span> in <span class="ni">_xy_from_xy</span><span class="nt">(self, x, y)</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span>             <span class="n">bx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">update_units</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">205</span>             <span class="n">by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">update_units</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span> 
+<span class="g g-Whitespace">    </span><span class="mi">207</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">!=</span> <span class="s1">&#39;plot&#39;</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ni">update_units</span><span class="nt">(self, data)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1465</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1466</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">1467</span><span class="s2">         converter = munits.registry.get_converter(data)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1468</span><span class="s2">         if converter is None:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1469</span><span class="s2">             return False</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/units.py</span> in <span class="ni">get_converter</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span><span class="s2">                 if (not isinstance(next_item, np.ndarray) or</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span><span class="s2">                         next_item.shape != x.shape):</span>
+<span class="ne">--&gt; </span><span class="mi">181</span><span class="s2">                     converter = self.get_converter(next_item)</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span><span class="s2">                 return converter</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span><span class="s2"> </span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/units.py</span> in <span class="ni">get_converter</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">185</span><span class="s2">         if converter is None:</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span><span class="s2">             try:</span>
+<span class="ne">--&gt; </span><span class="mi">187</span><span class="s2">                 thisx = safe_first_element(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span><span class="s2">             except (TypeError, StopIteration):</span>
+<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="s2">                 pass</span>
+
+<span class="nn">/usr/local/lib/python3.6/dist-packages/matplotlib/cbook/__init__.py</span> in <span class="ni">safe_first_element</span><span class="nt">(obj)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1633</span><span class="s2">         except TypeError:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1634</span><span class="s2">             pass</span>
+<span class="ne">-&gt; </span><span class="mi">1635</span><span class="s2">         raise RuntimeError(&quot;matplotlib does not support generators &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1636</span><span class="s2">                            &quot;as input&quot;)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1637</span><span class="s2">     return next(iter(obj))</span>
+
+<span class="ne">RuntimeError</span>: matplotlib does not support generators as input
+</pre></div>
+</div>
+<img alt="../../_images/09-Log-Optimal-Portfolios_20_2.png" src="../../_images/09-Log-Optimal-Portfolios_20_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fminbound</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">fminbound</span><span class="p">(</span><span class="k">lambda</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span> <span class="o">-</span><span class="n">ElnR</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">alpha</span>
+
+<span class="c1">#plt.plot(alpha, ElnR(alpha),&#39;r.&#39;,ms=10)</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span><span class="n">R</span><span class="p">)))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">S</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">S2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Stock&#39;</span><span class="p">,</span><span class="s1">&#39;Stock + Cash&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+<img alt="../../_images/09-Log-Optimal-Portfolios_21_1.png" src="../../_images/09-Log-Optimal-Portfolios_21_1.png" />
+</div>
+</div>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb">Optimization in Google Sheets</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Log-Optimal Growth and the Kelly Criterion</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

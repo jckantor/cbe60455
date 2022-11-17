@@ -1,0 +1,2068 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Portfolio Optimization &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Portfolio Optimization using Mean Absolute Deviation" href="06-portfolio-optimization-using-mean-absolute-deviation.html" />
+    <link rel="prev" title="Real Options" href="04-real-options.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03/00-scheduling.html">
+   Scheduling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/02-machine-bottleneck.html">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/07-State-Task-Networks.html">
+     Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/vendor-problem.html">
+     The Vendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/farmer-project.html">
+     Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-measuring-return.html">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06-portfolio-optimization-using-mean-absolute-deviation.html">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09-Log-Optimal-Portfolios.html">
+     Log-Optimal Portfolios
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/05/05-portfolio-optimization.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/05/05-portfolio-optimization.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/05-portfolio-optimization.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/05/05-portfolio-optimization.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Portfolio Optimization
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-libraries">
+     Import libraries
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-price-data">
+     Load Price Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-price-and-returns-data">
+     Plot Price and Returns Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-and-log-returns">
+     Linear and Log Returns
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#covariance-and-correlation-matrices">
+     Covariance and Correlation Matrices
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#visualizing-the-correlation-coefficients">
+       Visualizing the correlation coefficients
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#return-versus-volatility">
+   Return versus Volatility
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-portfolios">
+     Creating Portfolios
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-return-and-variance-of-a-portfolio">
+       Mean Return and Variance of a Portfolio
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples-of-portfolios-with-two-assets">
+     Examples of Portfolios with Two Assets
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#minimum-risk-portfolio">
+     Minimum Risk Portfolio
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pyomo-model-and-solution">
+       Pyomo Model and Solution
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#out-of-sample-simulation">
+       Out-of-Sample Simulation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#markowitz-portfolio">
+     Markowitz Portfolio
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Out of Sample Simulation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#risk-free-asset">
+     Risk-Free Asset
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximum-log-return-to-be-developed">
+     Maximum Log Return (to be developed).
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercises">
+     Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Portfolio Optimization</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Portfolio Optimization
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-libraries">
+     Import libraries
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-price-data">
+     Load Price Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-price-and-returns-data">
+     Plot Price and Returns Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-and-log-returns">
+     Linear and Log Returns
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#covariance-and-correlation-matrices">
+     Covariance and Correlation Matrices
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#visualizing-the-correlation-coefficients">
+       Visualizing the correlation coefficients
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#return-versus-volatility">
+   Return versus Volatility
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-portfolios">
+     Creating Portfolios
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-return-and-variance-of-a-portfolio">
+       Mean Return and Variance of a Portfolio
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples-of-portfolios-with-two-assets">
+     Examples of Portfolios with Two Assets
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#minimum-risk-portfolio">
+     Minimum Risk Portfolio
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pyomo-model-and-solution">
+       Pyomo Model and Solution
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#out-of-sample-simulation">
+       Out-of-Sample Simulation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#markowitz-portfolio">
+     Markowitz Portfolio
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Out of Sample Simulation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#risk-free-asset">
+     Risk-Free Asset
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximum-log-return-to-be-developed">
+     Maximum Log Return (to be developed).
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercises">
+     Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <!--NOTEBOOK_HEADER-->
+<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
+Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
+The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
+and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb">Real Options</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb">Portfolio Optimization using Mean Absolute Deviation</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.05-Portfolio-Optimization.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization">
+<h1>Portfolio Optimization<a class="headerlink" href="#portfolio-optimization" title="Permalink to this headline">#</a></h1>
+<p>This <a class="reference external" href="http://jupyter.org/">Jupyter notebook</a> demonstrates the formulation and solution of portfolio optimization problems.</p>
+<section id="import-libraries">
+<h2>Import libraries<a class="headerlink" href="#import-libraries" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># data wrangling libraries</span>
+<span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-price-data">
+<h2>Load Price Data<a class="headerlink" href="#load-price-data" title="Permalink to this headline">#</a></h2>
+<p>Here we create several groups of possible trading symbols, and select one for study.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Companies of the Dow Jones Industrial Average</span>
+<span class="n">djia</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mmm&#39;</span><span class="p">,</span><span class="s1">&#39;axp&#39;</span><span class="p">,</span><span class="s1">&#39;aapl&#39;</span><span class="p">,</span><span class="s1">&#39;ba&#39;</span><span class="p">,</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span><span class="s1">&#39;cvx&#39;</span><span class="p">,</span><span class="s1">&#39;csco&#39;</span><span class="p">,</span><span class="s1">&#39;ko&#39;</span><span class="p">,</span><span class="s1">&#39;dis&#39;</span><span class="p">,</span><span class="s1">&#39;dwdp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;xom&#39;</span><span class="p">,</span><span class="s1">&#39;ge&#39;</span><span class="p">,</span><span class="s1">&#39;gs&#39;</span><span class="p">,</span><span class="s1">&#39;hd&#39;</span><span class="p">,</span><span class="s1">&#39;ibm&#39;</span><span class="p">,</span><span class="s1">&#39;intc&#39;</span><span class="p">,</span><span class="s1">&#39;jnj&#39;</span><span class="p">,</span><span class="s1">&#39;jpm&#39;</span><span class="p">,</span><span class="s1">&#39;mcd&#39;</span><span class="p">,</span><span class="s1">&#39;mrk&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;msft&#39;</span><span class="p">,</span><span class="s1">&#39;nke&#39;</span><span class="p">,</span><span class="s1">&#39;pfe&#39;</span><span class="p">,</span><span class="s1">&#39;pg&#39;</span><span class="p">,</span><span class="s1">&#39;trv&#39;</span><span class="p">,</span><span class="s1">&#39;utx&#39;</span><span class="p">,</span><span class="s1">&#39;unh&#39;</span><span class="p">,</span><span class="s1">&#39;vz&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;wmt&#39;</span><span class="p">]</span>
+
+<span class="c1"># Representative ETF&#39;s and ETN&#39;s from the energy sector</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;oil&#39;</span><span class="p">,</span><span class="s1">&#39;uso&#39;</span><span class="p">,</span><span class="s1">&#39;uga&#39;</span><span class="p">,</span><span class="s1">&#39;uhn&#39;</span><span class="p">,</span><span class="s1">&#39;kol&#39;</span><span class="p">,</span><span class="s1">&#39;ung&#39;</span><span class="p">]</span>
+
+<span class="c1"># Standard indices</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;^dji&#39;</span><span class="p">,</span><span class="s1">&#39;^gspc&#39;</span><span class="p">]</span>
+
+<span class="c1"># pick one of these groups for study</span>
+<span class="n">syms</span> <span class="o">=</span> <span class="n">djia</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">syms</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;mmm&#39;, &#39;axp&#39;, &#39;aapl&#39;, &#39;ba&#39;, &#39;cat&#39;, &#39;cvx&#39;, &#39;csco&#39;, &#39;ko&#39;, &#39;dis&#39;, &#39;dwdp&#39;, &#39;xom&#39;, &#39;ge&#39;, &#39;gs&#39;, &#39;hd&#39;, &#39;ibm&#39;, &#39;intc&#39;, &#39;jnj&#39;, &#39;jpm&#39;, &#39;mcd&#39;, &#39;mrk&#39;, &#39;msft&#39;, &#39;nke&#39;, &#39;pfe&#39;, &#39;pg&#39;, &#39;trv&#39;, &#39;utx&#39;, &#39;unh&#39;, &#39;vz&#39;, &#39;v&#39;, &#39;wmt&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Price data is retrieved using the Pandas DataReader function. The first price data set consists of historical data that will be used to design investment portfolios. The second set will be used for simulation and evaluation of resulting portfolios. The use of ‘out-of-sample’ data for evaluation is standard practice in these types of applications.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="n">Prices</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">PricesSim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">syms</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Prices</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s1">&#39;yahoo&#39;</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">t2</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; ok.&#39;</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; fail. Try again.&#39;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mmm ok.
+axp fail. Try again. ok.
+aapl ok.
+ba fail. Try again. ok.
+cat fail. Try again. ok.
+cvx ok.
+csco fail. Try again. ok.
+ko ok.
+dis ok.
+dwdp ok.
+xom ok.
+ge ok.
+gs ok.
+hd fail. Try again. ok.
+ibm fail. Try again. ok.
+intc ok.
+jnj ok.
+jpm ok.
+mcd ok.
+mrk ok.
+msft ok.
+nke ok.
+pfe ok.
+pg ok.
+trv ok.
+utx ok.
+unh fail. Try again. ok.
+vz ok.
+v ok.
+wmt ok.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-price-and-returns-data">
+<h2>Plot Price and Returns Data<a class="headerlink" href="#plot-price-and-returns-data" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span><span class="o">=</span> <span class="n">Prices</span><span class="o">.</span><span class="n">index</span>
+<span class="n">Prices</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;axp&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>84.020606999999998
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Prices</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Prices for Selected Goods&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Price&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">Returns</span> <span class="o">=</span> <span class="n">Prices</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">/</span><span class="n">Prices</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Returns</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">Returns</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_12_0.png" src="../../_images/05-portfolio-optimization_12_0.png" />
+<img alt="../../_images/05-portfolio-optimization_12_1.png" src="../../_images/05-portfolio-optimization_12_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Prices</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;axp&#39;</span><span class="p">]</span>
+<span class="n">Prices</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>145.423462
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-and-log-returns">
+<h2>Linear and Log Returns<a class="headerlink" href="#linear-and-log-returns" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rlin</span> <span class="o">=</span> <span class="n">Returns</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">stdev</span> <span class="o">=</span> <span class="n">Returns</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Prices</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Annualized Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">252</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Annualized Volatility&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_16_0.png" src="../../_images/05-portfolio-optimization_16_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;Annualized Returns and Standard Deviation</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;Symbol     r_lin       r_log    r_lin-s^2/2    stdev&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Returns</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:5s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{0:9.5f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">]),</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   </span><span class="si">{0:9.5f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlog</span><span class="p">[</span><span class="n">s</span><span class="p">]),</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   </span><span class="si">{0:9.5f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">252.0</span><span class="o">*</span><span class="p">(</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)),</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   </span><span class="si">{0:9.5f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Annualized Returns and Standard Deviation
+
+Symbol     r_lin       r_log    r_lin-s^2/2    stdev
+mmm      0.10073     0.08642     0.08642     0.16915
+axp     -0.06379    -0.09123    -0.09096     0.23313
+aapl     0.06037     0.02830     0.02827     0.25338
+ba       0.16965     0.14294     0.14309     0.23045
+cat      0.08626     0.05194     0.05190     0.26216
+cvx      0.12736     0.09362     0.09348     0.26033
+csco     0.11347     0.08827     0.08806     0.22545
+ko       0.04776     0.03714     0.03715     0.14571
+dis      0.10763     0.08730     0.08741     0.20109
+dwdp     0.15613     0.12257     0.12227     0.26023
+xom      0.05831     0.03608     0.03599     0.21131
+ge       0.16780     0.14793     0.14772     0.20042
+gs       0.16050     0.12968     0.12973     0.24807
+hd       0.18924     0.16987     0.16989     0.19671
+ibm      0.07498     0.05315     0.05323     0.20861
+intc     0.04976     0.02191     0.02199     0.23568
+jnj      0.06764     0.05610     0.05606     0.15219
+jpm      0.22718     0.19929     0.19927     0.23628
+mcd      0.19668     0.18119     0.18113     0.17635
+mrk      0.06571     0.04256     0.04232     0.21631
+msft     0.19944     0.16628     0.16612     0.25817
+nke      0.06982     0.04423     0.04408     0.22688
+pfe      0.05137     0.03247     0.03233     0.19513
+pg       0.01160    -0.00003    -0.00004     0.15260
+trv      0.10497     0.08977     0.08983     0.17399
+utx      0.02575     0.00841     0.00842     0.18614
+unh      0.28231     0.25667     0.25667     0.22645
+vz       0.11293     0.10028     0.10026     0.15917
+v        0.13025     0.10617     0.10611     0.21973
+wmt     -0.03636    -0.05646    -0.05640     0.20018
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="covariance-and-correlation-matrices">
+<h2>Covariance and Correlation Matrices<a class="headerlink" href="#covariance-and-correlation-matrices" title="Permalink to this headline">#</a></h2>
+<p>The covariance matrix is easily computed using the pandas <code class="docutils literal notranslate"><span class="pre">.cov</span></code> and <code class="docutils literal notranslate"><span class="pre">.corr()</span></code> functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="n">Returns</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">Returns</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Covariance Matrix</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Correlation Coefficients</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Covariance Matrix
+
+          mmm      axp     aapl       ba      cat      cvx     csco       ko  \
+mmm  0.000114 0.000057 0.000077 0.000085 0.000092 0.000086 0.000078 0.000050   
+axp  0.000057 0.000216 0.000057 0.000080 0.000097 0.000070 0.000060 0.000038   
+aapl 0.000077 0.000057 0.000255 0.000103 0.000106 0.000090 0.000109 0.000052   
+ba   0.000085 0.000080 0.000103 0.000211 0.000122 0.000100 0.000090 0.000056   
+cat  0.000092 0.000097 0.000106 0.000122 0.000273 0.000159 0.000102 0.000042   
+cvx  0.000086 0.000070 0.000090 0.000100 0.000159 0.000269 0.000107 0.000062   
+csco 0.000078 0.000060 0.000109 0.000090 0.000102 0.000107 0.000202 0.000058   
+ko   0.000050 0.000038 0.000052 0.000056 0.000042 0.000062 0.000058 0.000084   
+dis  0.000062 0.000060 0.000083 0.000086 0.000078 0.000079 0.000092 0.000046   
+dwdp 0.000089 0.000075 0.000096 0.000114 0.000138 0.000138 0.000088 0.000055   
+xom  0.000074 0.000051 0.000077 0.000085 0.000124 0.000180 0.000090 0.000050   
+ge   0.000082 0.000081 0.000080 0.000097 0.000116 0.000107 0.000084 0.000051   
+gs   0.000093 0.000120 0.000112 0.000128 0.000157 0.000129 0.000109 0.000053   
+hd   0.000071 0.000067 0.000081 0.000083 0.000073 0.000070 0.000083 0.000050   
+ibm  0.000076 0.000079 0.000090 0.000097 0.000107 0.000103 0.000096 0.000051   
+intc 0.000080 0.000073 0.000108 0.000099 0.000116 0.000108 0.000121 0.000058   
+jnj  0.000061 0.000048 0.000060 0.000065 0.000058 0.000065 0.000063 0.000041   
+jpm  0.000094 0.000114 0.000105 0.000123 0.000140 0.000134 0.000115 0.000054   
+mcd  0.000059 0.000041 0.000062 0.000065 0.000047 0.000064 0.000067 0.000053   
+mrk  0.000067 0.000074 0.000077 0.000084 0.000079 0.000085 0.000083 0.000047   
+msft 0.000083 0.000076 0.000134 0.000091 0.000110 0.000112 0.000126 0.000067   
+nke  0.000064 0.000070 0.000084 0.000091 0.000064 0.000062 0.000082 0.000054   
+pfe  0.000054 0.000063 0.000066 0.000064 0.000066 0.000067 0.000067 0.000035   
+pg   0.000056 0.000040 0.000061 0.000062 0.000052 0.000070 0.000065 0.000057   
+trv  0.000070 0.000056 0.000070 0.000079 0.000073 0.000080 0.000075 0.000057   
+utx  0.000078 0.000072 0.000077 0.000098 0.000103 0.000089 0.000085 0.000048   
+unh  0.000063 0.000083 0.000087 0.000084 0.000068 0.000071 0.000071 0.000044   
+vz   0.000055 0.000038 0.000058 0.000057 0.000062 0.000075 0.000060 0.000051   
+v    0.000075 0.000086 0.000102 0.000091 0.000088 0.000088 0.000097 0.000055   
+wmt  0.000049 0.000037 0.000053 0.000058 0.000046 0.000051 0.000070 0.000043   
+
+          dis     dwdp   ...        msft      nke      pfe       pg      trv  \
+mmm  0.000062 0.000089   ...    0.000083 0.000064 0.000054 0.000056 0.000070   
+axp  0.000060 0.000075   ...    0.000076 0.000070 0.000063 0.000040 0.000056   
+aapl 0.000083 0.000096   ...    0.000134 0.000084 0.000066 0.000061 0.000070   
+ba   0.000086 0.000114   ...    0.000091 0.000091 0.000064 0.000062 0.000079   
+cat  0.000078 0.000138   ...    0.000110 0.000064 0.000066 0.000052 0.000073   
+cvx  0.000079 0.000138   ...    0.000112 0.000062 0.000067 0.000070 0.000080   
+csco 0.000092 0.000088   ...    0.000126 0.000082 0.000067 0.000065 0.000075   
+ko   0.000046 0.000055   ...    0.000067 0.000054 0.000035 0.000057 0.000057   
+dis  0.000160 0.000079   ...    0.000088 0.000074 0.000056 0.000050 0.000069   
+dwdp 0.000079 0.000269   ...    0.000104 0.000078 0.000078 0.000060 0.000072   
+xom  0.000070 0.000115   ...    0.000082 0.000050 0.000064 0.000060 0.000067   
+ge   0.000070 0.000108   ...    0.000097 0.000074 0.000069 0.000059 0.000074   
+gs   0.000105 0.000132   ...    0.000122 0.000096 0.000090 0.000061 0.000102   
+hd   0.000078 0.000082   ...    0.000094 0.000104 0.000066 0.000050 0.000073   
+ibm  0.000073 0.000097   ...    0.000108 0.000070 0.000061 0.000058 0.000070   
+intc 0.000084 0.000111   ...    0.000139 0.000077 0.000067 0.000069 0.000075   
+jnj  0.000051 0.000061   ...    0.000070 0.000055 0.000064 0.000049 0.000057   
+jpm  0.000098 0.000131   ...    0.000122 0.000095 0.000090 0.000063 0.000106   
+mcd  0.000056 0.000074   ...    0.000084 0.000070 0.000050 0.000049 0.000059   
+mrk  0.000058 0.000082   ...    0.000094 0.000063 0.000105 0.000053 0.000063   
+msft 0.000088 0.000104   ...    0.000264 0.000101 0.000078 0.000083 0.000084   
+nke  0.000074 0.000078   ...    0.000101 0.000204 0.000062 0.000056 0.000066   
+pfe  0.000056 0.000078   ...    0.000078 0.000062 0.000151 0.000041 0.000057   
+pg   0.000050 0.000060   ...    0.000083 0.000056 0.000041 0.000092 0.000057   
+trv  0.000069 0.000072   ...    0.000084 0.000066 0.000057 0.000057 0.000120   
+utx  0.000067 0.000090   ...    0.000084 0.000066 0.000061 0.000052 0.000070   
+unh  0.000069 0.000081   ...    0.000091 0.000075 0.000090 0.000050 0.000076   
+vz   0.000049 0.000064   ...    0.000069 0.000044 0.000042 0.000050 0.000058   
+v    0.000089 0.000100   ...    0.000130 0.000100 0.000076 0.000065 0.000078   
+wmt  0.000046 0.000047   ...    0.000061 0.000058 0.000050 0.000049 0.000047   
+
+          utx      unh       vz        v      wmt  
+mmm  0.000078 0.000063 0.000055 0.000075 0.000049  
+axp  0.000072 0.000083 0.000038 0.000086 0.000037  
+aapl 0.000077 0.000087 0.000058 0.000102 0.000053  
+ba   0.000098 0.000084 0.000057 0.000091 0.000058  
+cat  0.000103 0.000068 0.000062 0.000088 0.000046  
+cvx  0.000089 0.000071 0.000075 0.000088 0.000051  
+csco 0.000085 0.000071 0.000060 0.000097 0.000070  
+ko   0.000048 0.000044 0.000051 0.000055 0.000043  
+dis  0.000067 0.000069 0.000049 0.000089 0.000046  
+dwdp 0.000090 0.000081 0.000064 0.000100 0.000047  
+xom  0.000071 0.000060 0.000062 0.000074 0.000045  
+ge   0.000087 0.000077 0.000057 0.000089 0.000051  
+gs   0.000103 0.000108 0.000060 0.000121 0.000048  
+hd   0.000073 0.000084 0.000054 0.000095 0.000064  
+ibm  0.000089 0.000054 0.000064 0.000090 0.000053  
+intc 0.000089 0.000077 0.000062 0.000099 0.000050  
+jnj  0.000056 0.000059 0.000047 0.000066 0.000046  
+jpm  0.000100 0.000101 0.000061 0.000118 0.000058  
+mcd  0.000047 0.000052 0.000049 0.000072 0.000046  
+mrk  0.000071 0.000085 0.000058 0.000086 0.000057  
+msft 0.000084 0.000091 0.000069 0.000130 0.000061  
+nke  0.000066 0.000075 0.000044 0.000100 0.000058  
+pfe  0.000061 0.000090 0.000042 0.000076 0.000050  
+pg   0.000052 0.000050 0.000050 0.000065 0.000049  
+trv  0.000070 0.000076 0.000058 0.000078 0.000047  
+utx  0.000137 0.000069 0.000057 0.000081 0.000057  
+unh  0.000069 0.000203 0.000042 0.000082 0.000059  
+vz   0.000057 0.000042 0.000101 0.000060 0.000050  
+v    0.000081 0.000082 0.000060 0.000192 0.000055  
+wmt  0.000057 0.000059 0.000050 0.000055 0.000159  
+
+[30 rows x 30 columns]
+
+Correlation Coefficients
+
+          mmm      axp     aapl       ba      cat      cvx     csco       ko  \
+mmm  1.000000 0.364655 0.451973 0.547545 0.522230 0.494760 0.517919 0.515660   
+axp  0.364655 1.000000 0.242425 0.375220 0.399106 0.289644 0.289316 0.281259   
+aapl 0.451973 0.242425 1.000000 0.445385 0.400989 0.342746 0.479134 0.356953   
+ba   0.547545 0.375220 0.445385 1.000000 0.510478 0.420883 0.437872 0.421626   
+cat  0.522230 0.399106 0.400989 0.510478 1.000000 0.587187 0.432973 0.278986   
+cvx  0.494760 0.289644 0.342746 0.420883 0.587187 1.000000 0.460938 0.412001   
+csco 0.517919 0.289316 0.479134 0.437872 0.432973 0.460938 1.000000 0.446405   
+ko   0.515660 0.281259 0.356953 0.421626 0.278986 0.412001 0.446405 1.000000   
+dis  0.462545 0.321093 0.411082 0.469068 0.370606 0.382306 0.508937 0.392950   
+dwdp 0.508716 0.310577 0.366782 0.480226 0.507920 0.511553 0.376463 0.366010   
+xom  0.520763 0.260883 0.364549 0.438791 0.566202 0.822994 0.477664 0.409703   
+ge   0.611574 0.438860 0.395857 0.530476 0.554713 0.518193 0.469604 0.440906   
+gs   0.555655 0.524055 0.448399 0.563947 0.609206 0.504906 0.489024 0.371298   
+hd   0.534012 0.365528 0.410687 0.463156 0.356984 0.345962 0.474358 0.437787   
+ibm  0.542878 0.410789 0.426873 0.508687 0.491349 0.477953 0.514722 0.425589   
+intc 0.502933 0.336081 0.457084 0.461289 0.473298 0.443811 0.573555 0.423005   
+jnj  0.597834 0.339867 0.392625 0.467654 0.368226 0.411066 0.459955 0.470326   
+jpm  0.593096 0.522423 0.443882 0.569564 0.570202 0.548889 0.542419 0.395490   
+mcd  0.502439 0.248318 0.350349 0.400600 0.256740 0.351741 0.426814 0.521860   
+mrk  0.461245 0.370588 0.353349 0.425902 0.349173 0.378415 0.430047 0.374393   
+msft 0.476105 0.316735 0.515070 0.384549 0.408757 0.421108 0.547033 0.447756   
+nke  0.421223 0.332977 0.367831 0.438339 0.270978 0.264115 0.404063 0.413838   
+pfe  0.415463 0.347678 0.336592 0.361405 0.326920 0.331446 0.385546 0.313744   
+pg   0.547120 0.283407 0.398504 0.446439 0.325066 0.446879 0.472846 0.648127   
+trv  0.603375 0.348317 0.398234 0.494575 0.400747 0.444819 0.480368 0.565851   
+utx  0.622896 0.420745 0.412861 0.577625 0.532853 0.462771 0.507467 0.443824   
+unh  0.415327 0.394836 0.380555 0.406461 0.286811 0.304064 0.350731 0.338421   
+vz   0.518359 0.257751 0.360313 0.392023 0.371511 0.458308 0.423041 0.549953   
+v    0.508679 0.422300 0.460721 0.450413 0.383362 0.389688 0.491967 0.434044   
+wmt  0.366902 0.198630 0.263828 0.319360 0.219894 0.247071 0.389755 0.374912   
+
+          dis     dwdp   ...        msft      nke      pfe       pg      trv  \
+mmm  0.462545 0.508716   ...    0.476105 0.421223 0.415463 0.547120 0.603375   
+axp  0.321093 0.310577   ...    0.316735 0.332977 0.347678 0.283407 0.348317   
+aapl 0.411082 0.366782   ...    0.515070 0.367831 0.336592 0.398504 0.398234   
+ba   0.469068 0.480226   ...    0.384549 0.438339 0.361405 0.446439 0.494575   
+cat  0.370606 0.507920   ...    0.408757 0.270978 0.326920 0.325066 0.400747   
+cvx  0.382306 0.511553   ...    0.421108 0.264115 0.331446 0.446879 0.444819   
+csco 0.508937 0.376463   ...    0.547033 0.404063 0.385546 0.472846 0.480368   
+ko   0.392950 0.366010   ...    0.447756 0.413838 0.313744 0.648127 0.565851   
+dis  1.000000 0.382067   ...    0.424991 0.408103 0.356485 0.408050 0.493950   
+dwdp 0.382067 1.000000   ...    0.390648 0.330948 0.386845 0.381064 0.398630   
+xom  0.413049 0.528865   ...    0.381013 0.261822 0.393559 0.472696 0.458611   
+ge   0.439649 0.522189   ...    0.473573 0.410971 0.445342 0.483043 0.534101   
+gs   0.530469 0.516406   ...    0.481678 0.431778 0.469522 0.408332 0.595987   
+hd   0.499179 0.401505   ...    0.466360 0.589866 0.434702 0.416016 0.539021   
+ibm  0.437666 0.451718   ...    0.503634 0.373691 0.377783 0.462348 0.486039   
+intc 0.448204 0.458106   ...    0.575219 0.361099 0.369463 0.482063 0.460161   
+jnj  0.420901 0.387088   ...    0.450049 0.399004 0.539841 0.533692 0.537927   
+jpm  0.519558 0.537495   ...    0.503728 0.444876 0.490482 0.439233 0.650665   
+mcd  0.400755 0.405740   ...    0.466055 0.442589 0.364330 0.461105 0.484622   
+mrk  0.335593 0.369009   ...    0.426253 0.324716 0.627815 0.405277 0.422551   
+msft 0.424991 0.390648   ...    1.000000 0.432472 0.391766 0.529029 0.469158   
+nke  0.408103 0.330948   ...    0.432472 1.000000 0.352429 0.407602 0.421295   
+pfe  0.356485 0.386845   ...    0.391766 0.352429 1.000000 0.350306 0.425208   
+pg   0.408050 0.381064   ...    0.529029 0.407602 0.350306 1.000000 0.538937   
+trv  0.493950 0.398630   ...    0.469158 0.421295 0.425208 0.538937 1.000000   
+utx  0.453444 0.466154   ...    0.442362 0.390931 0.420395 0.460609 0.541419   
+unh  0.379571 0.347026   ...    0.393331 0.366389 0.513435 0.368229 0.488159   
+vz   0.386168 0.392272   ...    0.422451 0.308569 0.340296 0.518935 0.524803   
+v    0.507750 0.442284   ...    0.578375 0.504866 0.445418 0.487082 0.515457   
+wmt  0.286537 0.227267   ...    0.296297 0.319530 0.320107 0.408323 0.343103   
+
+          utx      unh       vz        v      wmt  
+mmm  0.622896 0.415327 0.518359 0.508679 0.366902  
+axp  0.420745 0.394836 0.257751 0.422300 0.198630  
+aapl 0.412861 0.380555 0.360313 0.460721 0.263828  
+ba   0.577625 0.406461 0.392023 0.450413 0.319360  
+cat  0.532853 0.286811 0.371511 0.383362 0.219894  
+cvx  0.462771 0.304064 0.458308 0.389688 0.247071  
+csco 0.507467 0.350731 0.423041 0.491967 0.389755  
+ko   0.443824 0.338421 0.549953 0.434044 0.374912  
+dis  0.453444 0.379571 0.386168 0.507750 0.286537  
+dwdp 0.466154 0.347026 0.392272 0.442284 0.227267  
+xom  0.456081 0.315451 0.465522 0.401174 0.270553  
+ge   0.584449 0.425390 0.449186 0.511206 0.322840  
+gs   0.561730 0.483407 0.383752 0.560882 0.244444  
+hd   0.501806 0.474290 0.434758 0.556254 0.411954  
+ibm  0.578989 0.288833 0.486273 0.494947 0.321066  
+intc 0.509872 0.363283 0.415477 0.481513 0.266699  
+jnj  0.495121 0.433377 0.486792 0.501066 0.383328  
+jpm  0.571778 0.473782 0.411547 0.573017 0.307874  
+mcd  0.361627 0.330164 0.443577 0.467071 0.330785  
+mrk  0.442122 0.436067 0.420943 0.453722 0.333088  
+msft 0.442362 0.393331 0.422451 0.578375 0.296297  
+nke  0.390931 0.366389 0.308569 0.504866 0.319530  
+pfe  0.420395 0.513435 0.340296 0.445418 0.320107  
+pg   0.460609 0.368229 0.518935 0.487082 0.408323  
+trv  0.541419 0.488159 0.524803 0.515457 0.343103  
+utx  1.000000 0.414102 0.487036 0.496608 0.382856  
+unh  0.414102 1.000000 0.292023 0.414639 0.325556  
+vz   0.487036 0.292023 1.000000 0.433601 0.396167  
+v    0.496608 0.414639 0.433601 1.000000 0.314725  
+wmt  0.382856 0.325556 0.396167 0.314725 1.000000  
+
+[30 rows x 30 columns]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="visualizing-the-correlation-coefficients">
+<h3>Visualizing the correlation coefficients<a class="headerlink" href="#visualizing-the-correlation-coefficients" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syms</span> <span class="o">=</span> <span class="n">Prices</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">syms</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">gca</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Returns</span><span class="p">[</span><span class="n">syms</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span><span class="n">Returns</span><span class="p">[</span><span class="n">syms</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">gca</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">gca</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">gca</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([])</span>
+        <span class="n">gca</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">syms</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">syms</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">syms</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">syms</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span><span class="mi">3</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_21_0.png" src="../../_images/05-portfolio-optimization_21_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x11c6fb908&gt;
+</pre></div>
+</div>
+<img alt="../../_images/05-portfolio-optimization_22_1.png" src="../../_images/05-portfolio-optimization_22_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="return-versus-volatility">
+<h1>Return versus Volatility<a class="headerlink" href="#return-versus-volatility" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Returns</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Annualized Standard Deviation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Annualized Linear Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_24_0.png" src="../../_images/05-portfolio-optimization_24_0.png" />
+</div>
+</div>
+<section id="creating-portfolios">
+<h2>Creating Portfolios<a class="headerlink" href="#creating-portfolios" title="Permalink to this headline">#</a></h2>
+<p>A portfolio is created by allocating current wealth among a collection of assets. Let <span class="math notranslate nohighlight">\(w_n\)</span> be the fraction of wealth allocated to the <span class="math notranslate nohighlight">\(n^{th}\)</span> asset from a set of <span class="math notranslate nohighlight">\(N\)</span> assets. Then</p>
+<div class="math notranslate nohighlight">
+\[\sum_{n=1}^N w_n = 1\]</div>
+<p>It may be possible to borrow assets, in which case the corresponding <span class="math notranslate nohighlight">\(w_n\)</span> is negative. A <em>long only</em> portfolio is one such that all of weights <span class="math notranslate nohighlight">\(w_n\)</span> are greater than or equal to zero.</p>
+<section id="mean-return-and-variance-of-a-portfolio">
+<h3>Mean Return and Variance of a Portfolio<a class="headerlink" href="#mean-return-and-variance-of-a-portfolio" title="Permalink to this headline">#</a></h3>
+<p>Denoting the total value of the portfolio as V, the value invested in asset <span class="math notranslate nohighlight">\(n\)</span> is <span class="math notranslate nohighlight">\(w_nV\)</span>. At a price <span class="math notranslate nohighlight">\(S_n\)</span>, the number of units of the asset is <span class="math notranslate nohighlight">\(\frac{w_nV}{S_n}\)</span> for a total value</p>
+<div class="math notranslate nohighlight">
+\[ V = \sum_{n=1}^N \frac{w_n V}{S_n}S_n \]</div>
+<p>at the start of the investment period. The value of the investment at the end of the period, <span class="math notranslate nohighlight">\(V'\)</span>, is given by</p>
+<div class="math notranslate nohighlight">
+\[ V' = \sum_{n=1}^N \frac{w_n V}{S_n}(1+r^{lin}_n)S_n \]</div>
+<p>Taking differences we find</p>
+<div class="math notranslate nohighlight">
+\[ V' - V = \sum_{n=1}^N \frac{w_n V}{S_n}r^{lin}_nS_n \]</div>
+<p>which, after division, yields the return on the portfolio</p>
+<div class="math notranslate nohighlight">
+\[ r^{lin}_p = \frac{V'-V}{V} = \sum_{n=1}^N w_nr^{lin}_n \]</div>
+<p>Taking expectations, the mean return of the portfolio</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\bar{r}^{lin}_{p} = \sum_{n=1}^N w_n \bar{r}^{lin}_n}\]</div>
+<p>Variance of portfolio return</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\sigma_{p}^2 = \sum_{m=1}^N\sum_{n=1}^N w_m w_n \sigma_{mn}}\]</div>
+</section>
+</section>
+<section id="examples-of-portfolios-with-two-assets">
+<h2>Examples of Portfolios with Two Assets<a class="headerlink" href="#examples-of-portfolios-with-two-assets" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_examples</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N_examples</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">Prices</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">w</span><span class="o">*</span><span class="n">Prices</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="n">Prices</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+        <span class="n">returnsV</span> <span class="o">=</span> <span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">/</span><span class="n">V</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">rV</span> <span class="o">=</span> <span class="n">returnsV</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">sV</span> <span class="o">=</span> <span class="n">returnsV</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">sV</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rV</span><span class="p">,</span><span class="s1">&#39;g.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+            
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev for selected assets&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Standard Deviation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Linear Return&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_28_0.png" src="../../_images/05-portfolio-optimization_28_0.png" />
+<img alt="../../_images/05-portfolio-optimization_28_1.png" src="../../_images/05-portfolio-optimization_28_1.png" />
+<img alt="../../_images/05-portfolio-optimization_28_2.png" src="../../_images/05-portfolio-optimization_28_2.png" />
+<img alt="../../_images/05-portfolio-optimization_28_3.png" src="../../_images/05-portfolio-optimization_28_3.png" />
+</div>
+</div>
+</section>
+<section id="minimum-risk-portfolio">
+<h2>Minimum Risk Portfolio<a class="headerlink" href="#minimum-risk-portfolio" title="Permalink to this headline">#</a></h2>
+<p>The minimum variance portfolio is found as a solution to
+$<span class="math notranslate nohighlight">\(\min_{w_1, w_2, \ldots, w_N} \sum_{m=1}^N\sum_{n=1}^N w_m w_n\sigma_{mn}\)</span><span class="math notranslate nohighlight">\(
+subject to 
+\)</span><span class="math notranslate nohighlight">\(\sum_{n=1}^N w_n = 1\)</span>$</p>
+<section id="pyomo-model-and-solution">
+<h3>Pyomo Model and Solution<a class="headerlink" href="#pyomo-model-and-solution" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># data</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Returns</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">STOCKS</span> <span class="o">=</span> <span class="n">Returns</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1"># pyomo model</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">STOCKS</span><span class="p">,</span><span class="n">domain</span><span class="o">=</span><span class="n">Reals</span><span class="p">)</span>
+
+<span class="c1"># expression for objective function</span>
+<span class="n">portfolio_var</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">sigma</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">STOCKS</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">)</span>
+<span class="n">portfolio_ret</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">OBJ</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="n">portfolio_var</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">minimize</span><span class="p">)</span>
+
+<span class="c1"># constraints</span>
+<span class="n">m</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># solve</span>
+<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;gurobi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="c1"># display solutions</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">],</span> <span class="n">STOCKS</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Symbol&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Weights for a minimum variance portfolio&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_31_0.png" src="../../_images/05-portfolio-optimization_31_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">portfolio_var</span><span class="p">()),</span><span class="mi">252</span><span class="o">*</span><span class="n">portfolio_ret</span><span class="p">(),</span><span class="s1">&#39;b.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Annualized Standard Deviation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Annualized Linear Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_32_0.png" src="../../_images/05-portfolio-optimization_32_0.png" />
+</div>
+</div>
+</section>
+<section id="out-of-sample-simulation">
+<h3>Out-of-Sample Simulation<a class="headerlink" href="#out-of-sample-simulation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PricesSim</span><span class="p">[</span><span class="s1">&#39;jpm&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2441</span>             <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2442</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2443</span>             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5280)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5126)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20523)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20477)</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;jpm&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-92-13bd3942c560&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">PricesSim</span><span class="p">[</span><span class="s1">&#39;jpm&#39;</span><span class="p">]</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ni">__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1962</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1963</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1964</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_column</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1965</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1966</span>     <span class="k">def</span> <span class="nf">_getitem_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ni">_getitem_column</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1969</span>         <span class="c1"># get column</span>
+<span class="g g-Whitespace">   </span><span class="mi">1970</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_unique</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1971</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_cache</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1972</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1973</span>         <span class="c1"># duplicate columns &amp; possible reduce dimensionality</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/generic.py</span> in <span class="ni">_get_item_cache</span><span class="nt">(self, item)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1643</span>         <span class="n">res</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1644</span>         <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1645</span>             <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1646</span>             <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box_item_values</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1647</span>             <span class="n">cache</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/internals.py</span> in <span class="ni">get</span><span class="nt">(self, item, fastpath)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3588</span> 
+<span class="g g-Whitespace">   </span><span class="mi">3589</span>             <span class="k">if</span> <span class="ow">not</span> <span class="n">isnull</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">3590</span>                 <span class="n">loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3591</span>             <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3592</span>                 <span class="n">indexer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">))[</span><span class="n">isnull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)]</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2442</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2443</span>             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2444</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_maybe_cast_indexer</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">2445</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2446</span>         <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="n">key</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span><span class="p">)</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5280)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5126)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20523)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20477)</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;jpm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">s</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+    
+<span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">:</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">/</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Portfolio Dynamics w/o Rebalancing&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Price/Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mmm
+axp
+aapl
+ba
+cat
+cvx
+csco
+ko
+dis
+dwdp
+xom
+ge
+gs
+hd
+ibm
+intc
+jnj
+jpm
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2441</span>             <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2442</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2443</span>             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5280)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5126)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20523)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20477)</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;jpm&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-89-fd40668052ed&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STOCKS</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="n">V</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">s</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ni">__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1962</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1963</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1964</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_column</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1965</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1966</span>     <span class="k">def</span> <span class="nf">_getitem_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ni">_getitem_column</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1969</span>         <span class="c1"># get column</span>
+<span class="g g-Whitespace">   </span><span class="mi">1970</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_unique</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1971</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_cache</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1972</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1973</span>         <span class="c1"># duplicate columns &amp; possible reduce dimensionality</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/generic.py</span> in <span class="ni">_get_item_cache</span><span class="nt">(self, item)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1643</span>         <span class="n">res</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1644</span>         <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1645</span>             <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1646</span>             <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box_item_values</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1647</span>             <span class="n">cache</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/internals.py</span> in <span class="ni">get</span><span class="nt">(self, item, fastpath)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3588</span> 
+<span class="g g-Whitespace">   </span><span class="mi">3589</span>             <span class="k">if</span> <span class="ow">not</span> <span class="n">isnull</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">3590</span>                 <span class="n">loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3591</span>             <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3592</span>                 <span class="n">indexer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">))[</span><span class="n">isnull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)]</span>
+
+<span class="nn">/Users/jeff/anaconda/lib/python3.6/site-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2442</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2443</span>             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2444</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_maybe_cast_indexer</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">2445</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2446</span>         <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="n">key</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span><span class="p">)</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5280)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc (pandas/_libs/index.c:5126)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20523)</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item (pandas/_libs/hashtable.c:20477)</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;jpm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Returns</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev for selected assets&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Standard Deviation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Linear Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">ReturnsV</span> <span class="o">=</span> <span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">/</span><span class="n">V</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">rlinMinVar</span> <span class="o">=</span> <span class="n">ReturnsV</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">stdevMinVar</span> <span class="o">=</span> <span class="n">ReturnsV</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;g.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;   Min. Var. Portfolio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.0708892,0.224943,&#39;   Min. Var. Portfolio&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/05-portfolio-optimization_36_1.png" src="../../_images/05-portfolio-optimization_36_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="markowitz-portfolio">
+<h2>Markowitz Portfolio<a class="headerlink" href="#markowitz-portfolio" title="Permalink to this headline">#</a></h2>
+<p>The minimum variance portfolio does a good job of handling volatility, but at the expense of relatively low return. The Markowitz portfolio adds an additional constraint to specify mean portfolio return.
+$<span class="math notranslate nohighlight">\(\min_{w_1, w_2, \ldots, w_N} \sum_{m=1}^N\sum_{n=1}^N w_m w_n\sigma_{mn}\)</span><span class="math notranslate nohighlight">\(
+subject to 
+\)</span><span class="math notranslate nohighlight">\(\sum_{n=1}^N w_n = 1\)</span><span class="math notranslate nohighlight">\(
+and
+\)</span><span class="math notranslate nohighlight">\(\sum_{n=1}^N w_n \bar{r}^{lin}_n = \bar{r}^{lin}_p\)</span><span class="math notranslate nohighlight">\(
+By programming the solution of the optimization problem as a function of \)</span>\bar{r}_p$, it is possible to create a risk-return tradeoff curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cvxpy problem description</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Parameter</span><span class="p">()</span>
+
+<span class="n">risk</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">quad_form</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cvx</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">risk</span><span class="p">),</span> 
+               <span class="p">[</span><span class="n">cvx</span><span class="o">.</span><span class="n">sum_entries</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">w</span> <span class="o">==</span> <span class="n">r</span><span class="p">,</span>
+               <span class="n">w</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># lists to store results of parameter scans</span>
+<span class="n">r_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">stdev_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">w_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># scan solution as function of portfolio return</span>
+<span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rlin</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="mf">3.0</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">rp</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">prob</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;optimal&quot;</span><span class="p">:</span>
+        <span class="n">r_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rp</span><span class="p">)</span>
+        <span class="n">stdev_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()))</span>
+        <span class="n">w_data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+
+<span class="c1"># plot tradeoff curve</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stdev_data</span><span class="p">),</span> <span class="mf">252.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r_data</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">syms</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;g.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;   Min. Var. Portfolio&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev for Markowitz Portfolio&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Standard Deviation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Linear Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-51-17cf03b2a1ed&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># cvxpy problem description</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">w</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">r</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Parameter</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">risk</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">quad_form</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span>
+
+<span class="ne">NameError</span>: name &#39;cvx&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot portfolio weights</span>
+<span class="n">w_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w_data</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_data</span><span class="p">,</span><span class="n">w_data</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_39_0.png" src="../../_images/05-portfolio-optimization_39_0.png" />
+</div>
+</div>
+<section id="id1">
+<h3>Out of Sample Simulation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="n">PricesSim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">syms</span><span class="p">:</span>
+    <span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s1">&#39;yahoo&#39;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">((</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">V</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span><span class="n">n</span><span class="p">]</span>
+
+<span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">PricesSim</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">/</span><span class="n">PricesSim</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Portfolio Dynamics w/o Rebalancing&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Price/Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-48-58b790cb0a82&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">V</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">((</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">V</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">])</span><span class="o">*</span><span class="n">PricesSim</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span><span class="n">n</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="ne">TypeError</span>: &#39;NoneType&#39; object has no attribute &#39;__getitem__&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="risk-free-asset">
+<h2>Risk-Free Asset<a class="headerlink" href="#risk-free-asset" title="Permalink to this headline">#</a></h2>
+<p>The minimum variance portfolio does a good job of handling volatility, but at the expense of relatively low return. The Markowitz portfolio adds an additional constraint to specify mean portfolio return.
+$<span class="math notranslate nohighlight">\(\min_{w_1, w_2, \ldots, w_N} \sum_{m=1}^N\sum_{n=1}^N w_m w_n\sigma_{mn}\)</span><span class="math notranslate nohighlight">\(
+subject to 
+\)</span><span class="math notranslate nohighlight">\(\sum_{n=1}^N w_n = 1 - w_f\)</span><span class="math notranslate nohighlight">\(
+and
+\)</span><span class="math notranslate nohighlight">\(\sum_{n=1}^N w_n \bar{r}^{lin}_n + w_f r_f = \bar{r}^{lin}_p\)</span><span class="math notranslate nohighlight">\(
+By programming the solution of the optimization problem as a function of \)</span>\bar{r}_p$, it is possible to create a risk-return tradeoff curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cvxpy problem description</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">),</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">Reals</span><span class="p">)</span>
+<span class="n">wf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">wf</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Parameter</span><span class="p">()</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">/</span><span class="mf">252.0</span>
+
+<span class="n">risk</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">quad_form</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cvx</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">risk</span><span class="p">),</span> 
+               <span class="p">[</span><span class="n">cvx</span><span class="o">.</span><span class="n">sum_entries</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">wf</span><span class="p">,</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="n">wf</span><span class="o">*</span><span class="n">rf</span> <span class="o">==</span> <span class="n">r</span><span class="p">,</span>
+               <span class="n">w</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># lists to store results of parameter scans</span>
+<span class="n">r_data_rf</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">stdev_data_rf</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">w_data_rf</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># scan solution as function of portfolio return</span>
+<span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">rf</span><span class="p">,</span><span class="n">rlin</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span><span class="mf">1.5</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">rp</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">prob</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;optimal&quot;</span><span class="p">:</span>
+        <span class="n">r_data_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rp</span><span class="p">)</span>
+        <span class="n">stdev_data_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()))</span>
+        <span class="n">w_data_rf</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stdev_data_rf</span><span class="p">),</span> <span class="mf">252.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r_data_rf</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stdev_data</span><span class="p">),</span> <span class="mf">252.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r_data</span><span class="p">),</span><span class="s1">&#39;g--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">syms</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    
+<span class="c1"># find max Sharpe ratio</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r_data</span><span class="p">)</span><span class="o">-</span><span class="n">rf</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stdev_data</span><span class="p">)))</span>
+<span class="n">smax</span> <span class="o">=</span> <span class="n">stdev_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+<span class="n">rmax</span> <span class="o">=</span> <span class="n">r_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">smax</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rmax</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span> <span class="mf">252.0</span><span class="o">*</span><span class="n">rmax</span>
+<span class="nb">print</span> <span class="mf">252.0</span><span class="o">*</span><span class="n">rf</span>
+<span class="nb">print</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">smax</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+
+<span class="n">wval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">w_data</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">syms</span><span class="p">)</span>
+<span class="n">wval</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Symbol&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Weights for a minimum variance portfolio&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.319026600441
+0.01
+0.110681042214
+</pre></div>
+</div>
+<img alt="../../_images/05-portfolio-optimization_45_1.png" src="../../_images/05-portfolio-optimization_45_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Prices</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="c1"># create price history of the portfolio</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">Prices</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Market&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Prices</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">V</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">wval</span><span class="p">[</span><span class="n">s</span><span class="p">])</span><span class="o">/</span><span class="n">Prices</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">Prices</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+    
+<span class="n">V</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot components</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Prices</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">Prices</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">/</span><span class="n">Prices</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Portfolio Dynamics w/o Rebalancing&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized Price/Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05-portfolio-optimization_47_0.png" src="../../_images/05-portfolio-optimization_47_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="p">[</span><span class="s1">&#39;Market&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+<span class="n">Sigma</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span><span class="s1">&#39;Market&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">Sigma</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="s1">&#39;Market&#39;</span><span class="p">,</span><span class="s1">&#39;Market&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^dji     12.528858
+^gspc     1.934181
+mmm       0.197222
+axp       0.120742
+aapl      0.133096
+ba        0.208771
+cat       0.072742
+cvx       0.051164
+csco      0.016654
+ko        0.016795
+dis       0.136692
+dd        0.086136
+xom       0.053090
+ge        0.020513
+gs        0.154648
+hd        0.086056
+ibm      -0.047416
+intc      0.046451
+jnj       0.122271
+jpm       0.054673
+mcd       0.023521
+mrk       0.067638
+msft      0.068685
+nke       0.121157
+pfe       0.016580
+pg        0.048426
+trv       0.075682
+utx       0.104676
+unh       0.123136
+vz        0.022144
+v         0.065840
+wmt       0.029284
+Market    1.000000
+Name: Market, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="maximum-log-return-to-be-developed">
+<h2>Maximum Log Return (to be developed).<a class="headerlink" href="#maximum-log-return-to-be-developed" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cvx</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">syms</span><span class="p">)</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">risk</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">quad_form</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">cvx</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cvx</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">*</span><span class="n">w</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">risk</span><span class="p">),</span> 
+               <span class="p">[</span><span class="n">cvx</span><span class="o">.</span><span class="n">sum_entries</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">risk</span> <span class="o">&lt;=</span> <span class="mf">0.0005</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">),</span>
+                <span class="n">w</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+<span class="nb">print</span> <span class="n">prob</span><span class="o">.</span><span class="n">status</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Returns</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdev</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="p">[</span><span class="n">s</span><span class="p">],</span><span class="s2">&quot;  </span><span class="si">{0:5&lt;s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Return versus stdev for selected assets&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Standard Deviation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Linear Return&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;g.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;   Min. Var. Portfolio&#39;</span><span class="p">)</span>
+
+<span class="n">wval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">wval</span><span class="p">)</span>
+<span class="n">stdevlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">)),</span><span class="n">wval</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevlog</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlog</span><span class="p">,</span><span class="s1">&#39;g.&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevlog</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlog</span><span class="p">,</span><span class="s1">&#39;  Max. Return Portfolio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>infeasible
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">IndexError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-353-221d4f60194f&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">252.0</span><span class="p">)</span><span class="o">*</span><span class="n">stdevMinVar</span><span class="p">,</span><span class="mf">252.0</span><span class="o">*</span><span class="n">rlinMinVar</span><span class="p">,</span><span class="s1">&#39;   Min. Var. Portfolio&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> 
+<span class="ne">---&gt; </span><span class="mi">30</span> <span class="n">wval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">value</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rlin</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">wval</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="n">stdevlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">)),</span><span class="n">wval</span><span class="p">))</span>
+
+<span class="ne">IndexError</span>: too many indices for array
+</pre></div>
+</div>
+<img alt="../../_images/05-portfolio-optimization_50_2.png" src="../../_images/05-portfolio-optimization_50_2.png" />
+</div>
+</div>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Modify the minimum variance portfolio to be ‘long-only’, and add a diversification constraints that no more than 20% of the portfolio can be invested in any single asset.  How much does this change the annualized return?  the annualized standard deviation?</p></li>
+<li><p>Modify the Markowitz portfolio to allow long-only positions and a diversification constraint that no more than 20% of the portfolio can be invested in any single asset. What conclusion to you draw?</p></li>
+</ol>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb">Real Options</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb">Portfolio Optimization using Mean Absolute Deviation</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.05-Portfolio-Optimization.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="04-real-options.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Real Options</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="06-portfolio-optimization-using-mean-absolute-deviation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Portfolio Optimization using Mean Absolute Deviation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Measuring Return &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Binomial Model for Pricing Options" href="03-binomial-model-for-pricing-options.html" />
+    <link rel="prev" title="Financial Risk and Diversification" href="00-finance.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03/00-scheduling.html">
+   Scheduling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/02-machine-bottleneck.html">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/07-State-Task-Networks.html">
+     Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/vendor-problem.html">
+     The Vendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/farmer-project.html">
+     Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06-portfolio-optimization-using-mean-absolute-deviation.html">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09-Log-Optimal-Portfolios.html">
+     Log-Optimal Portfolios
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/05/01-measuring-return.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/05/01-measuring-return.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/01-measuring-return.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/05/01-measuring-return.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where-to-get-price-data">
+   Where to get Price Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yahoo-finance">
+     Yahoo Finance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quandl">
+     Quandl
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#returns">
+   Returns
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-fractional-or-arithmetic-returns">
+     Linear fractional or Arithmetic Returns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-returns-don-t-tell-the-whole-story">
+     Linear returns don’t tell the whole story.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compounded-log-returns">
+     Compounded Log Returns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#volatility-drag-and-the-relationship-between-linear-and-log-returns">
+     Volatility Drag and the Relationship between Linear and Log Returns
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Measuring Return</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where-to-get-price-data">
+   Where to get Price Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yahoo-finance">
+     Yahoo Finance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quandl">
+     Quandl
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#returns">
+   Returns
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-fractional-or-arithmetic-returns">
+     Linear fractional or Arithmetic Returns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-returns-don-t-tell-the-whole-story">
+     Linear returns don’t tell the whole story.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compounded-log-returns">
+     Compounded Log Returns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#volatility-drag-and-the-relationship-between-linear-and-log-returns">
+     Volatility Drag and the Relationship between Linear and Log Returns
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="measuring-return">
+<h1>Measuring Return<a class="headerlink" href="#measuring-return" title="Permalink to this headline">#</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
+<p>The pandas_datareader library provides convenient access to financial data. The library requires separate installation by executing the command</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install pandas-datareader
+</pre></div>
+</div>
+<p>in a terminal window, or executign</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!pip install pandas-datareader --upgrade
+</pre></div>
+</div>
+<p>in a Jupyter notebook cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install pandas-datareader --upgrade
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Requirement already satisfied: pandas-datareader in /usr/local/lib/python3.7/dist-packages (0.10.0)
+Requirement already satisfied: pandas&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from pandas-datareader) (1.3.5)
+Requirement already satisfied: requests&gt;=2.19.0 in /usr/local/lib/python3.7/dist-packages (from pandas-datareader) (2.23.0)
+Requirement already satisfied: lxml in /usr/local/lib/python3.7/dist-packages (from pandas-datareader) (4.9.1)
+Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas-datareader) (2022.6)
+Requirement already satisfied: numpy&gt;=1.17.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas-datareader) (1.21.6)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas-datareader) (2.8.2)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.7/dist-packages (from python-dateutil&gt;=2.7.3-&gt;pandas&gt;=0.23-&gt;pandas-datareader) (1.15.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas-datareader) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas-datareader) (1.24.3)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas-datareader) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas-datareader) (2022.9.24)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">pandas_datareader</span> <span class="k">as</span> <span class="nn">pdr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function provides a convenient stock symbol lookup function.</p>
+</section>
+<section id="where-to-get-price-data">
+<h2>Where to get Price Data<a class="headerlink" href="#where-to-get-price-data" title="Permalink to this headline">#</a></h2>
+<p>Price data is available from a number of sources. Here we demonstrate the process of obtaining price data on financial goods from <a class="reference external" href="http://finance.yahoo.com/">Yahoo Finance</a>. Additional sources are documented <a class="reference external" href="https://pandas-datareader.readthedocs.io/en/latest/readers/index.html">here</a>.</p>
+<section id="yahoo-finance">
+<h3>Yahoo Finance<a class="headerlink" href="#yahoo-finance" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="http://finance.yahoo.com/">Yahoo Finance</a> provides historical Open, High, Low, Close, and Volume date for quotes on traded securities. In addition, Yahoo Finance provides historical <a class="reference external" href="http://marubozu.blogspot.com/2006/09/how-yahoo-calculates-adjusted-closing.html">Adjusted Close</a> price data that corrects for splits and dividend distributions. The Adjusted Close is a useful tool for computing the return on long-term investments.</p>
+<p>The following cell demonstrates how to download historical Adjusted Close price for a selected security into a pandas DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="s2">&quot;yahoo&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Adjusted Close&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f55bc75f250&gt;
+</pre></div>
+</div>
+<img alt="../../_images/01-measuring-return_7_1.png" src="../../_images/01-measuring-return_7_1.png" />
+</div>
+</div>
+</section>
+<section id="quandl">
+<h3>Quandl<a class="headerlink" href="#quandl" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="http://www.quandl.com/">Quandl</a> is a searchable source of time-series data on a wide range of commodities, financials, and many other economic and social indicators. Data from Quandl can be downloaded as files in various formats, or accessed directly using the <a class="reference external" href="http://www.quandl.com/help/api">Quandl API</a> or software-specific package. Here we use demonstrate use of the <a class="reference external" href="http://www.quandl.com/help/packages#Python">Quandl Python package</a>.</p>
+<p>The first step is execute a system command to check that the Quandl package has been installed.</p>
+<p>Here are examples of energy datasets. These were found by searching Quandl, then identifying the Quandl code used for accessing the dataset, a description, the name of the field containing the desired price information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;CHRIS/MCX_CL1&#39;</span>
+<span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;NYMEX Crude Oil Futures, Continuous Contract #1 (CL1) (Front Month)&#39;</span>
+<span class="n">field</span> <span class="o">=</span> <span class="s1">&#39;Close&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">quandl</span><span class="o">.</span><span class="n">QuandlReader</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Price $/bbl&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="n">e46d8d827ff0</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">quandl</span><span class="o">.</span><span class="n">QuandlReader</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/pandas_datareader/quandl.py</span> in <span class="ni">__init__</span><span class="nt">(self, symbols, start, end, retry_count, pause, session, chunksize, api_key)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">api_key</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="ne">---&gt; </span><span class="mi">66</span>                 <span class="s2">&quot;The Quandl API key must be provided either &quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span>                 <span class="s2">&quot;through the api_key variable or through the &quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">68</span>                 <span class="s2">&quot;environmental variable QUANDL_API_KEY.&quot;</span>
+
+<span class="ne">ValueError</span>: The Quandl API key must be provided either through the api_key variable or through the environmental variable QUANDL_API_KEY.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this headline">#</a></h2>
+<p>The statistical properties of financial series are usually studied in terms of the change in prices. There are several reasons for this, key among them is that the changes can often be closely approximated as stationary random variables whereas prices are generally non-stationary sequences.</p>
+<p>A common model is</p>
+<div class="math notranslate nohighlight">
+\[S_{t} = R_{t} S_{t-1}\]</div>
+<p>so, recursively,</p>
+<div class="math notranslate nohighlight">
+\[S_{t} = R_{t} R_{t-1} \cdots R_{0} S_{0}\]</div>
+<p>The gross return <span class="math notranslate nohighlight">\(R_t\)</span> is simply the ratio of the current price to the previous, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[R_t = \frac{S_t}{S_{t-1}}\]</div>
+<p><span class="math notranslate nohighlight">\(R_t\)</span> will typically be a number close to one in value, greater than one for an appreciating asset, or less than one for an asset with declining price.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span><span class="s2">&quot;yahoo&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Adjusted Close&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">R</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Returns&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/01-measuring-return_12_0.png" src="../../_images/01-measuring-return_12_0.png" />
+</div>
+</div>
+<section id="linear-fractional-or-arithmetic-returns">
+<h3>Linear fractional or Arithmetic Returns<a class="headerlink" href="#linear-fractional-or-arithmetic-returns" title="Permalink to this headline">#</a></h3>
+<p>Perhaps the most common way of reporting returns is simply the fractional increase in value of an asset over a period, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[r^{lin}_t = \frac{S_t - S_{t-1}}{S_{t-1}} = \frac{S_t}{S_{t-1}} - 1 \]</div>
+<p>Obviously</p>
+<div class="math notranslate nohighlight">
+\[r^{lin}_t = R_t  - 1\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span><span class="s2">&quot;yahoo&quot;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">rlin</span> <span class="o">=</span> <span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">get_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Adjusted Close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rlin</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/01-measuring-return_14_0.png" src="../../_images/01-measuring-return_14_0.png" />
+</div>
+</div>
+</section>
+<section id="linear-returns-don-t-tell-the-whole-story">
+<h3>Linear returns don’t tell the whole story.<a class="headerlink" href="#linear-returns-don-t-tell-the-whole-story" title="Permalink to this headline">#</a></h3>
+<p>Suppose you put money in an asset that returns 10% interest in even numbered years, but loses 10% in odd numbered years. Is this a good investment for the long-haul?</p>
+<p>If we look at mean linear return</p>
+<p>\begin{align}
+\bar{r}^{lin} &amp; = \frac{1}{T}\sum_{t=1}{T} r^{lin}_t  \
+&amp; = \frac{1}{T} (0.1 - 0.1 + 0.1 - 0.1 + \cdots) \
+&amp; = 0
+\end{align}</p>
+<p>we would conclude this asset, on average, offers zero return. What does a simulation show?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">log</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="n">S</span><span class="p">]]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.10</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">):</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">S</span> <span class="o">+</span> <span class="n">r</span><span class="o">*</span><span class="n">S</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="n">r</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">k</span><span class="p">,</span><span class="n">S</span><span class="p">])</span>
+    
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">log</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Value&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/01-measuring-return_16_1.png" src="../../_images/01-measuring-return_16_1.png" />
+</div>
+</div>
+<p>Despite an average linear return of zero, what we observe over time is an asset declining in price.  The reason is pretty obvious — on average, the years in which the asset loses money have higher balances than years where the asset gains value.  Consequently, the losses are somewhat greater than the gains which, over time, leads to a loss of value.</p>
+<p>Here’s a real-world example of this phenomenon. For a three year period ending October 24, 2017, United States Steel (stock symbol ‘X’) offers an annualized linear return of 15.9%. Seems like a terrific investment opportunity, doesn’t it?  Would you be surprised to learn that the actual value of the stock fell 18.3% over that three-year period period?</p>
+<p>What we can conclude from these examples is that average linear return, by itself, does not provide us with the information needed for long-term investing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;X&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="s2">&quot;yahoo&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">rlin</span> <span class="o">=</span> <span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Three year return :&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Adjusted Close&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">rlin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mean Linear Returns (annualized) = </span><span class="si">{</span><span class="mi">0</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="mi">252</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Three year return : -18.38049353595533 %
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">26</span><span class="o">-</span><span class="mi">76</span><span class="n">ba57adfc98</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">18</span> <span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">get_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Adjusted Close&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;get_symbol&#39; is not defined
+</pre></div>
+</div>
+<img alt="../../_images/01-measuring-return_18_2.png" src="../../_images/01-measuring-return_18_2.png" />
+</div>
+</div>
+</section>
+<section id="compounded-log-returns">
+<h3>Compounded Log Returns<a class="headerlink" href="#compounded-log-returns" title="Permalink to this headline">#</a></h3>
+<p>Compounded, or log returns, are defined as</p>
+<div class="math notranslate nohighlight">
+\[r^{log}_{t} = \log R_t = \log \frac{S_{t}}{S_{t-1}}\]</div>
+<p>The log returns have a very useful compounding property for aggregating price changes across time</p>
+<div class="math notranslate nohighlight">
+\[ \log \frac{S_{t+k}}{S_{t}} = r^{log}_{t+1} + r^{log}_{t+2} + \cdots + r^{log}_{t+k}\]</div>
+<p>If the compounded returns are statistically independent and identically distributed, then this property provides a means to aggregate returns and develop statistical price projections.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span><span class="s2">&quot;yahoo&quot;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">get_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Adjusted Close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rlin</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Log Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/01-measuring-return_20_0.png" src="../../_images/01-measuring-return_20_0.png" />
+</div>
+</div>
+</section>
+<section id="volatility-drag-and-the-relationship-between-linear-and-log-returns">
+<h3>Volatility Drag and the Relationship between Linear and Log Returns<a class="headerlink" href="#volatility-drag-and-the-relationship-between-linear-and-log-returns" title="Permalink to this headline">#</a></h3>
+<p>For long-term financial decision making, it’s important to understand the relationship between <span class="math notranslate nohighlight">\(r_t^{log}\)</span> and <span class="math notranslate nohighlight">\(r_t^{lin}\)</span>. Algebraically, the relationships are simple.</p>
+<div class="math notranslate nohighlight">
+\[r^{log}_t = \log \left(1+r^{lin}_t\right)\]</div>
+<div class="math notranslate nohighlight">
+\[r^{lin}_t = e^{r^{log}_t} - 1\]</div>
+<p>The linear return <span class="math notranslate nohighlight">\(r_t^{lin}\)</span> is the fraction of value that is earned from an asset in a single period. It is a direct measure of earnings. The average value <span class="math notranslate nohighlight">\(\bar{r}^{lin}\)</span> over many periods this gives the average fractional earnings per period. If you care about consuming the earnings from an asset and not about growth in value, then <span class="math notranslate nohighlight">\(\bar{r}^{lin}\)</span> is the quantity of interest to you.</p>
+<p>Log return <span class="math notranslate nohighlight">\(r_t^{log}\)</span> is the rate of growth in value of an asset over a single period. When averaged over many periods, <span class="math notranslate nohighlight">\(\bar{r}^{log}\)</span> measures the compounded rate of growth of value. If you care about the growth in value of an asset, then <span class="math notranslate nohighlight">\(\bar{r}^{log}\)</span> is the quantity of interest to you.</p>
+<p>The compounded rate of growth <span class="math notranslate nohighlight">\(r_t^{log}\)</span> is generally smaller than average linear return <span class="math notranslate nohighlight">\(\bar{r}^{lin}\)</span> due to the effects of volatility. To see this, consider an asset that has a linear return of -50% in period 1, and +100% in period 2. The average linear return is would be +25%, but the compounded growth in value would be 0%.</p>
+<p>A general formula for the relationship between <span class="math notranslate nohighlight">\(\bar{r}^{log}\)</span> and <span class="math notranslate nohighlight">\(\bar{r}^{lin}\)</span> is derived as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\bar{r}^{log} &amp; = \frac{1}{T}\sum_{t=1}^{T} r_t^{log} \\
+&amp; = \frac{1}{T}\sum_{t=1}^{T} \log\left(1+r_t^{lin}\right) \\
+&amp; = \frac{1}{T}\sum_{t=1}^{T} \left(\log(1) + r_t^{lin} - \frac{1}{2} (r_t^{lin})^2 + \cdots
+\right) \\
+&amp; = \frac{1}{T}\sum_{t=1}^{T} r_t^{lin} - \frac{1}{2}\frac{1}{T}\sum_{t=1}^{T} (r_t^{lin})^2 + \cdots \\
+&amp; = \bar{r}^{lin} - \frac{1}{2}\left(\frac{1}{T}\sum_{t=1}^{T} (r_t^{lin})^2\right) + \cdots \\
+&amp; = \bar{r}^{lin} - \frac{1}{2}\left((\bar{r}^{lin})^2 + \frac{1}{T}\sum_{t=1}^{T} (r_t^{lin}-\bar{r}^{lin})^2\right) + \cdots
+\end{align*}\end{split}\]</div>
+<p>For typical values <span class="math notranslate nohighlight">\(\bar{r}^{lin}\)</span> of and long horizons <span class="math notranslate nohighlight">\(T\)</span>, this results in a formula</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\bar{r}^{log} &amp; \approx \bar{r}^{lin} - \frac{1}{2} \left(\sigma^{lin}\right)^2
+\end{align*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma^{lin}\)</span> is the standard deviation of linear returns, more commonly called the volatility.</p>
+<p>The difference <span class="math notranslate nohighlight">\(- \frac{1}{2} \left(\sigma^{lin}\right)^2\)</span> is the <em>volatility drag</em> imposed on the compounded growth in value of an asset due to volatility in linear returns. This can be significant and a source of confusion for many investors.</p>
+<p>It’s indeed possible to have a positive average linear return, but negative compounded growth.  To see this, consider a $100 investment which earns 20% on even-numbered years, and loses 18% on odd-numbered years. The average linear return is 1%, and the average log return is -0.81%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="c1"># get stock price data</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="s2">&quot;yahoo&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+<span class="n">rlin</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Adjusted Close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rlin</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">rlog</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Log Returns (daily)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/01-measuring-return_22_0.png" src="../../_images/01-measuring-return_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Linear Return (rlin) = </span><span class="si">{0:.7f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rlin</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linear Volatility (sigma) = </span><span class="si">{0:.7f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rlin</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Volatility Drag -0.5*sigma**2 = </span><span class="si">{0:.7f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rlin - 0.5*vol = </span><span class="si">{0:.7f}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rlin</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rlin</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Log Return = </span><span class="si">{0:.7f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rlog</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Linear Return (rlin) = 0.0013522
+Linear Volatility (sigma) = 0.0230372
+Volatility Drag -0.5*sigma**2 = -0.0002654
+rlin - 0.5*vol = 0.0010868
+
+Mean Log Return = 0.0010867
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;XOM&#39;</span><span class="p">,</span> <span class="s1">&#39;GE&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">]</span>
+
+<span class="c1"># end date is today</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+<span class="c1"># start date is three years prior</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="n">rlin</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span>
+
+    <span class="c1"># get stock price data</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">pdr</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="s2">&quot;yahoo&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">rlin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> 
+    <span class="n">rlog</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="n">sigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="n">p0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">idx</span> <span class="o">-</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">width</span><span class="p">,</span> <span class="n">rlin</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="n">rlin</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">width</span><span class="p">,</span> <span class="n">rlog</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">k</span> <span class="o">-</span> <span class="mf">1.75</span><span class="o">*</span><span class="n">width</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span><span class="p">],[</span><span class="n">rlin</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">rlin</span><span class="p">[</span><span class="n">k</span><span class="p">]],</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">k</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mf">1.75</span><span class="o">*</span><span class="n">width</span><span class="p">],[</span><span class="n">rlog</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">rlog</span><span class="p">[</span><span class="n">k</span><span class="p">]],</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">symbols</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="n">p0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="s1">&#39;rlin&#39;</span><span class="p">,</span><span class="s1">&#39;0.5*sigma**2&#39;</span><span class="p">,</span><span class="s1">&#39;rlog&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Components of Linear Return&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Components of Linear Return&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/01-measuring-return_25_1.png" src="../../_images/01-measuring-return_25_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="00-finance.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Financial Risk and Diversification</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="03-binomial-model-for-pricing-options.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Binomial Model for Pricing Options</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
