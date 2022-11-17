@@ -615,9 +615,6 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="binomial-model-for-pricing-options">
 <h1>Binomial Model for Pricing Options<a class="headerlink" href="#binomial-model-for-pricing-options" title="Permalink to this headline">#</a></h1>
 <p>This notebooks demonstrates techniques for pricing options using a binomial lattice to model prices of the underlying security or commodity. The notebook makes use of the pandas_datareader library to download pricing information, and the Pyomo modeling library for some example calculations.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!pip install pandas_datareader --upgrade
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install pandas_datareader --upgrade
@@ -625,28 +622,18 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
-Requirement already satisfied: pandas_datareader in /usr/local/lib/python3.7/dist-packages (0.9.0)
-Collecting pandas_datareader
-  Downloading pandas_datareader-0.10.0-py3-none-any.whl (109 kB)
-     |████████████████████████████████| 109 kB 18.5 MB/s 
-?25hRequirement already satisfied: pandas&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from pandas_datareader) (1.3.5)
-Requirement already satisfied: lxml in /usr/local/lib/python3.7/dist-packages (from pandas_datareader) (4.9.1)
-Requirement already satisfied: requests&gt;=2.19.0 in /usr/local/lib/python3.7/dist-packages (from pandas_datareader) (2.23.0)
-Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2022.6)
-Requirement already satisfied: numpy&gt;=1.17.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (1.21.6)
-Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2.8.2)
-Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.7/dist-packages (from python-dateutil&gt;=2.7.3-&gt;pandas&gt;=0.23-&gt;pandas_datareader) (1.15.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2022.9.24)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2.10)
-Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (3.0.4)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (1.24.3)
-Installing collected packages: pandas-datareader
-  Attempting uninstall: pandas-datareader
-    Found existing installation: pandas-datareader 0.9.0
-    Uninstalling pandas-datareader-0.9.0:
-      Successfully uninstalled pandas-datareader-0.9.0
-Successfully installed pandas-datareader-0.10.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas_datareader in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (0.10.0)
+Requirement already satisfied: pandas&gt;=0.23 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (1.4.1)
+Requirement already satisfied: lxml in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (4.8.0)
+Requirement already satisfied: requests&gt;=2.19.0 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (2.27.1)
+Requirement already satisfied: python-dateutil&gt;=2.8.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2.8.2)
+Requirement already satisfied: pytz&gt;=2020.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2021.3)
+Requirement already satisfied: numpy&gt;=1.18.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (1.21.2)
+Requirement already satisfied: six&gt;=1.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from python-dateutil&gt;=2.8.1-&gt;pandas&gt;=0.23-&gt;pandas_datareader) (1.16.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2022.9.24)
+Requirement already satisfied: charset-normalizer~=2.0.0 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2.0.4)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (1.26.8)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (3.3)
 </pre></div>
 </div>
 </div>
@@ -788,12 +775,12 @@ r^{log} &amp; = \ln S_{t+\Delta t} - \ln S_t = \nu\Delta t + \sigma \sqrt{\Delta
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Returns
-   mu =  -0.00012788  (annualized = -3.22%)
-sigma =   0.01589357  (annualized = 25.23%)
+   mu =   0.00006036  (annualized = 1.52%)
+sigma =   0.01557979  (annualized = 24.73%)
 
 Log Returns
-   nu =  -0.00025426  (annualized = -6.41%)
-sigma =   0.01590227  (annualized = 25.24%)
+   nu =  -0.00006089  (annualized = -1.53%)
+sigma =   0.01557202  (annualized = 24.72%)
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_5_1.png" src="../../_images/03-binomial-model-for-pricing-options_5_1.png" />
@@ -827,9 +814,9 @@ p &amp; = \frac{1}{2} + \frac{\nu\Delta t}{2\sqrt{\sigma^2\Delta t + (\nu\Delta 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability (p) =  0.4635
-  Up Return (u) =  1.0758
-Down Return (d) =  0.9295
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability (p) =  0.491
+  Up Return (u) =  1.074
+Down Return (d) =  0.9311
 </pre></div>
 </div>
 </div>
@@ -956,7 +943,7 @@ P_{k,s} &amp; = p P_{k-1,s} + (1-p) P_{k-1,s-1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd759b29850&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f868081da00&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_13_1.png" src="../../_images/03-binomial-model-for-pricing-options_13_1.png" />
@@ -1021,7 +1008,7 @@ y_{k,s} &amp; = \frac{uC_{k+1,s+1}-dC_{k+1,s}}{(1+r)(u-d)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q =  0.49883292725341116
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q =  0.49966386904550664
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Cash Position&#39;)
@@ -1107,26 +1094,10 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="mi">4588</span><span class="n">f7d42cea</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># set of periods and states for each period</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">Periods</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">States</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;pyomo&#39;
-
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NOTE</span>: If your import is failing due to a missing package, you can
-<span class="n">manually</span> <span class="n">install</span> <span class="n">dependencies</span> <span class="n">using</span> <span class="n">either</span> <span class="o">!</span>pip or !apt.
-
-<span class="n">To</span> <span class="n">view</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">installing</span> <span class="n">some</span> <span class="n">common</span> <span class="n">dependencies</span><span class="p">,</span> <span class="n">click</span> <span class="n">the</span>
-<span class="s2">&quot;Open Examples&quot;</span> <span class="n">button</span> <span class="n">below</span><span class="o">.</span>
-<span class="gt">---------------------------------------------------------------------------</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Value of a European Call Option&#39;)
 </pre></div>
 </div>
+<img alt="../../_images/03-binomial-model-for-pricing-options_17_1.png" src="../../_images/03-binomial-model-for-pricing-options_17_1.png" />
 </div>
 </div>
 </section>
@@ -1185,7 +1156,7 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.text.Text at 0x120ad1f28&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Value of European Put Option&#39;)
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_19_1.png" src="../../_images/03-binomial-model-for-pricing-options_19_1.png" />
@@ -1216,7 +1187,7 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.text.Text at 0x1212a7ba8&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;The hypothetical value of early exercise of European Put Option&#39;)
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_21_1.png" src="../../_images/03-binomial-model-for-pricing-options_21_1.png" />
@@ -1243,7 +1214,7 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.text.Text at 0x1214053c8&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Arbitrage value for early exercise of a European Put Option&#39;)
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_23_1.png" src="../../_images/03-binomial-model-for-pricing-options_23_1.png" />
@@ -1314,8 +1285,6 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 <img alt="../../_images/03-binomial-model-for-pricing-options_25_1.png" src="../../_images/03-binomial-model-for-pricing-options_25_1.png" />
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.02-Geometric-Brownian-Motion.ipynb">Geometric Brownian Motion</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb">Real Options</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 
