@@ -24,3 +24,9 @@ chapters:
   - file: notebooks/04/vendor-problem.ipynb
   - file: notebooks/04/airline-seating.ipynb
   - file: notebooks/04/farmer-project.ipynb
+  
+- file: notebooks/05/00-finance.md
+  sections:
+  - file: notebooks/05/measuring-return.ipynb
+  - file: notebooks/05/geometric-brownian-motion.ipynb
+  - file: notebooks/05/binomial-model-for-pricing-options
