@@ -56,6 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>mermaid.initialize({startOnLoad:true});</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Financial Risk and Diversification" href="../05/00-finance.html" />
     <link rel="prev" title="Airline seat allocation problem" href="airline-seating.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -204,6 +205,58 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05/00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/01-measuring-return.html">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/05-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/06-portfolio-optimization-using-mean-absolute-deviation.html">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/08-Log-Optimal-Growth-and-the-Kelly-Criterion.html">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/09-Log-Optimal-Portfolios.html">
+     Log-Optimal Portfolios
     </a>
    </li>
   </ul>
@@ -443,13 +496,38 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-modeling">
+   Data Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#farm-simulation">
+   Farm Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-building">
    Model Building
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pyomo-model-development">
-   Pyomo Model Development
+  <a class="reference internal nav-link" href="#mean-solution">
+   1. Mean Solution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stochastic-solution">
+   2. Stochastic Solution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#worst-case-profit">
+   3. Worst Case Profit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#risk-versus-return">
+   4. Risk versus Return
   </a>
  </li>
 </ul>
@@ -482,13 +560,38 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-modeling">
+   Data Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#farm-simulation">
+   Farm Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-building">
    Model Building
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pyomo-model-development">
-   Pyomo Model Development
+  <a class="reference internal nav-link" href="#mean-solution">
+   1. Mean Solution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stochastic-solution">
+   2. Stochastic Solution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#worst-case-profit">
+   3. Worst Case Profit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#risk-versus-return">
+   4. Risk versus Return
   </a>
  </li>
 </ul>
@@ -518,17 +621,13 @@ title="Print to PDF"
 <span class="n">exec</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">helper</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 <span class="n">helper</span><span class="o">.</span><span class="n">install_pyomo</span><span class="p">()</span>
-<span class="n">helper</span><span class="o">.</span><span class="n">install_glpk</span><span class="p">()</span>
 <span class="n">helper</span><span class="o">.</span><span class="n">install_cbc</span><span class="p">()</span>
-<span class="n">helper</span><span class="o">.</span><span class="n">install_ipopt</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pyomo was previously installed
-glpk was previously installed
 cbc was previously installed
-ipopt was previously installed
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
@@ -538,10 +637,10 @@ ipopt was previously installed
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
 </pre></div>
 </div>
 </div>
@@ -597,9 +696,9 @@ ipopt was previously installed
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:left head"><p>Commodity</p></th>
-<th class="text-align:center head"><p>Sell Price <br> (euro/ton)</p></th>
+<th class="text-align:center head"><p>Sell <br> Price <br> (euro/ton)</p></th>
 <th class="text-align:center head"><p>Market <br> Demand <br> (tons)</p></th>
-<th class="text-align:center head"><p>Purchase <br> Price <br> (euro/ton)</p></th>
+<th class="text-align:center head"><p>Buy <br> Price <br> (euro/ton)</p></th>
 <th class="text-align:center head"><p>Cattle Feed <br> Required <br> (tons)</p></th>
 <th class="text-align:center head"><p>Planting <br> Cost <br> (euro/acre)</p></th>
 </tr>
@@ -635,33 +734,24 @@ ipopt was previously installed
 </tr>
 </tbody>
 </table>
-<p>(a) Implement the extensive form of stochastic LP corresponding to the farmer’s problem in Pyomo and solve it.</p>
 </section>
-<section id="model-building">
-<h2>Model Building<a class="headerlink" href="#model-building" title="Permalink to this headline">#</a></h2>
+<section id="data-modeling">
+<h2>Data Modeling<a class="headerlink" href="#data-modeling" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commodities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell&quot;</span><span class="p">:</span> <span class="mi">170</span><span class="p">,</span> <span class="s2">&quot;buy&quot;</span><span class="p">:</span> <span class="mi">238</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">},</span>
+    <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>  <span class="s2">&quot;buy&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="mi">240</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">230</span><span class="p">},</span>
+    <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span> <span class="s2">&quot;demand&quot;</span><span class="p">:</span> <span class="mi">6000</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">260</span><span class="p">},</span>
+    <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">260</span><span class="p">},</span>
+<span class="p">})</span><span class="o">.</span><span class="n">T</span>
 
-<span class="n">M</span> <span class="o">=</span> <span class="mi">10000</span>
-<span class="n">commodity_data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell price&quot;</span><span class="p">:</span> <span class="mi">170</span><span class="p">,</span> <span class="s2">&quot;market demand&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s2">&quot;buy price&quot;</span><span class="p">:</span> <span class="mi">238</span><span class="p">,</span> <span class="s2">&quot;feed&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">},</span>
-    <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell price&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s2">&quot;market demand&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s2">&quot;buy price&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span> <span class="s2">&quot;feed&quot;</span><span class="p">:</span> <span class="mi">240</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">230</span><span class="p">},</span>
-    <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell price&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span> <span class="s2">&quot;market demand&quot;</span><span class="p">:</span> <span class="mi">6000</span><span class="p">,</span> <span class="s2">&quot;buy price&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;feed&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">260</span><span class="p">},</span>
-    <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sell price&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;market demand&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s2">&quot;buy price&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;feed&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="mi">260</span><span class="p">},</span>
-<span class="p">}</span>
+<span class="c1"># fill NaN with a &quot;Big M&quot;</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">20000</span>
+<span class="n">commodities</span><span class="p">[</span><span class="s2">&quot;buy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">commodities</span><span class="p">[</span><span class="s2">&quot;demand&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">commodities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">commodity_data</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <span class="n">display</span><span class="p">(</span><span class="n">commodities</span><span class="p">)</span>
-
-<span class="n">yield_data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;good&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">3.6</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">},</span>
-    <span class="s2">&quot;average&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
-    <span class="s2">&quot;poor&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">2.4</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
-<span class="p">}</span>
-
-<span class="n">yields</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">yield_data</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="n">display</span><span class="p">(</span><span class="n">yields</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,49 +774,63 @@ ipopt was previously installed
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sell price</th>
-      <th>market demand</th>
-      <th>buy price</th>
-      <th>feed</th>
+      <th>sell</th>
+      <th>buy</th>
+      <th>required</th>
       <th>cost</th>
+      <th>demand</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>wheat</th>
-      <td>170</td>
-      <td>10000</td>
-      <td>238</td>
-      <td>200</td>
-      <td>150</td>
+      <td>170.0</td>
+      <td>238.0</td>
+      <td>200.0</td>
+      <td>150.0</td>
+      <td>20000.0</td>
     </tr>
     <tr>
       <th>corn</th>
-      <td>150</td>
-      <td>10000</td>
-      <td>210</td>
-      <td>240</td>
-      <td>230</td>
+      <td>150.0</td>
+      <td>210.0</td>
+      <td>240.0</td>
+      <td>230.0</td>
+      <td>20000.0</td>
     </tr>
     <tr>
       <th>beets</th>
-      <td>36</td>
-      <td>6000</td>
-      <td>0</td>
-      <td>10000</td>
-      <td>260</td>
+      <td>36.0</td>
+      <td>20000.0</td>
+      <td>0.0</td>
+      <td>260.0</td>
+      <td>6000.0</td>
     </tr>
     <tr>
       <th>more beets</th>
-      <td>10</td>
-      <td>10000</td>
-      <td>0</td>
-      <td>10000</td>
-      <td>260</td>
+      <td>10.0</td>
+      <td>20000.0</td>
+      <td>0.0</td>
+      <td>260.0</td>
+      <td>20000.0</td>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yields</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;good&quot;</span><span class="p">:</span>    <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">3.6</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">},</span>
+    <span class="s2">&quot;average&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+    <span class="s2">&quot;poor&quot;</span><span class="p">:</span>    <span class="p">{</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mf">2.4</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+<span class="p">})</span><span class="o">.</span><span class="n">T</span>
+<span class="n">display</span><span class="p">(</span><span class="n">yields</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -777,118 +881,839 @@ ipopt was previously installed
 </div></div></div>
 </div>
 </section>
-<section id="pyomo-model-development">
-<h2>Pyomo Model Development<a class="headerlink" href="#pyomo-model-development" title="Permalink to this headline">#</a></h2>
+<section id="farm-simulation">
+<h2>Farm Simulation<a class="headerlink" href="#farm-simulation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plant</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">(</span><span class="s2">&quot;Farmer&#39;s Problem&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sim_farm</span><span class="p">(</span><span class="n">plant</span><span class="p">,</span> <span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">):</span>
+    <span class="n">scenarios</span> <span class="o">=</span> <span class="n">yields</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">crops</span> <span class="o">=</span> <span class="n">commodities</span><span class="o">.</span><span class="n">index</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scenarios</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Scenario: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;plant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">plant</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">crops</span><span class="p">})</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">return</span>
+    
 
-<span class="n">m</span><span class="o">.</span><span class="n">CROPS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">commodities</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">yields</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-<span class="c1"># mutable parameters</span>
-<span class="n">m</span><span class="o">.</span><span class="n">total_land</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># here and now (first stage) decision variables</span>
-<span class="n">m</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">total_land</span><span class="p">))</span>
-
-<span class="c1"># wait and see (recourse, or second stage) decision variables</span>
-<span class="n">m</span><span class="o">.</span><span class="n">produce</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
-
-<span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">planting_cost</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">L</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
-
-<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">production</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">produce</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">yields</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">L</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-
-<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">maximize</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">mean_profit</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="k">return</span> <span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">planting_cost</span>
-
-<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-
-
-
-
-<span class="n">m</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">plant</span><span class="p">)</span>
+<span class="n">sim_farm</span><span class="p">(</span><span class="n">plant</span><span class="p">,</span> <span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 Set Declarations
-    CROPS : Size=1, Index=None, Ordered=Insertion
-        Key  : Dimen : Domain : Size : Members
-        None :     1 :    Any :    4 : {&#39;wheat&#39;, &#39;corn&#39;, &#39;beets&#39;, &#39;more beets&#39;}
-    SCENARIOS : Size=1, Index=None, Ordered=Insertion
-        Key  : Dimen : Domain : Size : Members
-        None :     1 :    Any :    3 : {&#39;good&#39;, &#39;average&#39;, &#39;poor&#39;}
-    produce_index : Size=1, Index=None, Ordered=True
-        Key  : Dimen : Domain          : Size : Members
-        None :     2 : SCENARIOS*CROPS :   12 : {(&#39;good&#39;, &#39;wheat&#39;), (&#39;good&#39;, &#39;corn&#39;), (&#39;good&#39;, &#39;beets&#39;), (&#39;good&#39;, &#39;more beets&#39;), (&#39;average&#39;, &#39;wheat&#39;), (&#39;average&#39;, &#39;corn&#39;), (&#39;average&#39;, &#39;beets&#39;), (&#39;average&#39;, &#39;more beets&#39;), (&#39;poor&#39;, &#39;wheat&#39;), (&#39;poor&#39;, &#39;corn&#39;), (&#39;poor&#39;, &#39;beets&#39;), (&#39;poor&#39;, &#39;more beets&#39;)}
-    production_index : Size=1, Index=None, Ordered=True
-        Key  : Dimen : Domain          : Size : Members
-        None :     2 : SCENARIOS*CROPS :   12 : {(&#39;good&#39;, &#39;wheat&#39;), (&#39;good&#39;, &#39;corn&#39;), (&#39;good&#39;, &#39;beets&#39;), (&#39;good&#39;, &#39;more beets&#39;), (&#39;average&#39;, &#39;wheat&#39;), (&#39;average&#39;, &#39;corn&#39;), (&#39;average&#39;, &#39;beets&#39;), (&#39;average&#39;, &#39;more beets&#39;), (&#39;poor&#39;, &#39;wheat&#39;), (&#39;poor&#39;, &#39;corn&#39;), (&#39;poor&#39;, &#39;beets&#39;), (&#39;poor&#39;, &#39;more beets&#39;)}
-
-1 Param Declarations
-    total_land : Size=1, Index=None, Domain=Any, Default=None, Mutable=True
-        Key  : Value
-        None :   500
-
-2 Var Declarations
-    L : Size=4, Index=CROPS
-        Key        : Lower : Value : Upper : Fixed : Stale : Domain
-             beets :     0 :   0.0 :   500 : False : False : NonNegativeReals
-              corn :     0 :   0.0 :   500 : False : False : NonNegativeReals
-        more beets :     0 :   0.0 :   500 : False : False : NonNegativeReals
-             wheat :     0 :   0.0 :   500 : False : False : NonNegativeReals
-    produce : Size=12, Index=produce_index
-        Key                       : Lower : Value : Upper : Fixed : Stale : Domain
-             (&#39;average&#39;, &#39;beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-              (&#39;average&#39;, &#39;corn&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-        (&#39;average&#39;, &#39;more beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-             (&#39;average&#39;, &#39;wheat&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                (&#39;good&#39;, &#39;beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                 (&#39;good&#39;, &#39;corn&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-           (&#39;good&#39;, &#39;more beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                (&#39;good&#39;, &#39;wheat&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                (&#39;poor&#39;, &#39;beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                 (&#39;poor&#39;, &#39;corn&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-           (&#39;poor&#39;, &#39;more beets&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-                (&#39;poor&#39;, &#39;wheat&#39;) :     0 :   0.0 :  None : False : False : NonNegativeReals
-
-1 Expression Declarations
-    planting_cost : Size=1, Index=None
-        Key  : Expression
-        None : 150*L[wheat] + 230*L[corn] + 260*L[beets] + 260*L[more beets]
-
-1 Objective Declarations
-    mean_profit : Size=1, Index=None, Active=True
-        Key  : Active : Sense    : Expression
-        None :   True : maximize : - (150*L[wheat] + 230*L[corn] + 260*L[beets] + 260*L[more beets])
-
-1 Constraint Declarations
-    production : Size=12, Index=production_index, Active=True
-        Key                       : Lower : Body                                             : Upper : Active
-             (&#39;average&#39;, &#39;beets&#39;) :   0.0 :           produce[average,beets] - 20.0*L[beets] :   0.0 :   True
-              (&#39;average&#39;, &#39;corn&#39;) :   0.0 :              produce[average,corn] - 3.0*L[corn] :   0.0 :   True
-        (&#39;average&#39;, &#39;more beets&#39;) :   0.0 : produce[average,more beets] - 20.0*L[more beets] :   0.0 :   True
-             (&#39;average&#39;, &#39;wheat&#39;) :   0.0 :            produce[average,wheat] - 2.5*L[wheat] :   0.0 :   True
-                (&#39;good&#39;, &#39;beets&#39;) :   0.0 :              produce[good,beets] - 24.0*L[beets] :   0.0 :   True
-                 (&#39;good&#39;, &#39;corn&#39;) :   0.0 :                 produce[good,corn] - 3.6*L[corn] :   0.0 :   True
-           (&#39;good&#39;, &#39;more beets&#39;) :   0.0 :    produce[good,more beets] - 24.0*L[more beets] :   0.0 :   True
-                (&#39;good&#39;, &#39;wheat&#39;) :   0.0 :               produce[good,wheat] - 3.0*L[wheat] :   0.0 :   True
-                (&#39;poor&#39;, &#39;beets&#39;) :   0.0 :              produce[poor,beets] - 16.0*L[beets] :   0.0 :   True
-                 (&#39;poor&#39;, &#39;corn&#39;) :   0.0 :                 produce[poor,corn] - 2.4*L[corn] :   0.0 :   True
-           (&#39;poor&#39;, &#39;more beets&#39;) :   0.0 :    produce[poor,more beets] - 16.0*L[more beets] :   0.0 :   True
-                (&#39;poor&#39;, &#39;wheat&#39;) :   0.0 :               produce[poor,wheat] - 2.0*L[wheat] :   0.0 :   True
-
-10 Declarations: CROPS SCENARIOS total_land L produce_index produce planting_cost production_index production mean_profit
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wheat         100
+corn          200
+beets         200
+more beets      0
+dtype: int64
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: good
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: average
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: poor
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="model-building">
+<h2>Model Building<a class="headerlink" href="#model-building" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="mean-solution">
+<h2>1. Mean Solution<a class="headerlink" href="#mean-solution" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">yields</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># maximize mean profit</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">maximize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span>
+
+<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="o">.</span><span class="n">dislay</span><span class="p">()</span>
+
+<span class="n">show_farmer</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">Input In [9],</span> in <span class="ni">&lt;cell line: 9&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="o">.</span><span class="n">dislay</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">show_farmer</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: &#39;IndexedVar&#39; object has no attribute &#39;dislay&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="stochastic-solution">
+<h2>2. Stochastic Solution<a class="headerlink" href="#stochastic-solution" title="Permalink to this headline">#</a></h2>
+<p>The problem statement asks for a number of different analyses. In a consulting situation, it is possible the client would ask more “what if” questions after hearing the initial results. For these reasons, we build a function that returns a Pyomo model the variables and expressions needed to address all parts of the problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
+
+<span class="k">def</span> <span class="nf">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">,</span> <span class="n">total_land</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">(</span><span class="s2">&quot;Farmer&#39;s Problem&quot;</span><span class="p">)</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">commodities</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">yields</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="c1"># mutable parameters</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">total_land</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="n">total_land</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># here and now (first stage) decision variables</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">plant</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">total_land</span><span class="p">))</span>
+
+    <span class="c1"># wait and see (recourse, or second stage) decision variables</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">produce</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">sell</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">buy</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">worst_case_profit</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">()</span>
+
+    <span class="c1"># first stage</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">limit_on_planted_land</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">total_land</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">planting_cost</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">]</span>
+
+    <span class="c1"># second stage constraints</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">crops_produced</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">produce</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">yields</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">buy_sell</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">produce</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">buy</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">sell</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">]</span> 
+
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">cannot_sell_more_than_demand</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">sell</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;demand&quot;</span><span class="p">]</span>
+
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">revenue</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;sell&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">sell</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">expense</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">planting_cost</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;buy&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">buy</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> 
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">scenario_profit</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">revenue</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="o">.</span><span class="n">expense</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">worst_case_profit_definition</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">scenario_profit</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="o">.</span><span class="n">worst_case_profit</span>
+
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Expression</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">mean_profit</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">scenario_profit</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">m</span>
+
+<span class="k">def</span> <span class="nf">sim_farmer</span><span class="p">(</span><span class="n">plant</span><span class="p">,</span> <span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">):</span>
+    <span class="n">retur</span>
+
+<span class="k">def</span> <span class="nf">show_farmer</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">scenario_profit</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">SCENARIOS</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Scenario: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    scenario profit = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">scenario_profit</span><span class="p">[</span><span class="n">s</span><span class="p">]()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;plant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="p">[</span><span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;produce&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">produce</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;buy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">buy</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;feed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">commodities</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;sell&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">sell</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;revenue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">revenue</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;expense&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">c</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">expense</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">})</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">)</span>
+
+<span class="c1"># maximize mean profit</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">maximize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span>
+
+<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">plant</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+
+<span class="n">show_farmer</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>plant : Size=4, Index=CROPS
+    Key        : Lower : Value : Upper : Fixed : Stale : Domain
+         beets :     0 : 250.0 :   500 : False : False : NonNegativeReals
+          corn :     0 :  80.0 :   500 : False : False : NonNegativeReals
+    more beets :     0 :   0.0 :   500 : False : False : NonNegativeReals
+         wheat :     0 : 170.0 :   500 : False : False : NonNegativeReals
+scenario_profit : Size=3
+    Key     : Value
+    average : 109350.0
+       good : 167000.0
+       poor :  48820.0
+mean_profit : Size=1
+    Key  : Value
+    None : 108390.0
+
+Scenario: good
+    scenario profit = 167000.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>170.0</td>
+      <td>510.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>310.0</td>
+      <td>52700.0</td>
+      <td>25500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>80.0</td>
+      <td>288.0</td>
+      <td>0.0</td>
+      <td>240</td>
+      <td>48.0</td>
+      <td>7200.0</td>
+      <td>18400.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>6000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>6000.0</td>
+      <td>216000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: average
+    scenario profit = 109350.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>170.0</td>
+      <td>425.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>225.0</td>
+      <td>38250.0</td>
+      <td>25500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>80.0</td>
+      <td>240.0</td>
+      <td>0.0</td>
+      <td>240</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>18400.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>5000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>5000.0</td>
+      <td>180000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: poor
+    scenario profit = 48820.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>170.0</td>
+      <td>340.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>140.0</td>
+      <td>23800.0</td>
+      <td>25500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>80.0</td>
+      <td>192.0</td>
+      <td>48.0</td>
+      <td>240</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>28480.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>4000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>4000.0</td>
+      <td>144000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="worst-case-profit">
+<h2>3. Worst Case Profit<a class="headerlink" href="#worst-case-profit" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">)</span>
+
+<span class="c1"># maximize mean profit</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">maximize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">worst_case_profit</span>
+
+<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">show_farmer</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>scenario_profit : Size=3
+    Key     : Value
+    average : 108250.0
+       good : 166000.0
+       poor :  50500.0
+mean_profit : Size=1
+    Key  : Value
+    None : 108250.0
+
+Scenario: good
+    scenario profit = 166000.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>150.0</td>
+      <td>450.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>250.0</td>
+      <td>42500.0</td>
+      <td>22500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>100.0</td>
+      <td>360.0</td>
+      <td>0.0</td>
+      <td>240</td>
+      <td>120.0</td>
+      <td>18000.0</td>
+      <td>23000.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>6000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>6000.0</td>
+      <td>216000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: average
+    scenario profit = 108250.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>150.0</td>
+      <td>375.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>175.0</td>
+      <td>29750.0</td>
+      <td>22500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>100.0</td>
+      <td>300.0</td>
+      <td>0.0</td>
+      <td>240</td>
+      <td>60.0</td>
+      <td>9000.0</td>
+      <td>23000.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>5000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>5000.0</td>
+      <td>180000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scenario: poor
+    scenario profit = 50500.0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plant</th>
+      <th>produce</th>
+      <th>buy</th>
+      <th>feed</th>
+      <th>sell</th>
+      <th>revenue</th>
+      <th>expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wheat</th>
+      <td>150.0</td>
+      <td>300.0</td>
+      <td>0.0</td>
+      <td>200</td>
+      <td>100.0</td>
+      <td>17000.0</td>
+      <td>22500.0</td>
+    </tr>
+    <tr>
+      <th>corn</th>
+      <td>100.0</td>
+      <td>240.0</td>
+      <td>0.0</td>
+      <td>240</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>23000.0</td>
+    </tr>
+    <tr>
+      <th>beets</th>
+      <td>250.0</td>
+      <td>4000.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>4000.0</td>
+      <td>144000.0</td>
+      <td>65000.0</td>
+    </tr>
+    <tr>
+      <th>more beets</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="risk-versus-return">
+<h2>4. Risk versus Return<a class="headerlink" href="#risk-versus-return" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">48000</span><span class="p">,</span> <span class="mi">50500</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">)</span>
+    
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CROPS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">min_profit</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">scenario_profit</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">wc</span>
+
+    <span class="c1"># maximize mean profit</span>
+    <span class="nd">@m</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">maximize</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span>
+
+    <span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wc</span><span class="p">,</span> <span class="s2">&quot;return&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">mean_profit</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wc</span><span class="p">,</span> <span class="s2">&quot;wc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wc</span>
+    
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;wc&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;return&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;wc&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/farmer-project_20_1.png" src="../../_images/farmer-project_20_1.png" />
 </div>
 </div>
 </section>
@@ -927,6 +1752,13 @@ ipopt was previously installed
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Airline seat allocation problem</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="../05/00-finance.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Financial Risk and Diversification</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

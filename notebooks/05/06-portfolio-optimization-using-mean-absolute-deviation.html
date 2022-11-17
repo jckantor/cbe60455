@@ -1,0 +1,932 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Portfolio Optimization using Mean Absolute Deviation &#8212; CBE 40455/60455 Process Operations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Portfolio Optimization" href="07-MAD-portfolio-optimization.html" />
+    <link rel="prev" title="Portfolio Optimization" href="05-portfolio-optimization.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CBE 40455/60455 Process Operations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    CBE 40555/60455 Process Operations
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01/syllabus.html">
+   CBE 40455/60455 Process Operations: Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../02/00-discrete-event-modeling.html">
+   Introduction to Discrete Event Simulation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/01-simpy.html">
+     Introduction to Simpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/02-agent-based-models.html">
+     Agent Based Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/03-queuing-systems.html">
+     Simulating Queuing Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/04-batch-process-prompt.html">
+     Batch Chemical Process
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../03/00-scheduling.html">
+   Scheduling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/01-critical-path-method.html">
+     Critical Path Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/02-machine-bottleneck.html">
+     Machine Bottleneck
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/03-job-shop-scheduling.html">
+     Job Shop Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/07-State-Task-Networks.html">
+     Scheduling Multipurpose Batch Processes using State-Task Networks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../04/00-uncertainty.html">
+   Optimization under Uncertainty
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/vendor-problem.html">
+     The Vendor Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/airline-seating.html">
+     Airline seat allocation problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/farmer-project.html">
+     Solving the Farmer’s problem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="00-finance.html">
+   Financial Risk and Diversification
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-measuring-return.html">
+     Measuring Return
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-binomial-model-for-pricing-options.html">
+     Binomial Model for Pricing Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04-real-options.html">
+     Real Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Portfolio Optimization using Mean Absolute Deviation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07-MAD-portfolio-optimization.html">
+     Portfolio Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html">
+     Log-Optimal Growth and the Kelly Criterion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09-Log-Optimal-Portfolios.html">
+     Log-Optimal Portfolios
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/jckantor/cbe60455/main?urlpath=tree/notebooks/05/06-portfolio-optimization-using-mean-absolute-deviation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/jckantor/cbe60455/blob/main/notebooks/05/06-portfolio-optimization-using-mean-absolute-deviation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jckantor/cbe60455"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jckantor/cbe60455/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/06-portfolio-optimization-using-mean-absolute-deviation.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/notebooks/05/06-portfolio-optimization-using-mean-absolute-deviation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mean-absolute-deviation">
+   Mean Absolute Deviation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reformulation-of-the-mad-objective">
+   Reformulation of the MAD Objective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seeding-the-glpk-pseudo-random-number-generator">
+   Seeding the GLPK Pseudo-Random Number Generator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-of-the-historical-returns">
+   Simulation of the Historical Returns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mathprog-model">
+   MathProg Model
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Portfolio Optimization using Mean Absolute Deviation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mean-absolute-deviation">
+   Mean Absolute Deviation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reformulation-of-the-mad-objective">
+   Reformulation of the MAD Objective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seeding-the-glpk-pseudo-random-number-generator">
+   Seeding the GLPK Pseudo-Random Number Generator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-of-the-historical-returns">
+   Simulation of the Historical Returns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mathprog-model">
+   MathProg Model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <!--NOTEBOOK_HEADER-->
+<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
+Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
+The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
+and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization-using-mean-absolute-deviation">
+<h1>Portfolio Optimization using Mean Absolute Deviation<a class="headerlink" href="#portfolio-optimization-using-mean-absolute-deviation" title="Permalink to this headline">#</a></h1>
+<p>This <a class="reference external" href="http://ipython.org/notebook.html">IPython notebook</a> demonstrates portfolio optimization using the Mean Absolute Deviation (MAD) criterion. A portion of these notes is adapted from <a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/Portfolio_Optimization">GLPK Wikibook tutorial on the subject</a> written by me.</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<p>Konno and Yamazaki (1990) proposed a linear programming model for portfolio optimization in which the risk measure is mean absolute deviation (MAD). This model computes a portfolio minimizing MAD subject to a lower bound on return.</p>
+<p>In contrast to the classical Markowitz portfolio, the MAD criterion requires a data set consisting of returns on the investment assets. The data set may be an historical record or samples from a multivariate statistical model of portfolio returns.  The MAD criterion produces portfolios with properties not shared by the Markowitz portfolio, including second degree stochastic dominance.</p>
+<p>Below we demonstrate portfolio optimization with the MAD criterion where data is generated by sampling a multivariate normal distribution. Given mean return <span class="math notranslate nohighlight">\(r\)</span> and the Cholesky decomposition of the covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> (i.e., <span class="math notranslate nohighlight">\(C\)</span> such that <span class="math notranslate nohighlight">\(CC^T = \Sigma\)</span>), we compute <span class="math notranslate nohighlight">\(r_t = r + C z_t\)</span> where the elements of <span class="math notranslate nohighlight">\(z_t\)</span> are zero mean normal variates with unit variance.</p>
+<p>The rest of the formulation is adapted from “Optimization Methods in Finance” by Gerald Curnuejols and Reha Tutuncu (2007) which, in turn, follows an implementation due to Fienstein and Thapa (1993).</p>
+<p><a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/Portfolio_Optimization">A complete tutorial</a> describing the implementation of this model is available on the <a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/">GLPK wikibook</a>.</p>
+</section>
+<section id="mean-absolute-deviation">
+<h2>Mean Absolute Deviation<a class="headerlink" href="#mean-absolute-deviation" title="Permalink to this headline">#</a></h2>
+<p>Portfolio optimization refers to the process of allocating capital among a set of financial assets to achieve a desired tradeoff between risk and return. The classical Markowitz approach to this problem measures risk using the expected variance of the portfolio return. This criterion yields a quadratic program for the relative weights of assets in the optimal portfolio.</p>
+<p>In 1991, Konno and Yamazaki <ref></ref> proposed a linear programming model for portfolio optimization whereby risk is measured by the mean absolute deviation (MAD) from the expected return.  Using MAD as the risk metric produces portfolios with several desirable properties not shared by the Markowitz portfolio, including [[w:Stochastic_dominance|second order stochastic dominance]].</p>
+<p>As originally formulated by Konno and Yamazaki, one starts with a history of returns <span class="math notranslate nohighlight">\(R_i(t_n)\)</span> for every asset in a set <span class="math notranslate nohighlight">\(S\)</span> of assets. The return at time <span class="math notranslate nohighlight">\(t_n\)</span> is determined by the change in price of the asset,</p>
+<div class="math notranslate nohighlight">
+\[R_i(t_n)= {(P_i(t_n)-P_i(t_{n-1}))}/{P_i(t_{n-1})}\]</div>
+<p>For each asset, the expected return is estimated by</p>
+<div class="math notranslate nohighlight">
+\[\bar{R}_i \approx \frac{1}{N}\sum_{n=1}^NR_i(t_n)\]</div>
+<p>The investor specifies a minimum required return <span class="math notranslate nohighlight">\(R_{p}\)</span>.  The portfolio optimization problem is to determine the fraction of the total investment allocated to each asset, <span class="math notranslate nohighlight">\(w_i\)</span>,  that minimizes the mean absolution deviation from the mean</p>
+<div class="math notranslate nohighlight">
+\[\min_{w_i} \frac{1}{N}\sum_{n=1}^N\lvert\sum_{i \in S} w_i(R_i(t_n)-\bar{R}_i)\rvert\]</div>
+<p>subject to the required return and a fixed total investment:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rcl}
+\sum_{i \in S} w_i\bar{R}_i &amp; \geq &amp; R_{p}  \\
+\quad \\
+\sum_{i \in S} w_i &amp; = &amp; 1
+\end{array}
+\end{split}\]</div>
+<p>The value of the minimum required return, <span class="math notranslate nohighlight">\(R_p\)</span> expresses the investor’s risk tolerance. A smaller value for <span class="math notranslate nohighlight">\(R_p\)</span> increases the feasible solution space, resulting in portfolios with lower values of the MAD risk metric. Increasing <span class="math notranslate nohighlight">\(R_p\)</span> results in portfolios with higher risk. The relationship between risk and return is a fundamental principle of investment theory.</p>
+<p>This formulation doesn’t place individual bounds on the weights <span class="math notranslate nohighlight">\(w_i\)</span>. In particular, <span class="math notranslate nohighlight">\(w_i &lt; 0\)</span> corresponds to short selling of the associated asset.  Constraints can be added if the investor imposes limits on short-selling, on the maximum amount that can be invested in a single asset, or other requirements for portfolio diversification.  Depending on the set of available investment opportunities, additional constraints can lead to infeasible investment problems.</p>
+</section>
+<section id="reformulation-of-the-mad-objective">
+<h2>Reformulation of the MAD Objective<a class="headerlink" href="#reformulation-of-the-mad-objective" title="Permalink to this headline">#</a></h2>
+<p>The following formulation of the objective function is adapted from “Optimization Methods in Finance” by Gerald Curnuejols and Reha Tutuncu (2007) <ref></ref> which, in turn, follows
+Feinstein and Thapa (1993) <ref></ref>.</p>
+<p>The model is streamlined by introducing decision variables <span class="math notranslate nohighlight">\(y_n \geq 0\)</span> and <span class="math notranslate nohighlight">\(z_n \geq 0\)</span>, <span class="math notranslate nohighlight">\(n=1,\ldots,N\)</span> so that the objective becomes</p>
+<div class="math notranslate nohighlight">
+\[\min_{w_i, y_n,z_n} \frac{1}{N}\sum_{n = 1}^{N} (y_n+z_n)\]</div>
+<p>subject to constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rcl}
+\sum_{i \in S} w_i\bar{R}_i &amp; \geq &amp; R_{p} \\ \\
+\sum_{i \in S} w_i &amp; = &amp; 1 \\ \\
+y_n-z_n &amp; = &amp; \sum_{i \in S} w_i(R_i(t_n)-\bar{R}_i) \quad \mbox{for}\quad n = 1,\ldots,N
+\end{array}
+\end{split}\]</div>
+<p>As discussed by Feinstein and Thapa, this version reduces the problem to <span class="math notranslate nohighlight">\(N+2\)</span> constraints in <span class="math notranslate nohighlight">\( 2N+\mbox{card}(S)\)</span> decision variables, noting the <code class="docutils literal notranslate"><span class="pre">card</span></code> function.</p>
+</section>
+<section id="seeding-the-glpk-pseudo-random-number-generator">
+<h2>Seeding the GLPK Pseudo-Random Number Generator<a class="headerlink" href="#seeding-the-glpk-pseudo-random-number-generator" title="Permalink to this headline">#</a></h2>
+<p>Unfortunately, MathProg does not provide a method to seed the pseudo-random number generator in GLPK.  Instead, the following GMPL code fragment uses the function gmtime() to find the number of seconds since 1970. Dropping the leading digit avoids subsequent overflow errors, and the square returns a number with big changes every second.  Extracting the lowest digits produces a number between 0 and 100,000 that determines how many times to sample GLPK’s pseudo-random number generator prior to subsequent use. This hack comes with no assurances regarding its statistical properties.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* A workaround for the lack of a way to seed the PRNG in GMPL */
+param utc := prod {1..2} (gmtime()-1000000000);
+param seed := utc - 100000*floor(utc/100000);
+check sum{1..seed} Uniform01() &gt; 0;
+</pre></div>
+</div>
+</section>
+<section id="simulation-of-the-historical-returns">
+<h2>Simulation of the Historical Returns<a class="headerlink" href="#simulation-of-the-historical-returns" title="Permalink to this headline">#</a></h2>
+<p>For this implementation, historical returns are simulated assuming knowledge of the means and covariances of asset returns. We begin with a vector of mean returns <span class="math notranslate nohighlight">\(\bar{R}\)</span> and covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> estimated by</p>
+<div class="math notranslate nohighlight">
+\[
+\Sigma_{ij}   \approx  \frac{1}{N-1}\sum_{n=1}^N(R_i(t_n)-\bar{R}_i)(R_j(t_n)-\bar{R}_j)
+\]</div>
+<p>Simulation of historical returns requires generation of samples from a multivariable normal distribution.  For this purpose  we  compute the Cholesky factorization where, for a positive semi-definite <span class="math notranslate nohighlight">\(\Sigma\)</span>, <span class="math notranslate nohighlight">\(\Sigma=CC^T\)</span> and <span class="math notranslate nohighlight">\(C\)</span> is a lower triangular matrix.  The following MathProg code fragment implements the Cholesky-Crout algorithm.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* Cholesky Lower Triangular Decomposition of the Covariance Matrix */
+param C{i in S, j in S : i &gt;= j} :=
+    if i = j then
+        sqrt(Sigma[i,i]-(sum {k in S : k &lt; i} (C[i,k]*C[i,k])))
+    else
+        (Sigma[i,j]-sum{k in S : k &lt; j} C[i,k]*C[j,k])/C[j,j];
+</pre></div>
+</div>
+<p>Without error checking, this code fragment fails unless <span class="math notranslate nohighlight">\(\Sigma\)</span> is positive definite.  The covariance matrix is normally positive definite for real-world data, so this is generally not an issue.  However, it does become an issue if one attempts to include a risk-free asset, such as a government bond, in the set of investment assets.</p>
+<p>Once the Cholesky factor <span class="math notranslate nohighlight">\(C\)</span> has been computed, a vector of simulated returns <span class="math notranslate nohighlight">\(R(t_n)\)</span> is given by <span class="math notranslate nohighlight">\(R(t_n) = \bar{R} + C Z(t_n)\)</span> where the elements of <span class="math notranslate nohighlight">\(Z(t_n)\)</span> are independent samples from a normal distribution with zero mean and unit variance.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* Simulated returns */
+param N default 5000;
+set T := 1..N;
+param R{i in S, t in T} := Rbar[i] + sum {j in S : j &lt;= i} C[i,j]*Normal(0,1);
+</pre></div>
+</div>
+</section>
+<section id="mathprog-model">
+<h2>MathProg Model<a class="headerlink" href="#mathprog-model" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m /dev/stdin
+
+# Example: PortfolioMAD.mod  Portfolio Optimization using Mean Absolute Deviation
+
+/* Stock Data */
+
+set S;                                    # Set of stocks
+param r{S};                               # Means of projected returns
+param cov{S,S};                           # Covariance of projected returns
+param r_portfolio
+    default (1/card(S))*sum{i in S} r[i]; # Lower bound on portfolio return
+
+/* Generate sample data */
+
+/* Cholesky Lower Triangular Decomposition of the Covariance Matrix */
+param c{i in S, j in S : i &gt;= j} := 
+    if i = j then
+        sqrt(cov[i,i]-(sum {k in S : k &lt; i} (c[i,k]*c[i,k])))
+    else
+        (cov[i,j]-sum{k in S : k &lt; j} c[i,k]*c[j,k])/c[j,j];
+
+/* Because there is no way to seed the PRNG, a workaround */
+param utc := prod {1..2} (gmtime()-1000000000);
+param seed := utc - 100000*floor(utc/100000);
+check sum{1..seed} Uniform01() &gt; 0;
+
+/* Normal random variates */
+param N default 5000;
+set T := 1..N;
+param zn{j in S, t in T} := Normal(0,1);
+param rt{i in S, t in T} := r[i] + sum {j in S : j &lt;= i} c[i,j]*zn[j,t];
+
+/* MAD Optimization */
+
+var w{S} &gt;= 0;                # Portfolio Weights with Bounds
+var y{T} &gt;= 0;                # Positive deviations (non-negative)
+var z{T} &gt;= 0;                # Negative deviations (non-negative)
+
+minimize MAD: (1/card(T))*sum {t in T} (y[t] + z[t]);
+
+s.t. C1: sum {s in S} w[s]*r[s] &gt;= r_portfolio;
+s.t. C2: sum {s in S} w[s] = 1;
+s.t. C3 {t in T}: (y[t] - z[t]) = sum{s in S} (rt[s,t]-r[s])*w[s];
+
+solve;
+
+/* Report */
+
+/* Input Data */
+printf &quot;Stock Data\n\n&quot;;
+printf &quot;         Return   Variance\n&quot;;
+printf {i in S} &quot;%5s   %7.4f   %7.4f\n&quot;, i, r[i], cov[i,i];
+
+printf &quot;\nCovariance Matrix\n\n&quot;;
+printf &quot;     &quot;;
+printf {j in S} &quot; %7s &quot;, j;
+printf &quot;\n&quot;;
+for {i in S} {
+    printf &quot;%5s  &quot; ,i;
+    printf {j in S} &quot; %7.4f &quot;, cov[i,j];
+    printf &quot;\n&quot;;
+}
+
+/* MAD Optimal Portfolio */
+printf &quot;\nMinimum Absolute Deviation (MAD) Portfolio\n\n&quot;;
+printf &quot;  Return   = %7.4f\n&quot;,r_portfolio;
+printf &quot;  Variance = %7.4f\n\n&quot;, sum {i in S, j in S} w[i]*w[j]*cov[i,j];
+printf &quot;         Weight\n&quot;;
+printf {s in S} &quot;%5s   %7.4f\n&quot;, s, w[s];
+printf &quot;\n&quot;;
+
+table tab0 {s in S} OUT &quot;JSON&quot; &quot;Optimal Portfolio&quot; &quot;PieChart&quot;: 
+    s, w[s]~PortfolioWeight;
+    
+table tab1 {s in S} OUT &quot;JSON&quot; &quot;Asset Return versus Volatility&quot; &quot;ScatterChart&quot;:
+    sqrt(cov[s,s])~StDev, r[s]~Return;
+    
+table tab2 {s in S} OUT &quot;JSON&quot; &quot;Portfolio Weights&quot; &quot;ColumnChart&quot;: 
+    s~Stock, w[s]~PortfolioWeight;
+    
+table tab3 {t in T} OUT &quot;JSON&quot; &quot;Simulated Portfolio Return&quot; &quot;LineChart&quot;: 
+    t~month, (y[t] - z[t])~PortfolioReturn;
+
+/* Simulated Return data in Matlab Format */
+/*
+printf &quot;\nrt = [ ... \n&quot;;
+for {t in T} {
+   printf {s in S} &quot;%9.4f&quot;,rt[s,t];
+   printf &quot;; ...\n&quot;;
+}
+printf &quot;];\n\n&quot;;
+*/
+
+data;
+
+/* Data for monthly returns on four selected stocks for a three
+year period ending December 4, 2009 */
+
+param N := 200;
+
+param r_portfolio := 0.01;
+
+param : S : r :=
+    AAPL    0.0308
+    GE     -0.0120
+    GS      0.0027
+    XOM     0.0018 ;
+
+param   cov : 
+            AAPL    GE      GS      XOM  :=
+    AAPL    0.0158  0.0062  0.0088  0.0022
+    GE      0.0062  0.0136  0.0064  0.0011
+    GS      0.0088  0.0064  0.0135  0.0008
+    XOM     0.0022  0.0011  0.0008  0.0022 ;
+
+end;
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLPSOL: GLPK LP/MIP Solver, v4.52
+Parameter(s) specified in the command line:
+ -m /dev/stdin
+Reading model section from /dev/stdin...
+Reading data section from /dev/stdin...
+/dev/stdin:115: warning: final NL missing before end of file
+115 lines were read
+Checking (line 24)...
+Generating MAD...
+Generating C1...
+Generating C2...
+Generating C3...
+Model has been successfully generated
+GLPK Simplex Optimizer, v4.52
+203 rows, 404 columns, 1608 non-zeros
+Preprocessing...
+140 rows, 142 columns, 698 non-zeros
+Scaling...
+ A: min|aij| =  2.301e-04  max|aij| =  1.000e+00  ratio =  4.346e+03
+GM: min|aij| =  9.139e-02  max|aij| =  1.094e+01  ratio =  1.197e+02
+EQ: min|aij| =  8.625e-03  max|aij| =  1.000e+00  ratio =  1.159e+02
+Constructing initial basis...
+Size of triangular part is 140
+      0: obj =   1.502038445e-02  infeas =  7.709e+00 (0)
+*   116: obj =   6.534903273e-02  infeas =  0.000e+00 (0)
+*   157: obj =   4.760242137e-02  infeas =  0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Time used:   0.0 secs
+Memory used: 1.0 Mb (1076387 bytes)
+Stock Data
+
+         Return   Variance
+ AAPL    0.0308    0.0158
+   GE   -0.0120    0.0136
+   GS    0.0027    0.0135
+  XOM    0.0018    0.0022
+
+Covariance Matrix
+
+         AAPL       GE       GS      XOM 
+ AAPL    0.0158   0.0062   0.0088   0.0022 
+   GE    0.0062   0.0136   0.0064   0.0011 
+   GS    0.0088   0.0064   0.0135   0.0008 
+  XOM    0.0022   0.0011   0.0008   0.0022 
+
+Minimum Absolute Deviation (MAD) Portfolio
+
+  Return   =  0.0100
+  Variance =  0.0033
+
+         Weight
+ AAPL    0.2828
+   GE    0.0000
+   GS    0.0000
+  XOM    0.7172
+
+Writing tab0...
+Invalid table driver `JSON&#39;
+/dev/stdin:71: error on opening table tab0
+Model postsolving error
+</pre></div>
+</div>
+</div>
+</div>
+<!--NAVIGATION-->
+<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python2",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python2'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="05-portfolio-optimization.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Portfolio Optimization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="07-MAD-portfolio-optimization.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Portfolio Optimization</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jeffrey C. Kantor<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
