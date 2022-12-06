@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Simulating Queuing Systems &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Batch Chemical Process" href="04-batch-process-prompt.html" />
     <link rel="prev" title="Agent Based Models" href="02-agent-based-models.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -657,12 +658,12 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="simulating-queuing-systems">
-<h1>Simulating Queuing Systems<a class="headerlink" href="#simulating-queuing-systems" title="Permalink to this headline">#</a></h1>
+<h1>Simulating Queuing Systems<a class="headerlink" href="#simulating-queuing-systems" title="Permalink to this heading">#</a></h1>
 <p>Queuing theory is one of the foundations for the analysis of discrete-event systems. This notebook introduces the nomenclature and terminology of queuing theory that will be used in later applications.</p>
 <section id="examples-of-queues">
-<h2>Examples of Queues<a class="headerlink" href="#examples-of-queues" title="Permalink to this headline">#</a></h2>
+<h2>Examples of Queues<a class="headerlink" href="#examples-of-queues" title="Permalink to this heading">#</a></h2>
 <section id="manufacturing-lines">
-<h3>Manufacturing Lines<a class="headerlink" href="#manufacturing-lines" title="Permalink to this headline">#</a></h3>
+<h3>Manufacturing Lines<a class="headerlink" href="#manufacturing-lines" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
@@ -684,14 +685,14 @@ title="Print to PDF"
 <p><a class="reference external" href="https://electrek.co/2020/08/31/tesla-video-production-gigafactory-shanghai-alien-dreadnought/?fbclid=IwAR2jHUZMQG4Gl77ugYHvm3DTq-zV5iOuN3bMNePzJswvfY_VVgYP3W7pSZQ">Tesla China - Shanghai Gigafactory production line</a>.</p>
 </section>
 <section id="service-lines">
-<h3>Service Lines<a class="headerlink" href="#service-lines" title="Permalink to this headline">#</a></h3>
+<h3>Service Lines<a class="headerlink" href="#service-lines" title="Permalink to this heading">#</a></h3>
 <p><img alt="mathworks queue" src="https://blogs.mathworks.com/images/seth/2015Q1/queues.png" /></p>
 </section>
 </section>
 <section id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">#</a></h2>
+<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this heading">#</a></h2>
 <section id="nomenclature">
-<h3>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this headline">#</a></h3>
+<h3>Nomenclature<a class="headerlink" href="#nomenclature" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Servers</p></li>
 <li><p>Arrival rate</p></li>
@@ -700,7 +701,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="service-disciplines-of-many-possibilities">
-<h3>Service Disciplines (of many possibilities)<a class="headerlink" href="#service-disciplines-of-many-possibilities" title="Permalink to this headline">#</a></h3>
+<h3>Service Disciplines (of many possibilities)<a class="headerlink" href="#service-disciplines-of-many-possibilities" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>First-in-first-out (FIFO or FCFS)</p></li>
 <li><p>Last in first out (LIFO)</p></li>
@@ -712,7 +713,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="poisson-process">
-<h2>Poisson Process<a class="headerlink" href="#poisson-process" title="Permalink to this headline">#</a></h2>
+<h2>Poisson Process<a class="headerlink" href="#poisson-process" title="Permalink to this heading">#</a></h2>
 <p>Poisson processes describe the occurance of independent random events. Examples:</p>
 <ul class="simple">
 <li><p>Arrival of customers, orders, or other entities from totally independent sources.</p></li>
@@ -721,7 +722,7 @@ title="Print to PDF"
 </ul>
 <p>Poisson processes are a useful approximation for many simulations, and also very easy to implement in practice. This section introduces some theory before describing a typical implementation.</p>
 <section id="binomial-distribution">
-<h3>Binomial distribution<a class="headerlink" href="#binomial-distribution" title="Permalink to this headline">#</a></h3>
+<h3>Binomial distribution<a class="headerlink" href="#binomial-distribution" title="Permalink to this heading">#</a></h3>
 <p>Suppose there is a probability <span class="math notranslate nohighlight">\(p\)</span> of an event occurring in a short interval. We’ll assume the interval is short enough that two or more events in the same interval would be extremely unlikely. Assuming each event is independent, the probability of seeing <span class="math notranslate nohighlight">\(k\)</span> events in <span class="math notranslate nohighlight">\(n\)</span> intervals is given by the binomial distribution</p>
 <div class="math notranslate nohighlight">
 \[\text{Binomial}(k | n, p) = \frac{n!}{k! (n-k)!} p^k (1 - p)^{n-k}\]</div>
@@ -762,7 +763,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="poisson-distribution">
-<h3>Poisson distribution<a class="headerlink" href="#poisson-distribution" title="Permalink to this headline">#</a></h3>
+<h3>Poisson distribution<a class="headerlink" href="#poisson-distribution" title="Permalink to this heading">#</a></h3>
 <p>Now imagine the events are occuring at an average rate <span class="math notranslate nohighlight">\(r\)</span> of events per unit time. In period <span class="math notranslate nohighlight">\(t\)</span> there would be, on average, <span class="math notranslate nohighlight">\(r t\)</span> events. If that period is broken into <span class="math notranslate nohighlight">\(n\)</span> intervals then</p>
 <div class="math notranslate nohighlight">
 \[ p = \frac{rt}{n}\]</div>
@@ -820,7 +821,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="waiting-time-between-events">
-<h3>Waiting time between events<a class="headerlink" href="#waiting-time-between-events" title="Permalink to this headline">#</a></h3>
+<h3>Waiting time between events<a class="headerlink" href="#waiting-time-between-events" title="Permalink to this heading">#</a></h3>
 <p>Suppose an event has just occurred. What is the probability of no additional events in the next <span class="math notranslate nohighlight">\(t\)</span> units of time? This is calculated with the Poisson distribution where <span class="math notranslate nohighlight">\(k=0\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\text{Poisson}(0 | r, t) = e^{-r t}\]</div>
@@ -831,7 +832,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="simulating-a-poisson-process-in-simpy">
-<h2>Simulating a Poisson Process in SimPy<a class="headerlink" href="#simulating-a-poisson-process-in-simpy" title="Permalink to this headline">#</a></h2>
+<h2>Simulating a Poisson Process in SimPy<a class="headerlink" href="#simulating-a-poisson-process-in-simpy" title="Permalink to this heading">#</a></h2>
 <p>Poisson processes are easy to implement in SimPy. A single parameter, commonly denoted as <span class="math notranslate nohighlight">\(r\)</span> or <span class="math notranslate nohighlight">\(\lambda\)</span>, is required to specify the average rate of occurance in units of number per unit time. For example, a value <span class="math notranslate nohighlight">\(\lambda = 4.2 \text{ min}^{-1}\)</span> corresponds to an average of 4.2 events per minute.</p>
 <p>An alternative specification is so express the mean time between events. The rate of machine failures, for example, is typically specified as “mean time between failures” (MTBF). In these cases, <span class="math notranslate nohighlight">\(r = \lambda = \frac{1}{\bar{\tau}}\)</span> where <span class="math notranslate nohighlight">\(\bar{\tau}\)</span> is the mean time between events.</p>
 <p>Once the mean rate has been determined, the time between events can be simulated by drawing samples from an exponential distribution</p>
@@ -894,7 +895,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="kendall-notation-for-queues">
-<h2>Kendall notation for queues<a class="headerlink" href="#kendall-notation-for-queues" title="Permalink to this headline">#</a></h2>
+<h2>Kendall notation for queues<a class="headerlink" href="#kendall-notation-for-queues" title="Permalink to this heading">#</a></h2>
 <p>Kendall notation is a standardized methods to describe and classify queues. The notation consists of three factors written as A/S/c where where A describes the arrival process, S the service process, and c is the number of servers attending the queue.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(A/S/c\)</span></p>
@@ -918,7 +919,7 @@ title="Print to PDF"
 <p><img alt="Call Center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Emergency_Call_Center_112.jpg/640px-Emergency_Call_Center_112.jpg" /></p>
 </section>
 <section id="example-simulation-of-an-order-processing-queue">
-<h2>Example: Simulation of an Order Processing Queue<a class="headerlink" href="#example-simulation-of-an-order-processing-queue" title="Permalink to this headline">#</a></h2>
+<h2>Example: Simulation of an Order Processing Queue<a class="headerlink" href="#example-simulation-of-an-order-processing-queue" title="Permalink to this heading">#</a></h2>
 <p>A chemical storeroom processes orders for a large research campus. At peak loads it is expected to receive an average of one order every 12 minutes. The time required to process each order is a fixed 10 minutes.</p>
 <ol class="simple">
 <li><p>Describe the process using the Kendall notation: M/D/1</p></li>

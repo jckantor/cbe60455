@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Binomial Model for Pricing Options &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Real Options" href="04-real-options.html" />
     <link rel="prev" title="Measuring Return" href="01-measuring-return.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -613,7 +614,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="binomial-model-for-pricing-options">
-<h1>Binomial Model for Pricing Options<a class="headerlink" href="#binomial-model-for-pricing-options" title="Permalink to this headline">#</a></h1>
+<h1>Binomial Model for Pricing Options<a class="headerlink" href="#binomial-model-for-pricing-options" title="Permalink to this heading">#</a></h1>
 <p>This notebooks demonstrates techniques for pricing options using a binomial lattice to model prices of the underlying security or commodity. The notebook makes use of the pandas_datareader library to download pricing information, and the Pyomo modeling library for some example calculations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -623,24 +624,24 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas_datareader in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (0.10.0)
-Requirement already satisfied: pandas&gt;=0.23 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (1.4.1)
 Requirement already satisfied: lxml in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (4.8.0)
+Requirement already satisfied: pandas&gt;=0.23 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (1.4.1)
 Requirement already satisfied: requests&gt;=2.19.0 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas_datareader) (2.27.1)
 Requirement already satisfied: python-dateutil&gt;=2.8.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2.8.2)
 Requirement already satisfied: pytz&gt;=2020.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (2021.3)
 Requirement already satisfied: numpy&gt;=1.18.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from pandas&gt;=0.23-&gt;pandas_datareader) (1.21.2)
 Requirement already satisfied: six&gt;=1.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from python-dateutil&gt;=2.8.1-&gt;pandas&gt;=0.23-&gt;pandas_datareader) (1.16.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2022.9.24)
 Requirement already satisfied: charset-normalizer~=2.0.0 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2.0.4)
-Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (1.26.8)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (3.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (2022.9.24)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /Users/jeff/opt/anaconda3/lib/python3.9/site-packages (from requests&gt;=2.19.0-&gt;pandas_datareader) (1.26.8)
 </pre></div>
 </div>
 </div>
 </div>
 <section id="historical-data">
-<h2>Historical Data<a class="headerlink" href="#historical-data" title="Permalink to this headline">#</a></h2>
-<p>The first step is download historical data for a selected security or commodity.  For the purposes of this notebook, it is useful to choose security of commodities for which there is an active options trading so the pricing model can be compared to real data.</p>
+<h2>Historical Data<a class="headerlink" href="#historical-data" title="Permalink to this heading">#</a></h2>
+<p>The first step is download historical data for a selected security or commodity.  For the purposes of this notebook, it is useful to choose security of commodities for which there is an active options trading so the pricing model can be compared to real data. A set of symbols representing commodity prices available on Yahoo Finance is located <a class="reference external" href="https://finance.yahoo.com/commodities/">here</a>.</p>
 <p><strong>Programming note:</strong> Given a stock market symbol, the function <code class="docutils literal notranslate"><span class="pre">yahoo_finance</span></code> defined in the following cell creates a pandas data series object <code class="docutils literal notranslate"><span class="pre">S</span></code> of historical prices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -674,18 +675,34 @@ Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/jeff/opt/anaconda3/l
 
     <span class="k">return</span> <span class="n">S</span>
 
-<span class="n">S</span> <span class="o">=</span> <span class="n">yahoo_finance</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">yahoo_finance</span><span class="p">(</span><span class="s1">&#39;HOH23.NYM&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/03-binomial-model-for-pricing-options_3_0.png" src="../../_images/03-binomial-model-for-pricing-options_3_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Date
+2022-05-19    3.1092
+2022-05-20    3.1091
+2022-05-23    3.1310
+2022-05-24    3.1473
+2022-05-25    3.1879
+               ...  
+2022-11-11    3.2738
+2022-11-14    3.2387
+2022-11-15    3.3072
+2022-11-16    3.2787
+2022-11-17    3.2283
+Name: HOH23.NYM, Length: 128, dtype: float64
+</pre></div>
+</div>
+<img alt="../../_images/03-binomial-model-for-pricing-options_3_1.png" src="../../_images/03-binomial-model-for-pricing-options_3_1.png" />
 </div>
 </div>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="fitting-historical-data-to-geometric-brownian-motion">
-<h1>Fitting Historical Data to Geometric Brownian Motion<a class="headerlink" href="#fitting-historical-data-to-geometric-brownian-motion" title="Permalink to this headline">#</a></h1>
+<h1>Fitting Historical Data to Geometric Brownian Motion<a class="headerlink" href="#fitting-historical-data-to-geometric-brownian-motion" title="Permalink to this heading">#</a></h1>
 <p>A model for Geometric Brownian Motion can be written in discrete time as</p>
 <div class="math notranslate nohighlight">
 \[S_{t + \Delta t} = S_t + \mu S_t \Delta t + \sigma S_t \sqrt{\Delta t} Z_t \]</div>
@@ -706,10 +723,10 @@ r^{log} &amp; = \ln S_{t+\Delta t} - \ln S_t = \nu\Delta t + \sigma \sqrt{\Delta
 \hat{\sigma} &amp; = \frac{1}{\sqrt{\Delta t}} \mbox{stdev}(\frac{S_{t+\Delta t} - S_t}{S_t}) \approx  \frac{1}{\sqrt{\Delta t}} \mbox{stdev}(\ln S_{t+\Delta t} - \ln S_t)
 \end{align*}</p>
 <p>Note that for trading data time is measured in ‘trading days’. On average there are 252 trading days in a year.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Period</p></th>
-<th class="text-align:center head"><p>Trading Days</p></th>
+<tr class="row-odd"><th class="head text-align:center"><p>Period</p></th>
+<th class="head text-align:center"><p>Trading Days</p></th>
 </tr>
 </thead>
 <tbody>
@@ -742,7 +759,7 @@ r^{log} &amp; = \ln S_{t+\Delta t} - \ln S_t = \nu\Delta t + \sigma \sqrt{\Delta
 
 <span class="c1"># compute linear and log returns</span>
 <span class="n">rlin</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">rlog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
 <span class="n">rlin</span> <span class="o">=</span> <span class="n">rlin</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">rlog</span> <span class="o">=</span> <span class="n">rlog</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -775,19 +792,60 @@ r^{log} &amp; = \ln S_{t+\Delta t} - \ln S_t = \nu\Delta t + \sigma \sqrt{\Delta
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Returns
-   mu =   0.00006036  (annualized = 1.52%)
-sigma =   0.01557979  (annualized = 24.73%)
+   mu =   0.00051426  (annualized = 12.96%)
+sigma =   0.02087600  (annualized = 33.14%)
 
 Log Returns
-   nu =  -0.00006089  (annualized = -1.53%)
-sigma =   0.01557202  (annualized = 24.72%)
+   nu =   0.00029599  (annualized = 7.46%)
+sigma =   0.02089946  (annualized = 33.18%)
 </pre></div>
 </div>
 <img alt="../../_images/03-binomial-model-for-pricing-options_5_1.png" src="../../_images/03-binomial-model-for-pricing-options_5_1.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">slast</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">nu</span><span class="o">*</span><span class="n">dt</span> <span class="o">+</span> <span class="n">sigma</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">84</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">r</span><span class="p">)))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="n">slast</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0005142609680219921 0.020899461334536643
+3.228300094604492
+</pre></div>
+</div>
+<img alt="../../_images/03-binomial-model-for-pricing-options_6_1.png" src="../../_images/03-binomial-model-for-pricing-options_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">slast</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">slast</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">slast</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.75837312618468 3.7584105750341843
+</pre></div>
+</div>
+<img alt="../../_images/03-binomial-model-for-pricing-options_7_1.png" src="../../_images/03-binomial-model-for-pricing-options_7_1.png" />
+</div>
+</div>
 <section id="binomial-model">
-<h2>Binomial Model<a class="headerlink" href="#binomial-model" title="Permalink to this headline">#</a></h2>
+<h2>Binomial Model<a class="headerlink" href="#binomial-model" title="Permalink to this heading">#</a></h2>
 <p>The binomial model provides a means of modeling the statistical distribution of future prices. Given a current price <span class="math notranslate nohighlight">\(S_t\)</span>, there are two possible states for the next observed value <span class="math notranslate nohighlight">\(S_{t+\Delta t}\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}S_{t + \Delta t} = \begin{cases} u S_t &amp; \mbox{with probability } p \\ d S_t &amp; \mbox{with probability } 1-p\end{cases}\end{split}\]</div>
@@ -814,9 +872,9 @@ p &amp; = \frac{1}{2} + \frac{\nu\Delta t}{2\sqrt{\sigma^2\Delta t + (\nu\Delta 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability (p) =  0.491
-  Up Return (u) =  1.074
-Down Return (d) =  0.9311
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability (p) =  0.5324
+  Up Return (u) =  1.1007
+Down Return (d) =  0.9085
 </pre></div>
 </div>
 </div>
@@ -870,7 +928,7 @@ S^f_{k+1,s+1} &amp; = \frac{d}{u} S^f_{k+1,s}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/03-binomial-model-for-pricing-options_9_0.png" src="../../_images/03-binomial-model-for-pricing-options_9_0.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_11_0.png" src="../../_images/03-binomial-model-for-pricing-options_11_0.png" />
 </div>
 </div>
 <p>The probability of reaching state <span class="math notranslate nohighlight">\(s\)</span> at time step <span class="math notranslate nohighlight">\(k\)</span> is denoted by <span class="math notranslate nohighlight">\(P_{k,s}\)</span>. This can be computed given probability of preceding states and the conditional probabilities <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(1-p\)</span>.</p>
@@ -917,12 +975,12 @@ P_{k,s} &amp; = p P_{k-1,s} + (1-p) P_{k-1,s-1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/03-binomial-model-for-pricing-options_11_0.png" src="../../_images/03-binomial-model-for-pricing-options_11_0.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_13_0.png" src="../../_images/03-binomial-model-for-pricing-options_13_0.png" />
 </div>
 </div>
 </section>
 <section id="european-call-option">
-<h2>European Call Option<a class="headerlink" href="#european-call-option" title="Permalink to this headline">#</a></h2>
+<h2>European Call Option<a class="headerlink" href="#european-call-option" title="Permalink to this heading">#</a></h2>
 <p>A European Call Option is a contract the provides the holder with the right, but not the obligation, to purchase an asset at a specified price and date in the future. The specified price is generally called the <strong>strike price</strong>, and the specified date is the <strong>expiration date</strong>.</p>
 <p>The purpose of the call option is to reduce the holder’s exposure to the risk of increasing prices. An airline, for example, might choose to purchase call options on airplance fuels in order to reduce the risk of selling advance tickets.</p>
 <p>The value of the call option upon expiration depends on the price of underlying asset. If the asset spot price <span class="math notranslate nohighlight">\(S\)</span> is greater than the strike price <span class="math notranslate nohighlight">\(K\)</span>, then the call option is worth the difference <span class="math notranslate nohighlight">\(S-K\)</span> because that is amount needed to fulfill the contract in the spot market.</p>
@@ -943,10 +1001,10 @@ P_{k,s} &amp; = p P_{k-1,s} + (1-p) P_{k-1,s-1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f868081da00&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8682c4b1f0&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_13_1.png" src="../../_images/03-binomial-model-for-pricing-options_13_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_15_1.png" src="../../_images/03-binomial-model-for-pricing-options_15_1.png" />
 </div>
 </div>
 <p>To price a call option, consider the construction of a portfolio composed of the underlying asset and cash that would have the same payoff. At node <span class="math notranslate nohighlight">\(k,s\)</span>, the portfolio is given by</p>
@@ -1008,20 +1066,20 @@ y_{k,s} &amp; = \frac{uC_{k+1,s+1}-dC_{k+1,s}}{(1+r)(u-d)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q =  0.49966386904550664
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q =  0.4842981134668199
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Cash Position&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_15_2.png" src="../../_images/03-binomial-model-for-pricing-options_15_2.png" />
-<img alt="../../_images/03-binomial-model-for-pricing-options_15_3.png" src="../../_images/03-binomial-model-for-pricing-options_15_3.png" />
-<img alt="../../_images/03-binomial-model-for-pricing-options_15_4.png" src="../../_images/03-binomial-model-for-pricing-options_15_4.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_17_2.png" src="../../_images/03-binomial-model-for-pricing-options_17_2.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_17_3.png" src="../../_images/03-binomial-model-for-pricing-options_17_3.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_17_4.png" src="../../_images/03-binomial-model-for-pricing-options_17_4.png" />
 </div>
 </div>
 </section>
 <section id="implementing-a-replicating-portfolio-with-pyomo">
-<h2>Implementing a Replicating Portfolio with Pyomo<a class="headerlink" href="#implementing-a-replicating-portfolio-with-pyomo" title="Permalink to this headline">#</a></h2>
+<h2>Implementing a Replicating Portfolio with Pyomo<a class="headerlink" href="#implementing-a-replicating-portfolio-with-pyomo" title="Permalink to this heading">#</a></h2>
 <p>A replicating portfolio is the key concept that allows use of the binomial model for pricing options. In a nutshell, the value of an option is the money needed to construct a portfolio  exactly replicate the option payoff.</p>
 <p>This concept can be extended to applications involving ‘real assets’, including processes that convert commodity resources into higher value products. As a first step, let’s see how Pyomo can be used to model a replicating portfolio for a European call option.</p>
 <p>We start with an expression for the value of the replicating portfolio at time <span class="math notranslate nohighlight">\(k\)</span> in state <span class="math notranslate nohighlight">\(s\)</span>. For the purpose of later generalization, we use the symbol <span class="math notranslate nohighlight">\(W\)</span> to denote wealth,</p>
@@ -1097,12 +1155,12 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Value of a European Call Option&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_17_1.png" src="../../_images/03-binomial-model-for-pricing-options_17_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_19_1.png" src="../../_images/03-binomial-model-for-pricing-options_19_1.png" />
 </div>
 </div>
 </section>
 <section id="european-put-option">
-<h2>European Put Option<a class="headerlink" href="#european-put-option" title="Permalink to this headline">#</a></h2>
+<h2>European Put Option<a class="headerlink" href="#european-put-option" title="Permalink to this heading">#</a></h2>
 <p>A European put option is the right (without obligation) to sell an asset for specified price on a specified date. The analysis is proceeds exactly as for the European call option, except that the value on the terminal date is given by</p>
 <div class="math notranslate nohighlight">
 \[P_{N,s} = \max(0, K-S^f_{N,s}) \qquad \forall s\in{\cal S}_N \]</div>
@@ -1159,12 +1217,12 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Value of European Put Option&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_19_1.png" src="../../_images/03-binomial-model-for-pricing-options_19_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_21_1.png" src="../../_images/03-binomial-model-for-pricing-options_21_1.png" />
 </div>
 </div>
 </section>
 <section id="early-exercise">
-<h2>Early Exercise<a class="headerlink" href="#early-exercise" title="Permalink to this headline">#</a></h2>
+<h2>Early Exercise<a class="headerlink" href="#early-exercise" title="Permalink to this heading">#</a></h2>
 <p>Let’s compare the value of the put option to the value of exercising the option. At any node <span class="math notranslate nohighlight">\((k,s)\)</span>, the value of exercising the option is <span class="math notranslate nohighlight">\(K-S^f_{k,s}\)</span>. The next cell compares the value of the European put option to hypothetical value of early exercise.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1190,8 +1248,8 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;The hypothetical value of early exercise of European Put Option&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_21_1.png" src="../../_images/03-binomial-model-for-pricing-options_21_1.png" />
-<img alt="../../_images/03-binomial-model-for-pricing-options_21_2.png" src="../../_images/03-binomial-model-for-pricing-options_21_2.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_23_1.png" src="../../_images/03-binomial-model-for-pricing-options_23_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_23_2.png" src="../../_images/03-binomial-model-for-pricing-options_23_2.png" />
 </div>
 </div>
 <p>We see several nodes where the value of exercising the option is worth more than the option itself. These would be opportunities for a risk-free profit. If such a circumstance arises, then</p>
@@ -1217,12 +1275,12 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Arbitrage value for early exercise of a European Put Option&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/03-binomial-model-for-pricing-options_23_1.png" src="../../_images/03-binomial-model-for-pricing-options_23_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_25_1.png" src="../../_images/03-binomial-model-for-pricing-options_25_1.png" />
 </div>
 </div>
 </section>
 <section id="american-put-option">
-<h2>American Put Option<a class="headerlink" href="#american-put-option" title="Permalink to this headline">#</a></h2>
+<h2>American Put Option<a class="headerlink" href="#american-put-option" title="Permalink to this heading">#</a></h2>
 <p>Compared to a European option, an American option provides an additional right of early exercise. The holder of the option an choose to exercise the option at any point prior to the expiration date.  This additional right can (but does not always add value under certain conditions.</p>
 <p>The opportunity for early exerise adds some complexity to the calculation of value. In the optimization framework, the holder of an American put could always receive value by exercising the option if the market value of the option is less than the exercise value.  Thus the exercise value establishes a lower bound on the value of the option at all nodes (not just the terminal nodes)</p>
 <div class="math notranslate nohighlight">
@@ -1281,8 +1339,8 @@ x_{k,s}S^f_{k+1,s+1} + y_{k,s}B_{k+1} &amp; \geq W_{k+1,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/03-binomial-model-for-pricing-options_25_0.png" src="../../_images/03-binomial-model-for-pricing-options_25_0.png" />
-<img alt="../../_images/03-binomial-model-for-pricing-options_25_1.png" src="../../_images/03-binomial-model-for-pricing-options_25_1.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_27_0.png" src="../../_images/03-binomial-model-for-pricing-options_27_0.png" />
+<img alt="../../_images/03-binomial-model-for-pricing-options_27_1.png" src="../../_images/03-binomial-model-for-pricing-options_27_1.png" />
 </div>
 </div>
 </section>

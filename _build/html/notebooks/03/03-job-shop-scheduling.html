@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Job Shop Scheduling &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Scheduling Multipurpose Batch Processes using State-Task Networks" href="07-State-Task-Networks.html" />
     <link rel="prev" title="Machine Bottleneck" href="02-machine-bottleneck.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -645,25 +646,25 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="job-shop-scheduling">
-<h1>Job Shop Scheduling<a class="headerlink" href="#job-shop-scheduling" title="Permalink to this headline">#</a></h1>
+<h1>Job Shop Scheduling<a class="headerlink" href="#job-shop-scheduling" title="Permalink to this heading">#</a></h1>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>A job shop consists of a set of distinct machines that process jobs. Each job is a series of tasks that require use of particular machines for known durations, and which must be completed in specified order. The job shop scheduling problem is to schedule the jobs on the machines to minimize the time necessary to process all jobs (i.e, the makespan) or some other metric of productivity. Job shop scheduling is one of the classic problems in Operations Research.</p>
 <p>Data consists of two tables. The first table is decomposition of the jobs into a series of tasks. Each task lists a job name, name of the required machine, and task duration. The second table list task pairs where the first task must be completed before the second task can be started. This formulation is quite general, but can also specify situations with no feasible solutions.</p>
 </section>
 <section id="job-shop-example">
-<h2>Job Shop Example<a class="headerlink" href="#job-shop-example" title="Permalink to this headline">#</a></h2>
+<h2>Job Shop Example<a class="headerlink" href="#job-shop-example" title="Permalink to this heading">#</a></h2>
 <p>The following example of a job shop is from from Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Dash Optimization, 2000.</p>
 <p>In this example, there are three printed paper products that must pass through color printing presses in a particular order. The given data consists of a flowsheet showing the order in which each job passes through the color presses</p>
 <p><img alt="jobshopdiagram.jpg" src="../../_images/jobshopdiagram.jpg" /></p>
 <p>and a table of data showing, in minutes, the amount of time each job requires on each machine.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Machine</p></th>
-<th class="text-align:center head"><p>Color</p></th>
-<th class="text-align:center head"><p>Paper 1</p></th>
-<th class="text-align:center head"><p>Paper 2</p></th>
-<th class="text-align:center head"><p>Paper 3</p></th>
+<tr class="row-odd"><th class="head text-align:center"><p>Machine</p></th>
+<th class="head text-align:center"><p>Color</p></th>
+<th class="head text-align:center"><p>Paper 1</p></th>
+<th class="head text-align:center"><p>Paper 2</p></th>
+<th class="head text-align:center"><p>Paper 3</p></th>
 </tr>
 </thead>
 <tbody>
@@ -690,13 +691,13 @@ title="Print to PDF"
 <p>What is the minimum amount of time (i.e, what is the makespan) for this set of jobs?</p>
 </section>
 <section id="task-decomposition">
-<h2>Task Decomposition<a class="headerlink" href="#task-decomposition" title="Permalink to this headline">#</a></h2>
+<h2>Task Decomposition<a class="headerlink" href="#task-decomposition" title="Permalink to this heading">#</a></h2>
 <p>The first step in the analysis is to decompose the process into a series of tasks. Each task is a (job,machine) pair. Some tasks cannot start until a prerequisite task is completed.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Task (Job,Machine)</p></th>
-<th class="text-align:center head"><p>Duration</p></th>
-<th class="text-align:center head"><p>Prerequisite Task</p></th>
+<tr class="row-odd"><th class="head text-align:center"><p>Task (Job,Machine)</p></th>
+<th class="head text-align:center"><p>Duration</p></th>
+<th class="head text-align:center"><p>Prerequisite Task</p></th>
 </tr>
 </thead>
 <tbody>
@@ -753,12 +754,12 @@ title="Print to PDF"
 </div>
 </section>
 <section id="model-formulation">
-<h2>Model Formulation<a class="headerlink" href="#model-formulation" title="Permalink to this headline">#</a></h2>
+<h2>Model Formulation<a class="headerlink" href="#model-formulation" title="Permalink to this heading">#</a></h2>
 <p>Each task is represented as an ordered pair <span class="math notranslate nohighlight">\((j,m)\)</span> where <span class="math notranslate nohighlight">\(j\)</span> is a job, and <span class="math notranslate nohighlight">\(m\)</span> is a machine.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p>Parameter</p></th>
-<th class="text-align:left head"><p>Description</p></th>
+<tr class="row-odd"><th class="head text-align:left"><p>Parameter</p></th>
+<th class="head text-align:left"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
@@ -770,10 +771,10 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p>Decision Variables</p></th>
-<th class="text-align:left head"><p>Description</p></th>
+<tr class="row-odd"><th class="head text-align:left"><p>Decision Variables</p></th>
+<th class="head text-align:left"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
@@ -806,7 +807,7 @@ title="Print to PDF"
 <p>avoids conflicts for use of the same machine.</p>
 </section>
 <section id="pyomo-implementation">
-<h2>Pyomo Implementation<a class="headerlink" href="#pyomo-implementation" title="Permalink to this headline">#</a></h2>
+<h2>Pyomo Implementation<a class="headerlink" href="#pyomo-implementation" title="Permalink to this heading">#</a></h2>
 <p>The job shop scheduling problem is implemented below in Pyomo. The implementation consists of of a function JobShop(TASKS) that accepts a dictionary of tanks and returns a pandas dataframe containing an optimal schedule of tasks. An optional argument to JobShop allows one to specify a solver.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -873,7 +874,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="displaying-a-solution">
-<h2>Displaying a Solution<a class="headerlink" href="#displaying-a-solution" title="Permalink to this headline">#</a></h2>
+<h2>Displaying a Solution<a class="headerlink" href="#displaying-a-solution" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Textualize</span><span class="p">(</span><span class="n">schedule</span><span class="p">):</span>
@@ -948,7 +949,7 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="visualizing-results-with-gantt-charts">
-<h2>Visualizing Results with Gantt Charts<a class="headerlink" href="#visualizing-results-with-gantt-charts" title="Permalink to this headline">#</a></h2>
+<h2>Visualizing Results with Gantt Charts<a class="headerlink" href="#visualizing-results-with-gantt-charts" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1025,16 +1026,16 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="application-to-scheduling-of-batch-processes">
-<h2>Application to Scheduling of Batch Processes<a class="headerlink" href="#application-to-scheduling-of-batch-processes" title="Permalink to this headline">#</a></h2>
+<h2>Application to Scheduling of Batch Processes<a class="headerlink" href="#application-to-scheduling-of-batch-processes" title="Permalink to this heading">#</a></h2>
 <p>We will now turn our attention to the application of the job shop scheduling problem to the short term scheduling of batch processes. We illustrate these techniques using an example from Dunn (2013).</p>
 <p><img alt="Screen%20Shot%202017-09-14%20at%209.09.57%20AM.png" src="notebooks/03/attachment:Screen%20Shot%202017-09-14%20at%209.09.57%20AM.png" /></p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Process</p></th>
-<th class="text-align:center head"><p>Mixer</p></th>
-<th class="text-align:center head"><p>Reactor</p></th>
-<th class="text-align:center head"><p>Separator</p></th>
-<th class="text-align:center head"><p>Packaging</p></th>
+<tr class="row-odd"><th class="head text-align:center"><p>Process</p></th>
+<th class="head text-align:center"><p>Mixer</p></th>
+<th class="head text-align:center"><p>Reactor</p></th>
+<th class="head text-align:center"><p>Separator</p></th>
+<th class="head text-align:center"><p>Packaging</p></th>
 </tr>
 </thead>
 <tbody>
@@ -1060,7 +1061,7 @@ Paper_1   42.0        45    87.0
 </table>
 </section>
 <section id="single-product-strategies">
-<h2>Single Product Strategies<a class="headerlink" href="#single-product-strategies" title="Permalink to this headline">#</a></h2>
+<h2>Single Product Strategies<a class="headerlink" href="#single-product-strategies" title="Permalink to this heading">#</a></h2>
 <p>Before going further, we create a function to streamline the generation of T</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1116,7 +1117,7 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="overlapping-tasks">
-<h2>Overlapping Tasks<a class="headerlink" href="#overlapping-tasks" title="Permalink to this headline">#</a></h2>
+<h2>Overlapping Tasks<a class="headerlink" href="#overlapping-tasks" title="Permalink to this heading">#</a></h2>
 <p>Let’s now consider an optimal scheduling problem where we are wish to make two batches of Product A.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1178,7 +1179,7 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="unit-cleanout">
-<h2>Unit Cleanout<a class="headerlink" href="#unit-cleanout" title="Permalink to this headline">#</a></h2>
+<h2>Unit Cleanout<a class="headerlink" href="#unit-cleanout" title="Permalink to this heading">#</a></h2>
 <p>A common feature in batch unit operations is a requirement that equipment be cleaned prior to reuse.</p>
 <p>In most cases the time needed for clean out would be equipment and product specific. Bur for the purposes of illustration, we implement this policy with a single non-negative parameter <span class="math notranslate nohighlight">\(t_{clean} \geq 0\)</span> which, if specified, requires a period no less than <span class="math notranslate nohighlight">\(t_{clean}\)</span> between the finish of one task and the start of another on every piece of equipment.</p>
 <p>This is implemented by modifying the usual disjunctive constraints to avoid machine conflicts, i.e.,</p>
@@ -1263,7 +1264,7 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="zero-wait-policy">
-<h2>Zero Wait Policy<a class="headerlink" href="#zero-wait-policy" title="Permalink to this headline">#</a></h2>
+<h2>Zero Wait Policy<a class="headerlink" href="#zero-wait-policy" title="Permalink to this heading">#</a></h2>
 <p>One of the issues in the use of job shop scheduling for batch processing are situations where there it isn’t possible to store intermediate materials. If there is no way to store intermediates, either in the processing equipment or in external vessels, then a <strong>zero-wait</strong> policy may be appropriate.</p>
 <p>A zero-wait policy requires subsequent processing machines to be available immediately upon completion of any task. To implement this policy, the usual precident sequencing constraint of a job shop scheduling problem, i.e.,</p>
 <p>\begin{align*}
@@ -1348,7 +1349,7 @@ Paper_1   42.0        45    87.0
 </div>
 </section>
 <section id="benchmark-problem-la19">
-<h2>Benchmark Problem LA19<a class="headerlink" href="#benchmark-problem-la19" title="Permalink to this headline">#</a></h2>
+<h2>Benchmark Problem LA19<a class="headerlink" href="#benchmark-problem-la19" title="Permalink to this heading">#</a></h2>
 <p>Lawrence 1984,
 Solved in 1991. This cell can be very long running … minutes to hours. Delete the comment tag on the last line only if you wish to run the cell to see the outcome of a long and challenging calculation that represented the state-of-the-art several decades ago.</p>
 <div class="cell docutils container">

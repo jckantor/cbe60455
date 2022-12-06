@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Portfolio Optimization &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -57,7 +58,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Log-Optimal Growth and the Kelly Criterion" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html" />
     <link rel="prev" title="Portfolio Optimization using Mean Absolute Deviation" href="06-portfolio-optimization-using-mean-absolute-deviation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -610,30 +611,23 @@ title="Print to PDF"
                 
               <div>
                 
-  <!--NOTEBOOK_HEADER-->
-<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
-Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
-The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
-and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb">Portfolio Optimization using Mean Absolute Deviation</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization">
-<h1>Portfolio Optimization<a class="headerlink" href="#portfolio-optimization" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization">
+<h1>Portfolio Optimization<a class="headerlink" href="#portfolio-optimization" title="Permalink to this heading">#</a></h1>
 <p>This <a class="reference external" href="http://ipython.org/notebook.html">IPython notebook</a> demonstrates portfolio optimization using the Mean Absolute Deviation (MAD) criterion. A portion of these notes is adapted from <a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/Portfolio_Optimization">GLPK Wikibook tutorial on the subject</a> written by me.</p>
 <p>J.C. Kantor (<a class="reference external" href="mailto:Kantor&#46;1&#37;&#52;&#48;nd&#46;edu">Kantor<span>&#46;</span>1<span>&#64;</span>nd<span>&#46;</span>edu</a>)</p>
 <p>The latest version of this IPython notebook is available at <a class="reference external" href="http://github.com/jckantor/CBE20255">http://github.com/jckantor/CBE20255</a>  for noncommercial use under terms of the <a class="reference external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution Noncommericial ShareAlike License</a>.</p>
 <section id="investment-objectives">
-<h2>Investment Objectives<a class="headerlink" href="#investment-objectives" title="Permalink to this headline">#</a></h2>
+<h2>Investment Objectives<a class="headerlink" href="#investment-objectives" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Maximize returns</p></li>
 <li><p>Reduce Risk through diversification</p></li>
 </ul>
 </section>
 <section id="why-diversify">
-<h2>Why Diversify?<a class="headerlink" href="#why-diversify" title="Permalink to this headline">#</a></h2>
+<h2>Why Diversify?<a class="headerlink" href="#why-diversify" title="Permalink to this heading">#</a></h2>
 <p>Investment portfolios are collections of investments that are managed for overall investment return.  Compared to investing all of your capital into a single asset, maintaining a portfolio of investments allows you to manage risk through diversification.</p>
 <section id="reduce-risk-through-law-of-large-numbers">
-<h3>Reduce Risk through Law of Large Numbers<a class="headerlink" href="#reduce-risk-through-law-of-large-numbers" title="Permalink to this headline">#</a></h3>
+<h3>Reduce Risk through Law of Large Numbers<a class="headerlink" href="#reduce-risk-through-law-of-large-numbers" title="Permalink to this heading">#</a></h3>
 <p>Suppose there are a set of independent investment opportunities that will pay back between 0 and 300% of your original investment, and that all outcomes in that range are equally likely. You have $100,000 to invest.  Should you put it all in one opportunity?  Or should you spread it around?</p>
 <p>Here we simulate the outcomes of 1000 trials where we place all the money into a sigle investment of $100,000.</p>
 <div class="cell docutils container">
@@ -659,7 +653,7 @@ and code is released under the <a class="reference external" href="https://opens
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average Profit = $49126
 </pre></div>
 </div>
-<img alt="../../_images/07-MAD-portfolio-optimization_10_1.png" src="../../_images/07-MAD-portfolio-optimization_10_1.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_8_1.png" src="../../_images/07-MAD-portfolio-optimization_8_1.png" />
 </div>
 </div>
 <p>As you would expect, about 1/3 of the time there is a loss, and about 2/3 of the time there is a profit. Is this an acceptable investment outcome?</p>
@@ -690,7 +684,7 @@ and code is released under the <a class="reference external" href="https://opens
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average Profit = $50177
 </pre></div>
 </div>
-<img alt="../../_images/07-MAD-portfolio-optimization_12_1.png" src="../../_images/07-MAD-portfolio-optimization_12_1.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_10_1.png" src="../../_images/07-MAD-portfolio-optimization_10_1.png" />
 </div>
 </div>
 <p>Even a modest degree of diversification reduces downside risk.</p>
@@ -711,13 +705,13 @@ and code is released under the <a class="reference external" href="https://opens
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_14_0.png" src="../../_images/07-MAD-portfolio-optimization_14_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_12_0.png" src="../../_images/07-MAD-portfolio-optimization_12_0.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="select-a-portfolio-from-a-set-of-candidate-portfolios">
-<h2>Select a Portfolio from a Set of Candidate Portfolios<a class="headerlink" href="#select-a-portfolio-from-a-set-of-candidate-portfolios" title="Permalink to this headline">#</a></h2>
+<h2>Select a Portfolio from a Set of Candidate Portfolios<a class="headerlink" href="#select-a-portfolio-from-a-set-of-candidate-portfolios" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">djia</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AXP&#39;</span><span class="p">,</span><span class="s1">&#39;BA&#39;</span><span class="p">,</span><span class="s1">&#39;CAT&#39;</span><span class="p">,</span><span class="s1">&#39;CSCO&#39;</span><span class="p">,</span><span class="s1">&#39;CVX&#39;</span><span class="p">,</span><span class="s1">&#39;DD&#39;</span><span class="p">,</span><span class="s1">&#39;DIS&#39;</span><span class="p">,</span><span class="s1">&#39;GE&#39;</span><span class="p">,</span> \
@@ -734,7 +728,7 @@ and code is released under the <a class="reference external" href="https://opens
 </div>
 </div>
 <section id="download-historical-data">
-<h3>Download Historical Data<a class="headerlink" href="#download-historical-data" title="Permalink to this headline">#</a></h3>
+<h3>Download Historical Data<a class="headerlink" href="#download-historical-data" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -794,7 +788,7 @@ XOM   754
 </div>
 </section>
 <section id="equally-weighted-portfolio">
-<h3>Equally Weighted Portfolio<a class="headerlink" href="#equally-weighted-portfolio" title="Permalink to this headline">#</a></h3>
+<h3>Equally Weighted Portfolio<a class="headerlink" href="#equally-weighted-portfolio" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_equal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">index</span> <span class="o">=</span> <span class="n">adjclose</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -814,12 +808,12 @@ XOM   754
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_20_0.png" src="../../_images/07-MAD-portfolio-optimization_20_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_18_0.png" src="../../_images/07-MAD-portfolio-optimization_18_0.png" />
 </div>
 </div>
 </section>
 <section id="compute-component-returns">
-<h3>Compute Component Returns<a class="headerlink" href="#compute-component-returns" title="Permalink to this headline">#</a></h3>
+<h3>Compute Component Returns<a class="headerlink" href="#compute-component-returns" title="Permalink to this heading">#</a></h3>
 <p>Arithmetic returns are required because subsequent calculations will be combining returns across components of a portfolio.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -850,7 +844,7 @@ XOM   754
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_23_0.png" src="../../_images/07-MAD-portfolio-optimization_23_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_21_0.png" src="../../_images/07-MAD-portfolio-optimization_21_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -865,7 +859,7 @@ XOM   754
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_24_0.png" src="../../_images/07-MAD-portfolio-optimization_24_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_22_0.png" src="../../_images/07-MAD-portfolio-optimization_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -894,13 +888,13 @@ XOM   754
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_25_0.png" src="../../_images/07-MAD-portfolio-optimization_25_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_23_0.png" src="../../_images/07-MAD-portfolio-optimization_23_0.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="mad-porfolio">
-<h2>MAD Porfolio<a class="headerlink" href="#mad-porfolio" title="Permalink to this headline">#</a></h2>
+<h2>MAD Porfolio<a class="headerlink" href="#mad-porfolio" title="Permalink to this heading">#</a></h2>
 <p>The linear program is formulated and solved using the pulp package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -989,7 +983,7 @@ Cleaning up...
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_32_0.png" src="../../_images/07-MAD-portfolio-optimization_32_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_30_0.png" src="../../_images/07-MAD-portfolio-optimization_30_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1010,7 +1004,7 @@ Cleaning up...
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.text.Text at 0x10e0bed90&gt;
 </pre></div>
 </div>
-<img alt="../../_images/07-MAD-portfolio-optimization_33_1.png" src="../../_images/07-MAD-portfolio-optimization_33_1.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_31_1.png" src="../../_images/07-MAD-portfolio-optimization_31_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1049,12 +1043,12 @@ Cleaning up...
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/07-MAD-portfolio-optimization_34_0.png" src="../../_images/07-MAD-portfolio-optimization_34_0.png" />
+<img alt="../../_images/07-MAD-portfolio-optimization_32_0.png" src="../../_images/07-MAD-portfolio-optimization_32_0.png" />
 </div>
 </div>
 </section>
 <section id="problem-1-solve-for-dominating-mad-portfolio">
-<h2>Problem 1: Solve for Dominating MAD Portfolio<a class="headerlink" href="#problem-1-solve-for-dominating-mad-portfolio" title="Permalink to this headline">#</a></h2>
+<h2>Problem 1: Solve for Dominating MAD Portfolio<a class="headerlink" href="#problem-1-solve-for-dominating-mad-portfolio" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lp</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;MAD Portfolio&#39;</span><span class="p">,</span><span class="n">pulp</span><span class="o">.</span><span class="n">LpMinimize</span><span class="p">)</span>
@@ -1121,8 +1115,6 @@ Cleaning up...
 </div>
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb">Portfolio Optimization using Mean Absolute Deviation</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 

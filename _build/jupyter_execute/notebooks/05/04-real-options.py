@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <!--NOTEBOOK_HEADER-->
-# *This notebook contains course material from [CBE40455](https://jckantor.github.io/CBE40455) by
-# Jeffrey Kantor (jeff at nd.edu); the content is available [on Github](https://github.com/jckantor/CBE40455.git).
-# The text is released under the [CC-BY-NC-ND-4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode),
-# and code is released under the [MIT license](https://opensource.org/licenses/MIT).*
-
-# <!--NAVIGATION-->
-# < [Binomial Model for Pricing Options](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb) | [Contents](toc.ipynb) | [Portfolio Optimization](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
-
 # # Real Options
 
 # ## Implementing a Replicating Portfolio in Pyomo
@@ -516,12 +507,3 @@ for k in range(0,N+1):
 # display
 SPdisplay(Sf,W,'Value')
 
-
-# In[ ]:
-
-
-
-
-
-# <!--NAVIGATION-->
-# < [Binomial Model for Pricing Options](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb) | [Contents](toc.ipynb) | [Portfolio Optimization](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>

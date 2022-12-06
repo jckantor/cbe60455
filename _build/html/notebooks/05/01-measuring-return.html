@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Measuring Return &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Binomial Model for Pricing Options" href="03-binomial-model-for-pricing-options.html" />
     <link rel="prev" title="Financial Risk and Diversification" href="00-finance.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -613,9 +614,9 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="measuring-return">
-<h1>Measuring Return<a class="headerlink" href="#measuring-return" title="Permalink to this headline">#</a></h1>
+<h1>Measuring Return<a class="headerlink" href="#measuring-return" title="Permalink to this heading">#</a></h1>
 <section id="imports">
-<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
 <p>The pandas_datareader library provides convenient access to financial data. The library requires separate installation by executing the command</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install pandas-datareader
 </pre></div>
@@ -665,10 +666,10 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 <p>The following function provides a convenient stock symbol lookup function.</p>
 </section>
 <section id="where-to-get-price-data">
-<h2>Where to get Price Data<a class="headerlink" href="#where-to-get-price-data" title="Permalink to this headline">#</a></h2>
+<h2>Where to get Price Data<a class="headerlink" href="#where-to-get-price-data" title="Permalink to this heading">#</a></h2>
 <p>Price data is available from a number of sources. Here we demonstrate the process of obtaining price data on financial goods from <a class="reference external" href="http://finance.yahoo.com/">Yahoo Finance</a>. Additional sources are documented <a class="reference external" href="https://pandas-datareader.readthedocs.io/en/latest/readers/index.html">here</a>.</p>
 <section id="yahoo-finance">
-<h3>Yahoo Finance<a class="headerlink" href="#yahoo-finance" title="Permalink to this headline">#</a></h3>
+<h3>Yahoo Finance<a class="headerlink" href="#yahoo-finance" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="http://finance.yahoo.com/">Yahoo Finance</a> provides historical Open, High, Low, Close, and Volume date for quotes on traded securities. In addition, Yahoo Finance provides historical <a class="reference external" href="http://marubozu.blogspot.com/2006/09/how-yahoo-calculates-adjusted-closing.html">Adjusted Close</a> price data that corrects for splits and dividend distributions. The Adjusted Close is a useful tool for computing the return on long-term investments.</p>
 <p>The following cell demonstrates how to download historical Adjusted Close price for a selected security into a pandas DataFrame.</p>
 <div class="cell docutils container">
@@ -699,7 +700,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </div>
 </section>
 <section id="quandl">
-<h3>Quandl<a class="headerlink" href="#quandl" title="Permalink to this headline">#</a></h3>
+<h3>Quandl<a class="headerlink" href="#quandl" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="http://www.quandl.com/">Quandl</a> is a searchable source of time-series data on a wide range of commodities, financials, and many other economic and social indicators. Data from Quandl can be downloaded as files in various formats, or accessed directly using the <a class="reference external" href="http://www.quandl.com/help/api">Quandl API</a> or software-specific package. Here we use demonstrate use of the <a class="reference external" href="http://www.quandl.com/help/packages#Python">Quandl Python package</a>.</p>
 <p>The first step is execute a system command to check that the Quandl package has been installed.</p>
 <p>Here are examples of energy datasets. These were found by searching Quandl, then identifying the Quandl code used for accessing the dataset, a description, the name of the field containing the desired price information.</p>
@@ -752,7 +753,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </section>
 </section>
 <section id="returns">
-<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this headline">#</a></h2>
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading">#</a></h2>
 <p>The statistical properties of financial series are usually studied in terms of the change in prices. There are several reasons for this, key among them is that the changes can often be closely approximated as stationary random variables whereas prices are generally non-stationary sequences.</p>
 <p>A common model is</p>
 <div class="math notranslate nohighlight">
@@ -794,7 +795,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </div>
 </div>
 <section id="linear-fractional-or-arithmetic-returns">
-<h3>Linear fractional or Arithmetic Returns<a class="headerlink" href="#linear-fractional-or-arithmetic-returns" title="Permalink to this headline">#</a></h3>
+<h3>Linear fractional or Arithmetic Returns<a class="headerlink" href="#linear-fractional-or-arithmetic-returns" title="Permalink to this heading">#</a></h3>
 <p>Perhaps the most common way of reporting returns is simply the fractional increase in value of an asset over a period, i.e.,</p>
 <div class="math notranslate nohighlight">
 \[r^{lin}_t = \frac{S_t - S_{t-1}}{S_{t-1}} = \frac{S_t}{S_{t-1}} - 1 \]</div>
@@ -836,7 +837,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </div>
 </section>
 <section id="linear-returns-don-t-tell-the-whole-story">
-<h3>Linear returns don’t tell the whole story.<a class="headerlink" href="#linear-returns-don-t-tell-the-whole-story" title="Permalink to this headline">#</a></h3>
+<h3>Linear returns don’t tell the whole story.<a class="headerlink" href="#linear-returns-don-t-tell-the-whole-story" title="Permalink to this heading">#</a></h3>
 <p>Suppose you put money in an asset that returns 10% interest in even numbered years, but loses 10% in odd numbered years. Is this a good investment for the long-haul?</p>
 <p>If we look at mean linear return</p>
 <p>\begin{align}
@@ -923,7 +924,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </div>
 </section>
 <section id="compounded-log-returns">
-<h3>Compounded Log Returns<a class="headerlink" href="#compounded-log-returns" title="Permalink to this headline">#</a></h3>
+<h3>Compounded Log Returns<a class="headerlink" href="#compounded-log-returns" title="Permalink to this heading">#</a></h3>
 <p>Compounded, or log returns, are defined as</p>
 <div class="math notranslate nohighlight">
 \[r^{log}_{t} = \log R_t = \log \frac{S_{t}}{S_{t-1}}\]</div>
@@ -966,7 +967,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7
 </div>
 </section>
 <section id="volatility-drag-and-the-relationship-between-linear-and-log-returns">
-<h3>Volatility Drag and the Relationship between Linear and Log Returns<a class="headerlink" href="#volatility-drag-and-the-relationship-between-linear-and-log-returns" title="Permalink to this headline">#</a></h3>
+<h3>Volatility Drag and the Relationship between Linear and Log Returns<a class="headerlink" href="#volatility-drag-and-the-relationship-between-linear-and-log-returns" title="Permalink to this heading">#</a></h3>
 <p>For long-term financial decision making, it’s important to understand the relationship between <span class="math notranslate nohighlight">\(r_t^{log}\)</span> and <span class="math notranslate nohighlight">\(r_t^{lin}\)</span>. Algebraically, the relationships are simple.</p>
 <div class="math notranslate nohighlight">
 \[r^{log}_t = \log \left(1+r^{lin}_t\right)\]</div>

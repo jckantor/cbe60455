@@ -1,25 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <!--NOTEBOOK_HEADER-->
-# *This notebook contains course material from [CBE40455](https://jckantor.github.io/CBE40455) by
-# Jeffrey Kantor (jeff at nd.edu); the content is available [on Github](https://github.com/jckantor/CBE40455.git).
-# The text is released under the [CC-BY-NC-ND-4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode),
-# and code is released under the [MIT license](https://opensource.org/licenses/MIT).*
-
-# <!--NAVIGATION-->
-# < [Portfolio Optimization](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb) | [Contents](toc.ipynb) | [Log-Optimal Portfolios](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
-
 # # Log-Optimal Growth and the Kelly Criterion
 
 # This [IPython notebook](http://ipython.org/notebook.html) demonstrates the Kelly criterion and other phenomena associated with log-optimal growth.
 
 # ## Initializations
 
-# In[ ]:
+# In[3]:
 
-
-get_ipython().run_line_magic('matplotlib', 'notebook')
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,11 +17,7 @@ import random
 
 # ## What are the Issues in Managing for Optimal Growth?
 
-# Consider a continuing 'investment opportunity' for which, at each stage, an invested dollar will yield either two dollars with probability $p$ or nothing with probability $1-p$. You can think of this as a gambling game if you like, or as sequence of business investment decisions.
-# 
-# ![Kelly_Criterion_Fig1](https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig1.png?raw=true)
-# 
-# Let $W_k$ be the wealth after $k$ stages in this sequence of decisions. At each stage $k$ there will be an associated return $R_k$ so that
+# Suppose we start with an amount of capital, $W_0$, and wish to grow that amount through a series of business decisions. Let $R_k$ be the gross return at stage $k$. 
 # 
 # $$W_k = R_k W_{k-1}$$
 # 
@@ -40,7 +25,15 @@ import random
 # 
 # $$W_k = R_kR_{k-1}\cdots R_2R_1W_0$$
 # 
-# Now let's consider a specific investment strategy. To avoid risking total loss of wealth in a single stage, we'll consider a strategy where we invest a fraction $\alpha$ of our remaining wealth, and retain a fraction $1-\alpha$ for future use. Under this strategy, the return $R_k$ is given by
+# If we could be confident that $R_k > 1$ for all $k$, then our wealth will grow over time. But a guaranteed return is rarely available, so we consider cases where there may be some risk.
+# 
+# To fix ideas, consider an on-going 'investment opportunity' where an invested dollar will yield two dollars with probability $p$ or nothing with probability $1-p$. You can think of this as a gambling game if you like, or as sequence of business investment decisions.
+# 
+# ![Kelly_Criterion_Fig1](https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig1.png?raw=true)
+# 
+# Now let's consider a specific investment strategy. To avoid risking total loss of wealth in a single stage, we invest a fraction $\alpha$ of our remaining wealth at each stage. If the payoff "wins", then we get $2 \alpha W_k$ back. When added to the $(1-\alpha)W_k$ we didn't invest our wealth is now $(1+\alpha)W_k$.  If we lose then our remaining wealth is $(1-\alpha)W_k$.
+# 
+# Under this strategy, the return $R_k$ is given by
 # 
 # $$R_k = \begin{cases} 1+\alpha & \mbox{with probability}\quad p \\ 1-\alpha & \mbox{with probability}\quad 1-p\end{cases}$$
 # 
@@ -62,29 +55,29 @@ import random
 # 
 # Next we plot $E[W_k/W_0]$ as a function of $\alpha$. If you run this notebook on your own server, you can adjust $p$ and $K$ to see the impact of changing parameters.
 
-# In[ ]:
+# In[8]:
 
 
-from scipy.misc import comb
+from scipy.special import comb
 from ipywidgets import interact
 
-def sim(K = 40,p = 0.55):
-    alpha = np.linspace(0,1,100)
+def sim(K=40, p=0.55):
+    alpha = np.linspace(0, 1, 100)
     W = [sum([comb(K,u)*((p*(1+a))**u)*(((1-p)*(1-a))**(K-u))               for u in range(0,K+1)]) for a in alpha]
     plt.figure()
-    plt.plot(alpha,W,'b')
+    plt.plot(alpha, W, 'b')
     plt.xlabel('alpha')
-    plt.ylabel('E[W({:d})/W(0)]'.format(K))
-    plt.title('Expected Wealth after {:d} trials'.format(K))
+    plt.ylabel(f'E[W({K:d})/W(0)]')
+    plt.title(f'Expected Wealth after {K:d} trials')
 
-interact(sim,K=(1,60),p=(0.4,0.6,0.01));
+interact(sim, K=(1, 60), p=(0.4, 0.6, 0.01));
 
 
-# This simulation suggests that if each stage is, on average, a winning proposition with $p > 0.5$, then expected wealth after $K$ stages is maximized by setting $\alpha = 1$. This is a very risky strategy. 
+# This simulation suggests that if each stage is, on average, a winning proposition with $p > 0.5$, then expected wealth after $K$ stages is maximized by setting $\alpha = 1$.
 # 
-# To show how risky, the following cell simulates the behavior of this process for as a function of $\alpha$, $p$, and $K$. Try different values of $\alpha$ in the range from 0 to 1 to see what happens.
+# This turns out to be a very risky strategy. To show how risky, the following cell simulates the behavior of this process for as a function of $\alpha$, $p$, and $K$. Try different values of $\alpha$ in the range from 0 to 1 to see what happens.
 
-# In[ ]:
+# In[12]:
 
 
 # Number of simulations to run
@@ -98,18 +91,19 @@ def sim2(K = 50, p = 0.55, alpha = 0.8):
     for n in range(0,N):
         # Compute an array of future returns
         R = np.array([1-alpha + 2*alpha*float(random.random() <= p) for _ in range(0,K)])
+        
         # Use returns to compute fraction of wealth that remains
         W = np.concatenate(([1.0],np.cumprod(R)))
         plt.semilogy(W) 
 
-interact(sim2, K = (10,60), p = (0.4,0.6,0.001), alpha = (0.0,1.0,0.01))
+interact(sim2, K = (10, 60), p = (0.4, 0.6, 0.001), alpha = (0.0, 1.0, 0.01))
 
 
 # Attempting to maximize wealth leads to a risky strategy where all wealth is put at risk at each stage hoping for a string of $k$ wins.  The very high rewards for this one outcome mask the fact that the most common outcome is to lose everything. If you're not convinced of this, go back and run the simulation a few more times for values of alpha in the range 0.8 to 1.0.  
 # 
 # If $\alpha =1$, the probability of still having money after $k$ stages is $(1-p)^k$.
 
-# In[ ]:
+# In[13]:
 
 
 K = 50
@@ -126,25 +120,25 @@ plt.grid();
 # 
 # It's like the case of buying into a high stakes lottery. The average outcome is calculated by including the rare outcome of the winning ticket together millions of tickets where there is no payout whatsoever. Buying lottery tickets shouldn't be anyone's notion of a good business plan!
 
-# In[ ]:
+# In[20]:
 
 
-from scipy.misc import comb
+from scipy.special import comb
 from scipy.stats import binom
-from IPython.html.widgets import interact
+from ipywidgets import interact
 
 K = 40
 
 def Wpdf(p=0.55, alpha=0.5):
-    rv = binom(K,p)
-    U = np.array(range(0,K+1))
+    rv = binom(K, p)
+    U = np.array(range(0, K+1))
     Pr = np.array([rv.pmf(u) for u in U])
-    W = np.array([((1+alpha)**u)*(((1-alpha))**(K-u)) for u in U])
-    plt.figure(figsize=(12,4))
+    W = np.array([((1 + alpha)**u)*(((1 - alpha))**(K-u)) for u in U])
+    plt.figure(figsize=(12, 4))
     
-    plt.subplot(2,2,1)
-    plt.bar(U-0.5,W)
-    plt.xlim(-0.5,K+0.5)
+    plt.subplot(2, 2, 1)
+    plt.bar(U - 0.5, W)
+    plt.xlim(-0.5, K+0.5)
     plt.ylabel('W(u)/W(0)')
     plt.xlabel('u')
     plt.title('Final Return W(K={0})/W(0) vs. u for alpha = {1:.3f}'.format(K,alpha))
@@ -163,15 +157,15 @@ def Wpdf(p=0.55, alpha=0.5):
     plt.title('Distribution for Total Return W(K={0})/W(0)'.format(K))
     plt.ylim([0,0.2])
     Wbar = sum(Pr*W)
-    WVaR = W[rv.ppf(0.05)]
-    Wmed = 0.5*(W[rv.ppf(0.49)] + W[rv.ppf(0.51)])
+    #WVaR = W[rv.ppf(0.05)]
+    #Wmed = 0.5*(W[rv.ppf(0.49)] + W[rv.ppf(0.51)])
     ylim = np.array(plt.ylim())
-    plt.plot([WVaR,WVaR],0.5*ylim,'r--')
+    #plt.plot([WVaR,WVaR],0.5*ylim,'r--')
     plt.plot([Wbar,Wbar],0.5*ylim,'b--')
     plt.text(Wbar,0.5*ylim[1],' Average = {0:.3f}'.format(Wbar))
-    plt.text(Wmed,0.75*ylim[1],' Median = {0:.3f}'.format(Wmed))
-    plt.text(WVaR,0.5*ylim[1],'5th Percentile = {0:.3f}'.format(WVaR),ha='right')
-    plt.plot([Wmed,Wmed],ylim,'r',lw=2)
+    #plt.text(Wmed,0.75*ylim[1],' Median = {0:.3f}'.format(Wmed))
+    #plt.text(WVaR,0.5*ylim[1],'5th Percentile = {0:.3f}'.format(WVaR),ha='right')
+    #plt.plot([Wmed,Wmed],ylim,'r',lw=2)
     plt.tight_layout()
 
 interact(Wpdf, p = (0.4,0.6,0.01), alpha = (0.01,0.99,0.01))
@@ -187,16 +181,16 @@ interact(Wpdf, p = (0.4,0.6,0.01), alpha = (0.01,0.99,0.01))
 # 
 # A typical utility function is shown on the following chart.
 
-# In[ ]:
+# In[21]:
 
 
 def U(x):
     return np.log(x)
 
 def plotUtility(U):
-    plt.figure(figsize=(8,4))
-    x = np.linspace(0.5,20.0,100)
-    plt.plot(x,U(x))
+    plt.figure(figsize=(8, 4))
+    x = np.linspace(0.5, 20.0, 100)
+    plt.plot(x, U(x))
     plt.xlabel('Wealth')
     plt.ylabel('Utility')
     plt.title('A Typical Utility Function');
@@ -210,16 +204,15 @@ plotUtility(U)
 # 
 # which is shown on the chart with the utility function.
 
-# In[ ]:
+# In[23]:
 
 
 plotUtility(U)
 ymin,ymax = plt.ylim()
-plt.hold(True)
-plt.plot([5,5],[ymin,U(5)],'r')
-plt.plot([15,15],[ymin,U(15)],'r')
-plt.plot([10,10],[ymin,U(10)],'r--')
-plt.text(10.2,ymin+0.1,'E[W] = \$10');
+plt.plot([5, 5], [ymin, U(5)], 'r')
+plt.plot([15, 15], [ymin, U(15)], 'r')
+plt.plot([10, 10], [ymin, U(10)], 'r--')
+plt.text(10.2, ymin+0.1, 'E[W] = \$10');
 
 
 # Finding the expected utility, we can use the utilty function to solve for the 'certainty equivalent' value of the game. The certainty equivalent value is the amount of wealth that has the same utility as the expected utility of the game. 
@@ -228,14 +221,13 @@ plt.text(10.2,ymin+0.1,'E[W] = \$10');
 # 
 # Because the utilty function is concave, the certainty equivalent value is less than the expected value of the game. The difference between the two values is the degree to which we discount the value of the game due to it's uncertain nature.
 
-# In[ ]:
+# In[24]:
 
 
 from scipy.optimize import brentq
 
 plotUtility(U)
 ymin,ymax = plt.ylim()
-plt.hold(True)
 plt.plot([5,5,0],[ymin,U(5),U(5)],'r')
 plt.plot([15,15,0],[ymin,U(15),U(15)],'r')
 plt.plot([10,10],[ymin,U(10)],'r--')
@@ -311,7 +303,7 @@ np.exp((1/6)*(np.log(4000000) + np.log(1000000) + np.log(25000)+np.log(10000) + 
 
 # ![Kelly_Criterion_Volatility_Pumping](https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Volatility_Pumping.png?raw=true)
 
-# In[ ]:
+# In[28]:
 
 
 # payoffs for two states
@@ -324,27 +316,28 @@ rf = 0.004
 K = 100
 
 ElnR = p*np.log(u) + (1-p)*np.log(d)
-print "Expected return = {:0.5}".format(ElnR)
-
+print("Expected return = {:0.5}".format(ElnR))
 
 Z = np.array([float(random.random() <= p) for _ in range(0,K)])
 R = d + (u-d)*Z
 S = np.cumprod(np.concatenate(([1],R)))
 
-
 ElnR = lambda alpha: p*np.log(alpha*u +(1-alpha)*np.exp(rf)) +     (1-p)*np.log(alpha*d + (1-alpha)*np.exp(rf))
 
 a = np.linspace(0,1)
 
-plt.plot(a,map(ElnR,a))
+plt.plot(a, list(map(ElnR, a)))
+plt.title("Expected Return")
+plt.xlabel("alpha")
 
 
-# In[ ]:
+# In[31]:
 
 
 from scipy.optimize import fminbound
-alpha = fminbound(lambda(alpha): -ElnR(alpha),0,1)
-print alpha
+
+alpha = fminbound(lambda alpha: -ElnR(alpha), 0, 1)
+print(alpha)
 
 #plt.plot(alpha, ElnR(alpha),'r.',ms=10)
 
@@ -361,6 +354,3 @@ plt.legend(['Stock','Stock + Cash']);
 
 
 
-
-# <!--NAVIGATION-->
-# < [Portfolio Optimization](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb) | [Contents](toc.ipynb) | [Log-Optimal Portfolios](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>

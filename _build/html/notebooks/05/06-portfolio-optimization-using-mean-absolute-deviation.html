@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Portfolio Optimization using Mean Absolute Deviation &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Portfolio Optimization" href="07-MAD-portfolio-optimization.html" />
     <link rel="prev" title="Portfolio Optimization" href="05-portfolio-optimization.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -574,18 +575,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <!--NOTEBOOK_HEADER-->
-<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
-Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
-The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
-and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization-using-mean-absolute-deviation">
-<h1>Portfolio Optimization using Mean Absolute Deviation<a class="headerlink" href="#portfolio-optimization-using-mean-absolute-deviation" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="portfolio-optimization-using-mean-absolute-deviation">
+<h1>Portfolio Optimization using Mean Absolute Deviation<a class="headerlink" href="#portfolio-optimization-using-mean-absolute-deviation" title="Permalink to this heading">#</a></h1>
 <p>This <a class="reference external" href="http://ipython.org/notebook.html">IPython notebook</a> demonstrates portfolio optimization using the Mean Absolute Deviation (MAD) criterion. A portion of these notes is adapted from <a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/Portfolio_Optimization">GLPK Wikibook tutorial on the subject</a> written by me.</p>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>Konno and Yamazaki (1990) proposed a linear programming model for portfolio optimization in which the risk measure is mean absolute deviation (MAD). This model computes a portfolio minimizing MAD subject to a lower bound on return.</p>
 <p>In contrast to the classical Markowitz portfolio, the MAD criterion requires a data set consisting of returns on the investment assets. The data set may be an historical record or samples from a multivariate statistical model of portfolio returns.  The MAD criterion produces portfolios with properties not shared by the Markowitz portfolio, including second degree stochastic dominance.</p>
 <p>Below we demonstrate portfolio optimization with the MAD criterion where data is generated by sampling a multivariate normal distribution. Given mean return <span class="math notranslate nohighlight">\(r\)</span> and the Cholesky decomposition of the covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> (i.e., <span class="math notranslate nohighlight">\(C\)</span> such that <span class="math notranslate nohighlight">\(CC^T = \Sigma\)</span>), we compute <span class="math notranslate nohighlight">\(r_t = r + C z_t\)</span> where the elements of <span class="math notranslate nohighlight">\(z_t\)</span> are zero mean normal variates with unit variance.</p>
@@ -593,7 +587,7 @@ and code is released under the <a class="reference external" href="https://opens
 <p><a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/Portfolio_Optimization">A complete tutorial</a> describing the implementation of this model is available on the <a class="reference external" href="http://en.wikibooks.org/wiki/GLPK/">GLPK wikibook</a>.</p>
 </section>
 <section id="mean-absolute-deviation">
-<h2>Mean Absolute Deviation<a class="headerlink" href="#mean-absolute-deviation" title="Permalink to this headline">#</a></h2>
+<h2>Mean Absolute Deviation<a class="headerlink" href="#mean-absolute-deviation" title="Permalink to this heading">#</a></h2>
 <p>Portfolio optimization refers to the process of allocating capital among a set of financial assets to achieve a desired tradeoff between risk and return. The classical Markowitz approach to this problem measures risk using the expected variance of the portfolio return. This criterion yields a quadratic program for the relative weights of assets in the optimal portfolio.</p>
 <p>In 1991, Konno and Yamazaki <ref></ref> proposed a linear programming model for portfolio optimization whereby risk is measured by the mean absolute deviation (MAD) from the expected return.  Using MAD as the risk metric produces portfolios with several desirable properties not shared by the Markowitz portfolio, including [[w:Stochastic_dominance|second order stochastic dominance]].</p>
 <p>As originally formulated by Konno and Yamazaki, one starts with a history of returns <span class="math notranslate nohighlight">\(R_i(t_n)\)</span> for every asset in a set <span class="math notranslate nohighlight">\(S\)</span> of assets. The return at time <span class="math notranslate nohighlight">\(t_n\)</span> is determined by the change in price of the asset,</p>
@@ -618,7 +612,7 @@ and code is released under the <a class="reference external" href="https://opens
 <p>This formulation doesn’t place individual bounds on the weights <span class="math notranslate nohighlight">\(w_i\)</span>. In particular, <span class="math notranslate nohighlight">\(w_i &lt; 0\)</span> corresponds to short selling of the associated asset.  Constraints can be added if the investor imposes limits on short-selling, on the maximum amount that can be invested in a single asset, or other requirements for portfolio diversification.  Depending on the set of available investment opportunities, additional constraints can lead to infeasible investment problems.</p>
 </section>
 <section id="reformulation-of-the-mad-objective">
-<h2>Reformulation of the MAD Objective<a class="headerlink" href="#reformulation-of-the-mad-objective" title="Permalink to this headline">#</a></h2>
+<h2>Reformulation of the MAD Objective<a class="headerlink" href="#reformulation-of-the-mad-objective" title="Permalink to this heading">#</a></h2>
 <p>The following formulation of the objective function is adapted from “Optimization Methods in Finance” by Gerald Curnuejols and Reha Tutuncu (2007) <ref></ref> which, in turn, follows
 Feinstein and Thapa (1993) <ref></ref>.</p>
 <p>The model is streamlined by introducing decision variables <span class="math notranslate nohighlight">\(y_n \geq 0\)</span> and <span class="math notranslate nohighlight">\(z_n \geq 0\)</span>, <span class="math notranslate nohighlight">\(n=1,\ldots,N\)</span> so that the objective becomes</p>
@@ -636,7 +630,7 @@ y_n-z_n &amp; = &amp; \sum_{i \in S} w_i(R_i(t_n)-\bar{R}_i) \quad \mbox{for}\qu
 <p>As discussed by Feinstein and Thapa, this version reduces the problem to <span class="math notranslate nohighlight">\(N+2\)</span> constraints in <span class="math notranslate nohighlight">\( 2N+\mbox{card}(S)\)</span> decision variables, noting the <code class="docutils literal notranslate"><span class="pre">card</span></code> function.</p>
 </section>
 <section id="seeding-the-glpk-pseudo-random-number-generator">
-<h2>Seeding the GLPK Pseudo-Random Number Generator<a class="headerlink" href="#seeding-the-glpk-pseudo-random-number-generator" title="Permalink to this headline">#</a></h2>
+<h2>Seeding the GLPK Pseudo-Random Number Generator<a class="headerlink" href="#seeding-the-glpk-pseudo-random-number-generator" title="Permalink to this heading">#</a></h2>
 <p>Unfortunately, MathProg does not provide a method to seed the pseudo-random number generator in GLPK.  Instead, the following GMPL code fragment uses the function gmtime() to find the number of seconds since 1970. Dropping the leading digit avoids subsequent overflow errors, and the square returns a number with big changes every second.  Extracting the lowest digits produces a number between 0 and 100,000 that determines how many times to sample GLPK’s pseudo-random number generator prior to subsequent use. This hack comes with no assurances regarding its statistical properties.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* A workaround for the lack of a way to seed the PRNG in GMPL */
 param utc := prod {1..2} (gmtime()-1000000000);
@@ -646,7 +640,7 @@ check sum{1..seed} Uniform01() &gt; 0;
 </div>
 </section>
 <section id="simulation-of-the-historical-returns">
-<h2>Simulation of the Historical Returns<a class="headerlink" href="#simulation-of-the-historical-returns" title="Permalink to this headline">#</a></h2>
+<h2>Simulation of the Historical Returns<a class="headerlink" href="#simulation-of-the-historical-returns" title="Permalink to this heading">#</a></h2>
 <p>For this implementation, historical returns are simulated assuming knowledge of the means and covariances of asset returns. We begin with a vector of mean returns <span class="math notranslate nohighlight">\(\bar{R}\)</span> and covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> estimated by</p>
 <div class="math notranslate nohighlight">
 \[
@@ -671,10 +665,10 @@ param R{i in S, t in T} := Rbar[i] + sum {j in S : j &lt;= i} C[i,j]*Normal(0,1)
 </div>
 </section>
 <section id="mathprog-model">
-<h2>MathProg Model<a class="headerlink" href="#mathprog-model" title="Permalink to this headline">#</a></h2>
+<h2>MathProg Model<a class="headerlink" href="#mathprog-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m /dev/stdin
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">script</span> glpsol -m /dev/stdin
 
 # Example: PortfolioMAD.mod  Portfolio Optimization using Mean Absolute Deviation
 
@@ -858,8 +852,6 @@ Model postsolving error
 </div>
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.07-MAD-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.06-Portfolio-Optimization-using-Mean-Absolute-Deviation.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 
@@ -875,13 +867,13 @@ Model postsolving error
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python2",
+            kernelName: "python3",
             path: "./notebooks/05"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python2'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               

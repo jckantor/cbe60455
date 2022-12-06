@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Real Options &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Portfolio Optimization" href="05-portfolio-optimization.html" />
     <link rel="prev" title="Binomial Model for Pricing Options" href="03-binomial-model-for-pricing-options.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -616,17 +617,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <!--NOTEBOOK_HEADER-->
-<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
-Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
-The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
-and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb">Binomial Model for Pricing Options</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="real-options">
-<h1>Real Options<a class="headerlink" href="#real-options" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="real-options">
+<h1>Real Options<a class="headerlink" href="#real-options" title="Permalink to this heading">#</a></h1>
 <section id="implementing-a-replicating-portfolio-in-pyomo">
-<h2>Implementing a Replicating Portfolio in Pyomo<a class="headerlink" href="#implementing-a-replicating-portfolio-in-pyomo" title="Permalink to this headline">#</a></h2>
+<h2>Implementing a Replicating Portfolio in Pyomo<a class="headerlink" href="#implementing-a-replicating-portfolio-in-pyomo" title="Permalink to this heading">#</a></h2>
 <p>A replicating portfolio is the key concept for using of a binomial model to price options. In a nutshell, the value of an option is the money needed to construct a portfolio that replicates the option’s payoff for every possible outcome. The replicating portfolio can be extended to applications involving ‘real assets’, including processes that convert commodity resources into higher value products.</p>
 <p>The period of the contract is broken into <span class="math notranslate nohighlight">\(N\)</span> stages where <span class="math notranslate nohighlight">\(k=0\)</span> denotes the start of the first stage of the option contract and <span class="math notranslate nohighlight">\(k=N\)</span> denotes the end of the last stage.</p>
 <p><img alt="" src="notebooks/img/TimelineRealOption.png" /></p>
@@ -651,7 +645,7 @@ x_{k-1,s}S^f_{k,s+1} + (y_{k-1,s}-P_{k,s})(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 <p>where we assume expenses are incurred immediately prior to the start of stage <span class="math notranslate nohighlight">\(k\)</span>, and income is accumulated immediately following completion of stage <span class="math notranslate nohighlight">\(k\)</span>.</p>
 </section>
 <section id="example-1-value-of-a-fixed-cash-flow">
-<h2>Example 1. Value of a fixed cash flow<a class="headerlink" href="#example-1-value-of-a-fixed-cash-flow" title="Permalink to this headline">#</a></h2>
+<h2>Example 1. Value of a fixed cash flow<a class="headerlink" href="#example-1-value-of-a-fixed-cash-flow" title="Permalink to this heading">#</a></h2>
 <p>Suppose we are considering the purchase of lease on property that could generate $10,000 per year of income for the next 10 years. We assume there is virtually no risk that the full of those payments will not be received.</p>
 <p>The value of the portfolio after stage <span class="math notranslate nohighlight">\(k\)</span> is designated <span class="math notranslate nohighlight">\(W_k\)</span>. The replicating portfolio consists of cash equivalents in the amount <span class="math notranslate nohighlight">\(y_k\)</span> that may be deposited with an annual interest rate <span class="math notranslate nohighlight">\(r\)</span>.</p>
 <div class="math notranslate nohighlight">
@@ -711,16 +705,16 @@ y_{k-1} &amp; = \frac{y_k}{1+r} + P_k &amp; \forall k = 1, 2, \ldots, N
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_5_0.png" src="../../_images/04-real-options_5_0.png" />
+<img alt="../../_images/04-real-options_3_0.png" src="../../_images/04-real-options_3_0.png" />
 </div>
 </div>
 </section>
 <section id="example-2-simplico-gold-mine">
-<h2>Example 2. Simplico Gold Mine<a class="headerlink" href="#example-2-simplico-gold-mine" title="Permalink to this headline">#</a></h2>
+<h2>Example 2. Simplico Gold Mine<a class="headerlink" href="#example-2-simplico-gold-mine" title="Permalink to this heading">#</a></h2>
 <p>The Simplico Gold Mine is a well-known example due to Luenberger. Up to 10,000 ounces per year can be extracted from the gold mine at a processing cost of $200/oz. We assume the price of gold is currently $400/oz. and can modeled on a binomial lattice with u = 1.2, d=0.9, a probability 0.75 that the price increases. The cost of borrowing money is equal to 10% per year. Gold extracted during the year is sold at the end of the year for the price that prevailed at the start of the year.</p>
 <p>What is the value of a 10 year lease on the gold mine?</p>
 <section id="solution">
-<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">#</a></h3>
+<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this heading">#</a></h3>
 <p>As a first step towards a solution, we compute a binomial lattice for the price of gold using the giving information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -767,7 +761,7 @@ y_{k-1} &amp; = \frac{y_k}{1+r} + P_k &amp; \forall k = 1, 2, \ldots, N
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_8_0.png" src="../../_images/04-real-options_8_0.png" />
+<img alt="../../_images/04-real-options_6_0.png" src="../../_images/04-real-options_6_0.png" />
 </div>
 </div>
 <p>The second step is to solve an optimization model for the lease value. Let <span class="math notranslate nohighlight">\(W_{k,s}\)</span> denotethe value of the option at end of stage <span class="math notranslate nohighlight">\(k\)</span> and in state <span class="math notranslate nohighlight">\(s\)</span>. The terminal value of the lease is zero, i.e.,</p>
@@ -836,14 +830,14 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_10_0.png" src="../../_images/04-real-options_10_0.png" />
+<img alt="../../_images/04-real-options_8_0.png" src="../../_images/04-real-options_8_0.png" />
 </div>
 </div>
 <p>The value of the lease is $24.07 million.</p>
 </section>
 </section>
 <section id="example-3-simplico-gold-mine-capital-investment">
-<h2>Example 3. Simplico Gold Mine Capital Investment<a class="headerlink" href="#example-3-simplico-gold-mine-capital-investment" title="Permalink to this headline">#</a></h2>
+<h2>Example 3. Simplico Gold Mine Capital Investment<a class="headerlink" href="#example-3-simplico-gold-mine-capital-investment" title="Permalink to this heading">#</a></h2>
 <p>Next we consider an option to make a capital improvement in the gold mine following an <a class="reference external" href="http://www.columbia.edu/~mh2078/FoundationsFE/RealOptions.pdf">analysis of Martin Haugh</a>. The option increases the gold output by 25% to 12,500 oz./year. The required investment is a $4 million capital expense and an on-going increase in operating costs from $200/oz. to $240/oz. There would be no residual value resulting from the investment. The task is to determine if this option has value and, if so, how the option should be implemented.</p>
 <p>We begin the analysis by computing the value of Simplico Gold Mine with this enhancement in place.</p>
 <div class="cell docutils container">
@@ -900,7 +894,7 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_13_0.png" src="../../_images/04-real-options_13_0.png" />
+<img alt="../../_images/04-real-options_11_0.png" src="../../_images/04-real-options_11_0.png" />
 </div>
 </div>
 <p>Immediate implementation of the capital expansion would raise the initial of the lease from $24.07 to $27.02 million accounting for the increase in capacity and operating cost. The increase of $2.95 million is not enough to justify an initial capital investment of $4 million.</p>
@@ -919,7 +913,7 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_15_0.png" src="../../_images/04-real-options_15_0.png" />
+<img alt="../../_images/04-real-options_13_0.png" src="../../_images/04-real-options_13_0.png" />
 </div>
 </div>
 <p>Nodes above the $4 million threshold correspond to scenarios where the operator would increase value by electing to implement the mine enhancements. Those scenarios are characterized by high gold prices occuring relatively early in the course of the lease.</p>
@@ -993,17 +987,17 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_17_0.png" src="../../_images/04-real-options_17_0.png" />
-<img alt="../../_images/04-real-options_17_1.png" src="../../_images/04-real-options_17_1.png" />
+<img alt="../../_images/04-real-options_15_0.png" src="../../_images/04-real-options_15_0.png" />
+<img alt="../../_images/04-real-options_15_1.png" src="../../_images/04-real-options_15_1.png" />
 </div>
 </div>
 <p>In this case the capital expense has been incorporated into the leave value calculations. Because the value of the lease has increased from the base case of $24.07 to $24.63 million, the availability of the option adds value to the lease.</p>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="example-4-tree-farm-harvesting">
-<h1>Example 4. Tree Farm Harvesting<a class="headerlink" href="#example-4-tree-farm-harvesting" title="Permalink to this headline">#</a></h1>
+<h1>Example 4. Tree Farm Harvesting<a class="headerlink" href="#example-4-tree-farm-harvesting" title="Permalink to this heading">#</a></h1>
 <section id="price-model">
-<h2>Price Model<a class="headerlink" href="#price-model" title="Permalink to this headline">#</a></h2>
+<h2>Price Model<a class="headerlink" href="#price-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -1050,12 +1044,12 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_21_0.png" src="../../_images/04-real-options_21_0.png" />
+<img alt="../../_images/04-real-options_19_0.png" src="../../_images/04-real-options_19_0.png" />
 </div>
 </div>
 </section>
 <section id="growth-model">
-<h2>Growth Model<a class="headerlink" href="#growth-model" title="Permalink to this headline">#</a></h2>
+<h2>Growth Model<a class="headerlink" href="#growth-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1081,7 +1075,7 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_23_0.png" src="../../_images/04-real-options_23_0.png" />
+<img alt="../../_images/04-real-options_21_0.png" src="../../_images/04-real-options_21_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1137,11 +1131,9 @@ x_{k-1,s}S^f_{k,s+1} + y_{k-1,s}-P_{k,s}(1+r) &amp; \geq W_{k,s+1} + Q_{k,s+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/04-real-options_24_0.png" src="../../_images/04-real-options_24_0.png" />
+<img alt="../../_images/04-real-options_22_0.png" src="../../_images/04-real-options_22_0.png" />
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.03-Binomial-Model-for-Pricing-Options.ipynb">Binomial Model for Pricing Options</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.05-Portfolio-Optimization.ipynb">Portfolio Optimization</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.04-Real-Options.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 

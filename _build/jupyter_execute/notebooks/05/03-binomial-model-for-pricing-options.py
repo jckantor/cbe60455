@@ -5,7 +5,7 @@
 # 
 # This notebooks demonstrates techniques for pricing options using a binomial lattice to model prices of the underlying security or commodity. The notebook makes use of the pandas_datareader library to download pricing information, and the Pyomo modeling library for some example calculations.
 
-# In[1]:
+# In[29]:
 
 
 get_ipython().system('pip install pandas_datareader --upgrade')
@@ -13,11 +13,11 @@ get_ipython().system('pip install pandas_datareader --upgrade')
 
 # ## Historical Data
 # 
-# The first step is download historical data for a selected security or commodity.  For the purposes of this notebook, it is useful to choose security of commodities for which there is an active options trading so the pricing model can be compared to real data.
+# The first step is download historical data for a selected security or commodity.  For the purposes of this notebook, it is useful to choose security of commodities for which there is an active options trading so the pricing model can be compared to real data. A set of symbols representing commodity prices available on Yahoo Finance is located [here](https://finance.yahoo.com/commodities/).
 # 
 # **Programming note:** Given a stock market symbol, the function ``yahoo_finance`` defined in the following cell creates a pandas data series object ``S`` of historical prices.
 
-# In[2]:
+# In[46]:
 
 
 import matplotlib.pyplot as plt
@@ -50,7 +50,8 @@ def yahoo_finance(symbol, nYears = 3):
 
     return S
 
-S = yahoo_finance('T', 1.5)
+S = yahoo_finance('HOH23.NYM', 0.5)
+print(S)
 
 
 # # Fitting Historical Data to Geometric Brownian Motion
@@ -101,14 +102,14 @@ S = yahoo_finance('T', 1.5)
 # \sigma^{annual} & = \sqrt{252} \times \sigma^{trading\ day} \\
 # \end{align*}
 
-# In[3]:
+# In[47]:
 
 
 from scipy.stats import norm
 
 # compute linear and log returns
 rlin = (S - S.shift(1))/S.shift(1)
-rlog = np.log(S/S.shift(1))
+rlog = np.log(S) - np.log(S.shift(1))
 
 rlin = rlin.dropna()
 rlog = rlog.dropna()
@@ -138,6 +139,32 @@ print('   nu = {0:12.8f}  (annualized = {1:.2f}%)'.format(nu,100*252*nu))
 print('sigma = {0:12.8f}  (annualized = {1:.2f}%)'.format(sigma,100*np.sqrt(252)*sigma))
 
 
+# In[75]:
+
+
+print(mu, sigma)
+
+
+print(S[-1])
+
+
+
+fig, ax = plt.subplots(1, 1)
+slast = []
+for n in range(10000):
+    r = nu*dt + sigma*np.sqrt(dt)*np.random.normal(size=84)
+    s = np.exp(np.log(S[-1] + np.cumsum(r)))
+    ax.plot(s, alpha=0.02, color='b')
+    slast.append(s[-1])
+
+
+# In[77]:
+
+
+plt.hist(slast, bins=100)
+print(np.mean(slast), np.median(slast))
+
+
 # ## Binomial Model
 # 
 # The binomial model provides a means of modeling the statistical distribution of future prices. Given a current price $S_t$, there are two possible states for the next observed value $S_{t+\Delta t}$
@@ -153,7 +180,7 @@ print('sigma = {0:12.8f}  (annualized = {1:.2f}%)'.format(sigma,100*np.sqrt(252)
 # \ln d & = - \sqrt{\sigma^2\Delta t + (\nu\Delta t)^2} 
 # \end{align*}
 
-# In[4]:
+# In[50]:
 
 
 # Time/period
@@ -196,7 +223,7 @@ print('Down Return (d) = ', round(d,4))
 # 
 # which is the formula used below to compute values in the binomial lattice.
 
-# In[5]:
+# In[22]:
 
 
 N = 5
@@ -234,7 +261,7 @@ Sdisplay(Sf)
 # 
 # The following cell evaluates price and probability for a binomial model, and also plot the average price.
 
-# In[6]:
+# In[23]:
 
 
 P = {}
@@ -286,7 +313,7 @@ SPdisplay(Sf,P,P)
 # 
 # The next cell demonstrates the terminal value of a european call option where the strike price is equal to the initial price (known as an 'at the money' strike).
 
-# In[7]:
+# In[24]:
 
 
 K = 36
@@ -334,7 +361,7 @@ plt.plot([0,N],[K,K],'y--',lw=3)
 # 
 # The second important consequence is the actual pricing formula. It's linear, for one thing, is easily implemented as a calculation that proceeds backward in time as shown in the diagram above. As can be seen from the derivation, the computation is quite general and can be applied to any option which can be assigned a terminal value.
 
-# In[8]:
+# In[25]:
 
 
 r = 0.030/12
@@ -404,7 +431,7 @@ plt.title('Cash Position')
 # 
 # If everything works as expected, the results of this calculation should be the same as those computed using risk-neutral probabilities.
 
-# In[9]:
+# In[26]:
 
 
 from pyomo.environ import *
@@ -460,7 +487,7 @@ plt.title('Value of a European Call Option')
 # 
 # The value of the put option can be computed using the same risk neutral probabilities as for the call option, or by modifying the Pyomo model as shown in the following cell.
 
-# In[10]:
+# In[27]:
 
 
 from pyomo.environ import *
@@ -512,7 +539,7 @@ plt.title('Value of European Put Option')
 # 
 # Let's compare the value of the put option to the value of exercising the option. At any node $(k,s)$, the value of exercising the option is $K-S^f_{k,s}$. The next cell compares the value of the European put option to hypothetical value of early exercise.
 
-# In[11]:
+# In[28]:
 
 
 W = {}

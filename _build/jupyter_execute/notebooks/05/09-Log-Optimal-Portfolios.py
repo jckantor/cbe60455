@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <!--NOTEBOOK_HEADER-->
-# *This notebook contains course material from [CBE40455](https://jckantor.github.io/CBE40455) by
-# Jeffrey Kantor (jeff at nd.edu); the content is available [on Github](https://github.com/jckantor/CBE40455.git).
-# The text is released under the [CC-BY-NC-ND-4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode),
-# and code is released under the [MIT license](https://opensource.org/licenses/MIT).*
-
-# <!--NAVIGATION-->
-# < [Log-Optimal Growth and the Kelly Criterion](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb) | [Contents](toc.ipynb) | [Optimization in Google Sheets](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
-
 # # Log-Optimal Portfolios
 
 # This notebook demonstrates the Kelly criterion and other phenomena associated with log-optimal growth.
@@ -300,6 +291,3 @@ plt.legend(['Stock','Stock + Cash']);
 
 
 
-
-# <!--NAVIGATION-->
-# < [Log-Optimal Growth and the Kelly Criterion](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb) | [Contents](toc.ipynb) | [Optimization in Google Sheets](http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb) ><p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a>
