@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Batch Chemical Process &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -57,7 +58,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Scheduling" href="../03/00-scheduling.html" />
     <link rel="prev" title="Simulating Queuing Systems" href="03-queuing-systems.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -533,9 +534,9 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="batch-chemical-process">
-<h1>Batch Chemical Process<a class="headerlink" href="#batch-chemical-process" title="Permalink to this headline">#</a></h1>
+<h1>Batch Chemical Process<a class="headerlink" href="#batch-chemical-process" title="Permalink to this heading">#</a></h1>
 <section id="problem-statement">
-<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">#</a></h2>
+<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this heading">#</a></h2>
 <p>Schultheisz, Daniel, and Jude T. Sommerfeld. “Discrete-Event Simulation in Chemical Engineering.” Chemical Engineering Education 22.2 (1988): 98-102.</p>
 <p><img alt="Batch Process" src="notebooks/02/figures/BatchProcess.png" /></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;... a small, single-product batch chemical plant has three identical reactors in parallel, followed by a single storage tank and a batch still. Customer orders (batches) to be filled (which begin with processing in the reactor) occur every 115 ± 30 minutes, uniformly distributed. The reaction time in a given reactor is 335 ± 60 minutes, and the distillation time in the still is 110 ± 25 minutes, both times uniformly distributed. The holding capacity of the storage tank is exactly one batch. Hence, the storage tank must be empty for a given reactor to discharge its batch; if not, the reactor cannot begin processing a new batch until the storage tank becomes empty. The simulation is to be run for 100 batches. The model should have the capability to collect waiting line statistics for the queue immediately upstream of the reactor.&quot;&quot;
@@ -544,7 +545,7 @@ title="Print to PDF"
 <p>You have been hired by the client as a consulting engineer. Prepare a SimPy simulation of this process to deliver to the client. The delivery should include functions to report the key performance indicators, visualize the results of the simulation, and to conduct ‘what-if’ studies to determine ways to improve process performance.</p>
 </section>
 <section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h2>
 <ol class="simple">
 <li><p>What is the purpose of the simulation? What question needs to be answered? In thinking about this, carefully consider what has been requested, what other questions are relevant to improving system performance.</p></li>
 <li><p>What are the key performance indicators?  What data needs to be collected?</p></li>

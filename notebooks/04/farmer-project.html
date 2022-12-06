@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Solving the Farmer’s problem &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Financial Risk and Diversification" href="../05/00-finance.html" />
     <link rel="prev" title="Airline seat allocation problem" href="airline-seating.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -605,7 +606,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="solving-the-farmer-s-problem">
-<h1>Solving the Farmer’s problem<a class="headerlink" href="#solving-the-farmer-s-problem" title="Permalink to this headline">#</a></h1>
+<h1>Solving the Farmer’s problem<a class="headerlink" href="#solving-the-farmer-s-problem" title="Permalink to this heading">#</a></h1>
 <p>The <a class="reference external" href="https://www.math.uh.edu/~rohop/Spring_15/Chapter1.pdf">Farmer’s Problem</a> is a teaching example presented in the well-known textbook by John Birge and Francois Louveaux.</p>
 <ul class="simple">
 <li><p>Birge, John R., and Francois Louveaux. Introduction to stochastic programming. Springer Science &amp; Business Media, 2011.</p></li>
@@ -646,7 +647,7 @@ cbc was previously installed
 </div>
 </div>
 <section id="problem-statement">
-<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">#</a></h2>
+<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this heading">#</a></h2>
 <p>In the <a class="reference external" href="https://www.math.uh.edu/~rohop/Spring_15/Chapter1.pdf">farmer’s problem</a>, a European farmer has to allocate 500 acres of land to three different crops (wheat, corn, and sugar beets) aiming to maximize profit.</p>
 <ul class="simple">
 <li><p>Planting one acre of wheat, corn and beet costs \<span class="math notranslate nohighlight">\(150, \\\)</span>230 and \$260, respectively.</p></li>
@@ -665,13 +666,13 @@ cbc was previously installed
 </ol>
 </section>
 <section id="data-summary">
-<h2>Data Summary<a class="headerlink" href="#data-summary" title="Permalink to this headline">#</a></h2>
-<table class="colwidths-auto table">
+<h2>Data Summary<a class="headerlink" href="#data-summary" title="Permalink to this heading">#</a></h2>
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p>Scenario</p></th>
-<th class="text-align:center head"><p>Yield for wheat <br> (tons/acre)</p></th>
-<th class="text-align:center head"><p>Yield for corn <br> (tons/acre)</p></th>
-<th class="text-align:center head"><p>Yield for beets <br> (tons/acre)</p></th>
+<tr class="row-odd"><th class="head text-align:left"><p>Scenario</p></th>
+<th class="head text-align:center"><p>Yield for wheat <br> (tons/acre)</p></th>
+<th class="head text-align:center"><p>Yield for corn <br> (tons/acre)</p></th>
+<th class="head text-align:center"><p>Yield for beets <br> (tons/acre)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -693,14 +694,14 @@ cbc was previously installed
 </tbody>
 </table>
 <p>We first consider the case in which all the prices are fixed and not weather-dependent. The following table summarizes the data.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p>Commodity</p></th>
-<th class="text-align:center head"><p>Sell <br> Price <br> (euro/ton)</p></th>
-<th class="text-align:center head"><p>Market <br> Demand <br> (tons)</p></th>
-<th class="text-align:center head"><p>Buy <br> Price <br> (euro/ton)</p></th>
-<th class="text-align:center head"><p>Cattle Feed <br> Required <br> (tons)</p></th>
-<th class="text-align:center head"><p>Planting <br> Cost <br> (euro/acre)</p></th>
+<tr class="row-odd"><th class="head text-align:left"><p>Commodity</p></th>
+<th class="head text-align:center"><p>Sell <br> Price <br> (euro/ton)</p></th>
+<th class="head text-align:center"><p>Market <br> Demand <br> (tons)</p></th>
+<th class="head text-align:center"><p>Buy <br> Price <br> (euro/ton)</p></th>
+<th class="head text-align:center"><p>Cattle Feed <br> Required <br> (tons)</p></th>
+<th class="head text-align:center"><p>Planting <br> Cost <br> (euro/acre)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -736,7 +737,7 @@ cbc was previously installed
 </table>
 </section>
 <section id="data-modeling">
-<h2>Data Modeling<a class="headerlink" href="#data-modeling" title="Permalink to this headline">#</a></h2>
+<h2>Data Modeling<a class="headerlink" href="#data-modeling" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commodities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -882,7 +883,7 @@ cbc was previously installed
 </div>
 </section>
 <section id="farm-simulation">
-<h2>Farm Simulation<a class="headerlink" href="#farm-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Farm Simulation<a class="headerlink" href="#farm-simulation" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plant</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s2">&quot;wheat&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;corn&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;beets&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;more beets&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
@@ -1044,10 +1045,10 @@ dtype: int64
 </div>
 </section>
 <section id="model-building">
-<h2>Model Building<a class="headerlink" href="#model-building" title="Permalink to this headline">#</a></h2>
+<h2>Model Building<a class="headerlink" href="#model-building" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="mean-solution">
-<h2>1. Mean Solution<a class="headerlink" href="#mean-solution" title="Permalink to this headline">#</a></h2>
+<h2>1. Mean Solution<a class="headerlink" href="#mean-solution" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">yields</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
@@ -1080,7 +1081,7 @@ dtype: int64
 </div>
 </section>
 <section id="stochastic-solution">
-<h2>2. Stochastic Solution<a class="headerlink" href="#stochastic-solution" title="Permalink to this headline">#</a></h2>
+<h2>2. Stochastic Solution<a class="headerlink" href="#stochastic-solution" title="Permalink to this heading">#</a></h2>
 <p>The problem statement asks for a number of different analyses. In a consulting situation, it is possible the client would ask more “what if” questions after hearing the initial results. For these reasons, we build a function that returns a Pyomo model the variables and expressions needed to address all parts of the problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1431,7 +1432,7 @@ Scenario: good
 </div>
 </section>
 <section id="worst-case-profit">
-<h2>3. Worst Case Profit<a class="headerlink" href="#worst-case-profit" title="Permalink to this headline">#</a></h2>
+<h2>3. Worst Case Profit<a class="headerlink" href="#worst-case-profit" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">farmer</span><span class="p">(</span><span class="n">commodities</span><span class="p">,</span> <span class="n">yields</span><span class="p">)</span>
@@ -1683,7 +1684,7 @@ Scenario: good
 </div>
 </section>
 <section id="risk-versus-return">
-<h2>4. Risk versus Return<a class="headerlink" href="#risk-versus-return" title="Permalink to this headline">#</a></h2>
+<h2>4. Risk versus Return<a class="headerlink" href="#risk-versus-return" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>

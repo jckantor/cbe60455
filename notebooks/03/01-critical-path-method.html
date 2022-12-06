@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Critical Path Method &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -57,7 +58,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Machine Bottleneck" href="02-machine-bottleneck.html" />
     <link rel="prev" title="Scheduling" href="00-scheduling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -543,10 +544,10 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="critical-path-method">
-<h1>Critical Path Method<a class="headerlink" href="#critical-path-method" title="Permalink to this headline">#</a></h1>
+<h1>Critical Path Method<a class="headerlink" href="#critical-path-method" title="Permalink to this heading">#</a></h1>
 <p>This notebook demonstrates the Critical Path Method.</p>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>The Critical Path Method is a technique for calculating the shortest time span needed to complete a series of tasks. The tasks are represented by nodes, each labelled with the duration. The precedence order of the task is given by a set of arcs.</p>
 <p>Here we demonstrate the representation and calculation of the critical path. Decision variables are introduced for</p>
 <ul class="simple">
@@ -575,7 +576,7 @@ Successfully installed cplex-22.1.0.0
 </div>
 </section>
 <section id="example-stadium-construction">
-<h2>Example: Stadium Construction<a class="headerlink" href="#example-stadium-construction" title="Permalink to this headline">#</a></h2>
+<h2>Example: Stadium Construction<a class="headerlink" href="#example-stadium-construction" title="Permalink to this heading">#</a></h2>
 <p>Stadium Construction, <a class="reference external" href="http://www.maximalsoftware.com/modellib/modXpressMP.html">Example 7.1.1</a> from <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.69.9634&amp;rep=rep1&amp;type=pdf">Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 7, Dash Optimization, 2000</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1273,7 +1274,7 @@ Solution:
 </div>
 </section>
 <section id="identifying-the-critical-path">
-<h2>Identifying the Critical Path<a class="headerlink" href="#identifying-the-critical-path" title="Permalink to this headline">#</a></h2>
+<h2>Identifying the Critical Path<a class="headerlink" href="#identifying-the-critical-path" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>

@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Machine Bottleneck &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Job Shop Scheduling" href="03-job-shop-scheduling.html" />
     <link rel="prev" title="Critical Path Method" href="01-critical-path-method.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -589,10 +590,10 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="machine-bottleneck">
-<h1>Machine Bottleneck<a class="headerlink" href="#machine-bottleneck" title="Permalink to this headline">#</a></h1>
+<h1>Machine Bottleneck<a class="headerlink" href="#machine-bottleneck" title="Permalink to this heading">#</a></h1>
 <p>This notebook demonstrates the formulation and solution of the a machine bottleneck problem using Pyomo/GLPK. The task is to schedule a set of jobs on a single machine given the release time, duration, and due time for each job. Date for the example problem is from Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 5, Dash Optimization, 2000.</p>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h2>
 <p>The problem is to schedule a sequence of jobs for a single machine. The data consists of a list of jobs. For each job, the data provides the time at which the job is released to the for machine processing, the expected duration of the job, and the due date. The problem is to sequence the jobs on the machine to meet the due dates, or show that no such sequence is possible.</p>
 <p>The following data was presented in the Machine Bottleneck Example from Christelle Gueret, Christian Prins, Marc Sevaux, “Applications of Optimization with Xpress-MP,” Chapter 5, Dash Optimization, 2000.</p>
 <div class="cell docutils container">
@@ -728,14 +729,14 @@ G 9.0
 </div>
 </section>
 <section id="modeling">
-<h2>Modeling<a class="headerlink" href="#modeling" title="Permalink to this headline">#</a></h2>
+<h2>Modeling<a class="headerlink" href="#modeling" title="Permalink to this heading">#</a></h2>
 <section id="data">
-<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h3>
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h3>
 <p>The data for this problem consists of a list of jobs. Each job is tagged with a unique ID along with numerical data giving the time at which the job will be released for machine processing, the expected duration, and the time at which it is due.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
-<th class="text-align:left head"><p>Description</p></th>
+<th class="head text-align:left"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
@@ -755,12 +756,12 @@ G 9.0
 </table>
 </section>
 <section id="decision-variables">
-<h3>Decision Variables<a class="headerlink" href="#decision-variables" title="Permalink to this headline">#</a></h3>
+<h3>Decision Variables<a class="headerlink" href="#decision-variables" title="Permalink to this heading">#</a></h3>
 <p>For a single machine, the essential decision variable is the start time at which the job begins processing.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
-<th class="text-align:left head"><p>Description</p></th>
+<th class="head text-align:left"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
@@ -801,7 +802,7 @@ G 9.0
 </section>
 </section>
 <section id="pyomo-model">
-<h2>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this headline">#</a></h2>
+<h2>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
@@ -992,7 +993,7 @@ G 9.0
 </div>
 </section>
 <section id="visualization">
-<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1027,7 +1028,7 @@ G 9.0
 </div>
 </section>
 <section id="multiple-machines">
-<h2>Multiple Machines<a class="headerlink" href="#multiple-machines" title="Permalink to this headline">#</a></h2>
+<h2>Multiple Machines<a class="headerlink" href="#multiple-machines" title="Permalink to this heading">#</a></h2>
 <p>The case of multiple machines requires a modest extension of model described above. Given a set <span class="math notranslate nohighlight">\(M\)</span> of machines, we introduce an additional decision binary variable <span class="math notranslate nohighlight">\(z_{j,m}\)</span> indicating if job <span class="math notranslate nohighlight">\(j\)</span> has been assigned to machine <span class="math notranslate nohighlight">\(m\)</span>. The additional constraints</p>
 <p>\begin{align*}
 \sum_{m\in M}z_{j,m} = 1

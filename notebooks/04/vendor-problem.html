@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>The Vendor Problem &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Airline seat allocation problem" href="airline-seating.html" />
     <link rel="prev" title="Optimization under Uncertainty" href="00-uncertainty.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -673,9 +674,9 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="the-vendor-problem">
-<h1>The Vendor Problem<a class="headerlink" href="#the-vendor-problem" title="Permalink to this headline">#</a></h1>
+<h1>The Vendor Problem<a class="headerlink" href="#the-vendor-problem" title="Permalink to this heading">#</a></h1>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>We use the generic title “Vendor Problem” to refer to the classic <a class="reference external" href="https://en.wikipedia.org/wiki/Newsvendor_model">newsvendor problem or newsvendor model</a>. Vendor problems are straightforward examples of two stage decision problems where a decision must be made “here and now” to purchase a perishable items that will be resold later in a market with uncertain demand. If the vendor buys too much then there will be leftover goods sold for salvage value. But buy too little and the vendor leaves “money on the table.” The problem is to determine an order size that balances the vendor’s economic risk and reward.</p>
 <p>The vendor problem appears in a wide range of applications including in media at <a class="reference external" href="https://pubsonline.informs.org/doi/abs/10.1287/inte.33.3.72.16010?journalCode=inte">Time Magazine</a> and the <a class="reference external" href="https://pubsonline.informs.org/doi/abs/10.1287/inte.2014.0759?journalCode=inte">Yedioth Group</a>, manufacturing at <a class="reference external" href="https://pubsonline.informs.org/doi/abs/10.1287/inte.1070.0339?journalCode=inte">Intel</a> and <a class="reference external" href="https://pubsonline.informs.org/doi/abs/10.1287/inte.1070.0299?journalCode=inte">Hitachi</a>, <a class="reference external" href="https://arxiv.org/pdf/2007.02510.pdf">supply chain optimization in online fashion e-commerce</a>, and <a class="reference external" href="https://econpapers.repec.org/bookchap/sprisochp/978-1-4614-3600-3_5f10.htm">recycling/remanufacturing operations</a>.</p>
 <p>Recent reviews of the vendor problem can be found in the following publications.</p>
@@ -687,17 +688,17 @@ title="Print to PDF"
 <p>Daily life is replete with examples of the vendor problem. Stop a moment and think of a few before moving on.</p>
 </section>
 <section id="problem-data">
-<h2>Problem Data<a class="headerlink" href="#problem-data" title="Permalink to this headline">#</a></h2>
+<h2>Problem Data<a class="headerlink" href="#problem-data" title="Permalink to this heading">#</a></h2>
 <p>The vendor needs to decide how much inventory to order here and now to fulfill an uncertain future demand. The data includes the vendor’s purchase cost <span class="math notranslate nohighlight">\(c\)</span>, the vendor’s selling price <span class="math notranslate nohighlight">\(r\)</span>, and salvage/waste value <span class="math notranslate nohighlight">\(w\)</span>. The problem has meaning when these prices satisfy relationships</p>
 <div class="math notranslate nohighlight">
 \[ r \geq c \geq w\]</div>
 <p>The difference <span class="math notranslate nohighlight">\((r - c)\)</span> is the net profit earned per unit when there is sufficient customer demand, <span class="math notranslate nohighlight">\((c - w)\)</span> is the loss per unit for goods sold as waste or salvage.</p>
 <p>Consider, for example, a food truck that sells a single menu item at a price of 5€ for which the cost is 2€ per item sold, and could be sold out at discounted price of 1.25€ if demand is not sufficient at the original price.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p></p></th>
-<th class="text-align:center head"><p>Symbol</p></th>
-<th class="text-align:center head"><p>Value</p></th>
+<tr class="row-odd"><th class="head text-align:left"><p></p></th>
+<th class="head text-align:center"><p>Symbol</p></th>
+<th class="head text-align:center"><p>Value</p></th>
 </tr>
 </thead>
 <tbody>
@@ -727,13 +728,13 @@ title="Print to PDF"
 </div>
 </section>
 <section id="demand-scenarios">
-<h2>Demand Scenarios<a class="headerlink" href="#demand-scenarios" title="Permalink to this headline">#</a></h2>
+<h2>Demand Scenarios<a class="headerlink" href="#demand-scenarios" title="Permalink to this heading">#</a></h2>
 <p>The first case we consider is a probabilistic demand forecast specified as a short list of scenarios.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Scenario <br> <span class="math notranslate nohighlight">\(s\)</span></p></th>
-<th class="text-align:center head"><p>Probability <br> <span class="math notranslate nohighlight">\(p_s\)</span></p></th>
-<th class="text-align:center head"><p>Demand <br> <span class="math notranslate nohighlight">\(D_s\)</span></p></th>
+<tr class="row-odd"><th class="head text-align:center"><p>Scenario <br> <span class="math notranslate nohighlight">\(s\)</span></p></th>
+<th class="head text-align:center"><p>Probability <br> <span class="math notranslate nohighlight">\(p_s\)</span></p></th>
+<th class="head text-align:center"><p>Demand <br> <span class="math notranslate nohighlight">\(D_s\)</span></p></th>
 </tr>
 </thead>
 <tbody>
@@ -811,9 +812,9 @@ title="Print to PDF"
 </div>
 </section>
 <section id="preliminary-calculations">
-<h2>Preliminary Calculations<a class="headerlink" href="#preliminary-calculations" title="Permalink to this headline">#</a></h2>
+<h2>Preliminary Calculations<a class="headerlink" href="#preliminary-calculations" title="Permalink to this heading">#</a></h2>
 <section id="expected-value-with-perfect-information-ev-pi">
-<h3>Expected Value with Perfect Information (EV|PI)<a class="headerlink" href="#expected-value-with-perfect-information-ev-pi" title="Permalink to this headline">#</a></h3>
+<h3>Expected Value with Perfect Information (EV|PI)<a class="headerlink" href="#expected-value-with-perfect-information-ev-pi" title="Permalink to this heading">#</a></h3>
 <p>Imagine a situation where one could forecast future demand perfectly. Then for each scenario <span class="math notranslate nohighlight">\(s \in S\)</span>, the order size would match demand <span class="math notranslate nohighlight">\(D_s\)</span> producing a net profit <span class="math notranslate nohighlight">\((r - c)D_s\)</span> with probability <span class="math notranslate nohighlight">\(p_s\)</span>. The computing expected value then gives the <strong>expected value of perfect information (EV|PI)</strong></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -840,7 +841,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="computing-the-expected-value-for-fixed-order-size">
-<h3>Computing the Expected Value for fixed Order Size<a class="headerlink" href="#computing-the-expected-value-for-fixed-order-size" title="Permalink to this headline">#</a></h3>
+<h3>Computing the Expected Value for fixed Order Size<a class="headerlink" href="#computing-the-expected-value-for-fixed-order-size" title="Permalink to this heading">#</a></h3>
 <p>The key characteristic of the newsvendor problem is that one determines the order size <span class="math notranslate nohighlight">\(x\)</span> without advance knowledge of which scenario will transpire. For scenarios <span class="math notranslate nohighlight">\(s\in S\)</span>, the number of units sold at retail value is given by the smaller of the order size and demand.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -875,7 +876,7 @@ y_s &amp; = \min(x, D_s)\\
 </div>
 </section>
 <section id="expected-value-of-the-mean-demand">
-<h3>Expected Value of the Mean Demand<a class="headerlink" href="#expected-value-of-the-mean-demand" title="Permalink to this headline">#</a></h3>
+<h3>Expected Value of the Mean Demand<a class="headerlink" href="#expected-value-of-the-mean-demand" title="Permalink to this heading">#</a></h3>
 <p>A common answer to the question of how much to order is to order the expected demand.</p>
 <div class="math notranslate nohighlight">
 \[\bar{D} = \mathbb{E}[D] = \sum_{s\in S} p_s D_s\]</div>
@@ -902,7 +903,7 @@ expected profit for the mean demand = 440.625
 </section>
 </section>
 <section id="maximizing-the-expected-value">
-<h2>Maximizing the Expected Value<a class="headerlink" href="#maximizing-the-expected-value" title="Permalink to this headline">#</a></h2>
+<h2>Maximizing the Expected Value<a class="headerlink" href="#maximizing-the-expected-value" title="Permalink to this heading">#</a></h2>
 <p>The objective is to maximize expected profit. Let’s plot the expected value as a function of the decision variable <span class="math notranslate nohighlight">\(x\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -938,7 +939,7 @@ expected profit for the mean demand = 440.625
 </div>
 </section>
 <section id="pyomo-model-for-the-stochastic-solution">
-<h2>Pyomo Model for the Stochastic Solution<a class="headerlink" href="#pyomo-model-for-the-stochastic-solution" title="Permalink to this headline">#</a></h2>
+<h2>Pyomo Model for the Stochastic Solution<a class="headerlink" href="#pyomo-model-for-the-stochastic-solution" title="Permalink to this heading">#</a></h2>
 <p>An optimization model to find the maximum expected value can be constructed from the following formulation.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1040,10 +1041,10 @@ y : Size=3, Index=S
 </div>
 </section>
 <section id="analytical-solution">
-<h2>Analytical Solution<a class="headerlink" href="#analytical-solution" title="Permalink to this headline">#</a></h2>
+<h2>Analytical Solution<a class="headerlink" href="#analytical-solution" title="Permalink to this heading">#</a></h2>
 <p>Virtually every two-stage stochastic programs will require a numerical solution using an optimization code. The newsvendor problem, however, is amenable to analytical solution which is included here for the great insight that it gives into the relationship between economic return, risk, and demand forecasting.</p>
 <section id="maximum-expected-value-for-continuous-distributions">
-<h3>Maximum Expected Value for Continuous Distributions<a class="headerlink" href="#maximum-expected-value-for-continuous-distributions" title="Permalink to this headline">#</a></h3>
+<h3>Maximum Expected Value for Continuous Distributions<a class="headerlink" href="#maximum-expected-value-for-continuous-distributions" title="Permalink to this heading">#</a></h3>
 <p>The case of continuous distributions can be handled analytically with basic calculus. Let <span class="math notranslate nohighlight">\(p(D)\)</span> be the continuous probability density function for demand.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1087,7 +1088,7 @@ y : Size=3, Index=S
 </section>
 </section>
 <section id="discrete-distribution">
-<h2>Discrete Distribution<a class="headerlink" href="#discrete-distribution" title="Permalink to this headline">#</a></h2>
+<h2>Discrete Distribution<a class="headerlink" href="#discrete-distribution" title="Permalink to this heading">#</a></h2>
 <p>Let’s apply the continuous probability analysis to the discrete case. We first compute the quantile <span class="math notranslate nohighlight">\(q = \frac{r-c}{r-w}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1175,7 +1176,7 @@ y : Size=3, Index=S
 </div>
 </section>
 <section id="managing-risk">
-<h2>Managing Risk<a class="headerlink" href="#managing-risk" title="Permalink to this headline">#</a></h2>
+<h2>Managing Risk<a class="headerlink" href="#managing-risk" title="Permalink to this heading">#</a></h2>
 <p>Up to this point the objective has been to maximize expected value without regard to any associated financial risk. This is a suitable objective for a risk neutral vendor. Most private businesses, however, avoid downside risk even at the cost of reducing expected return.</p>
 <p>The following chart shows the profit earned for each scenario when the objective is to maximize expected profit.</p>
 <div class="cell docutils container">
@@ -1249,7 +1250,7 @@ y : Size=3, Index=S
 </div>
 </section>
 <section id="maximizing-worst-case-profit">
-<h2>Maximizing Worst-Case Profit<a class="headerlink" href="#maximizing-worst-case-profit" title="Permalink to this headline">#</a></h2>
+<h2>Maximizing Worst-Case Profit<a class="headerlink" href="#maximizing-worst-case-profit" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
@@ -1360,7 +1361,7 @@ y : Size=3, Index=S
 </div>
 </section>
 <section id="distribution-of-outcomes">
-<h2>Distribution of Outcomes<a class="headerlink" href="#distribution-of-outcomes" title="Permalink to this headline">#</a></h2>
+<h2>Distribution of Outcomes<a class="headerlink" href="#distribution-of-outcomes" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">profit</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">expr</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>

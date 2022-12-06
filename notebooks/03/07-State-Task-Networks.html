@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Scheduling Multipurpose Batch Processes using State-Task Networks &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -59,7 +60,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="Optimization under Uncertainty" href="../04/00-uncertainty.html" />
     <link rel="prev" title="Job Shop Scheduling" href="03-job-shop-scheduling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -721,7 +722,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="scheduling-multipurpose-batch-processes-using-state-task-networks">
-<h1>Scheduling Multipurpose Batch Processes using State-Task Networks<a class="headerlink" href="#scheduling-multipurpose-batch-processes-using-state-task-networks" title="Permalink to this headline">#</a></h1>
+<h1>Scheduling Multipurpose Batch Processes using State-Task Networks<a class="headerlink" href="#scheduling-multipurpose-batch-processes-using-state-task-networks" title="Permalink to this heading">#</a></h1>
 <p>The State-Task Network (STN) is an approach to modeling multipurpose batch process for the purpose of short term scheduling. It was first developed by Kondili, et al., in 1993, and subsequently developed and extended by others.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -734,7 +735,7 @@ title="Print to PDF"
 </div>
 </div>
 <section id="bibliographic-notes">
-<h2>Bibliographic Notes<a class="headerlink" href="#bibliographic-notes" title="Permalink to this headline">#</a></h2>
+<h2>Bibliographic Notes<a class="headerlink" href="#bibliographic-notes" title="Permalink to this heading">#</a></h2>
 <p>Original development –</p>
 <ul class="simple">
 <li><p>Kondili, E., Pantelides, C. C., &amp; Sargent, R. W. H. (1993). A general algorithm for short-term scheduling of batch operations—I. MILP formulation. Computers &amp; Chemical Engineering, 17(2), 211-227. [<a class="reference external" href="https://www.researchgate.net/profile/Roger-Sargent/publication/222159161_A_General_Algorithm_for_Short-Term_Scheduling_of_Batch_Operations-i_MILP_Formulation/links/5a19d9be0f7e9be37f9a5af1/A-General-Algorithm-for-Short-Term-Scheduling-of-Batch-Operations-i-MILP-Formulation.pdf">pdf</a>]</p></li>
@@ -759,7 +760,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="example-kondili-et-al-1993">
-<h2>Example (Kondili, et al., 1993)<a class="headerlink" href="#example-kondili-et-al-1993" title="Permalink to this headline">#</a></h2>
+<h2>Example (Kondili, et al., 1993)<a class="headerlink" href="#example-kondili-et-al-1993" title="Permalink to this heading">#</a></h2>
 <p>A state-task network is a graphical representation of the activities in a multiproduct batch process. The representation includes the minimum details needed for short term scheduling of batch operations.</p>
 <p>A well-studied example due to Kondili (1993) is shown below. Other examples are available in the references cited above.</p>
 <p><img alt="Screen%20Shot%202017-09-16%20at%209.45.36%20PM.png" src="https://jckantor.github.io/CBE30338/figures/Kondili_1993.png" /></p>
@@ -767,7 +768,7 @@ title="Print to PDF"
 <p>The rectangular nodes denote process tasks. When scheduled for execution, each task is assigned an appropriate piece of equipment, and assigned a batch of material according to the incoming arcs. Each incoming arc begins at a state where the associated label indicates the mass fraction of the batch coming from that particular state. Outgoing arcs indicate the disposition of the batch to product states. The outgoing are labels indicate the fraction of the batch assigned to each product state, and the time necessary to produce that product.</p>
 <p>Not shown in the diagram is the process equipment used to execute the tasks. A separate list of process units is available, each characterized by a capacity and list of tasks which can be performed in that unit.</p>
 <section id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">#</a></h3>
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h3>
 <ol class="simple">
 <li><p>Read this reciped for Hollandaise Sauce: <a class="reference external" href="http://www.foodnetwork.com/recipes/tyler-florence/hollandaise-sauce-recipe-1910043">http://www.foodnetwork.com/recipes/tyler-florence/hollandaise-sauce-recipe-1910043</a>. Assume the available equipment consists of one sauce pan and a double-boiler on a stove. Draw a state-task network outlining the basic steps in the recipe.</p></li>
 <li><p>A few months ago you were given process development responsibilities for a start-up company that is attempting to commercialize a novel fermentation technology.  The fermentation produces high-value medicinal products based on an engineered micro-organism. During you short time on the job, you have already developed and commissioned a pilot plant comprised of the following basic operations:</p></li>
@@ -782,7 +783,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="encoding-stn-data">
-<h2>Encoding STN data<a class="headerlink" href="#encoding-stn-data" title="Permalink to this headline">#</a></h2>
+<h2>Encoding STN data<a class="headerlink" href="#encoding-stn-data" title="Permalink to this heading">#</a></h2>
 <p>The basic data structure specifies the states, tasks, and units comprising a state-task network. The intention is for all relevant problem data to be contained in a single JSON-like structure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -847,12 +848,12 @@ title="Print to PDF"
 </div>
 </div>
 <section id="setting-a-time-grid">
-<h3>Setting a Time Grid<a class="headerlink" href="#setting-a-time-grid" title="Permalink to this headline">#</a></h3>
+<h3>Setting a Time Grid<a class="headerlink" href="#setting-a-time-grid" title="Permalink to this heading">#</a></h3>
 <p>The following computations can be done on any time grid, including real-valued time points. TIME is a list of time points commencing at 0.</p>
 </section>
 </section>
 <section id="mathematical-model">
-<h2>Mathematical Model<a class="headerlink" href="#mathematical-model" title="Permalink to this headline">#</a></h2>
+<h2>Mathematical Model<a class="headerlink" href="#mathematical-model" title="Permalink to this heading">#</a></h2>
 <p>The following Pyomo model closely follows the development in Kondili, et al. (1993). In particular, the first step in the model is to process the STN data to create sets as given in Kondili.</p>
 <p>One important difference from Kondili is the adoption of a more natural time scale that starts at <span class="math notranslate nohighlight">\(t = 0\)</span> and extends to <span class="math notranslate nohighlight">\(t = H\)</span> (rather than from 1 to H+1).</p>
 <p>A second difference is the introduction of an additional decision variable denoted by <span class="math notranslate nohighlight">\(Q_{j,t}\)</span> indicating the amount of material in unit <span class="math notranslate nohighlight">\(j\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>. A material balance then reads</p>
@@ -874,7 +875,7 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 \end{align*}</p>
 </section>
 <section id="organizing-problem-data-structures">
-<h2>Organizing Problem Data Structures<a class="headerlink" href="#organizing-problem-data-structures" title="Permalink to this headline">#</a></h2>
+<h2>Organizing Problem Data Structures<a class="headerlink" href="#organizing-problem-data-structures" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">STN</span> <span class="o">=</span> <span class="n">Kondili</span>
@@ -889,7 +890,7 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 </div>
 </div>
 <section id="characterizing-time">
-<h3>Characterizing Time<a class="headerlink" href="#characterizing-time" title="Permalink to this headline">#</a></h3>
+<h3>Characterizing Time<a class="headerlink" href="#characterizing-time" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">H</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
@@ -905,7 +906,7 @@ B_{ij}^{min}W_{ijt} &amp; \leq B_{ijt} \leq  B_{ij}^{max}W_{ijt} \qquad \forall 
 </div>
 </section>
 <section id="characterizing-tasks">
-<h3>Characterizing Tasks<a class="headerlink" href="#characterizing-tasks" title="Permalink to this headline">#</a></h3>
+<h3>Characterizing Tasks<a class="headerlink" href="#characterizing-tasks" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set of all tasks </span>
@@ -990,7 +991,7 @@ TASK Heating      duration =  1.0
 </div>
 </section>
 <section id="characterizing-states">
-<h3>Characterizing States<a class="headerlink" href="#characterizing-states" title="Permalink to this headline">#</a></h3>
+<h3>Characterizing States<a class="headerlink" href="#characterizing-states" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># T[s] set of tasks receiving material from state s </span>
@@ -1055,7 +1056,7 @@ STATE Product_2   capacity = 500.0  ic =   0.0  price = 1000.00
 </div>
 </section>
 <section id="characterizing-the-processing-units">
-<h3>Characterizing the Processing Units<a class="headerlink" href="#characterizing-the-processing-units" title="Permalink to this headline">#</a></h3>
+<h3>Characterizing the Processing Units<a class="headerlink" href="#characterizing-the-processing-units" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set of all units</span>
@@ -1104,7 +1105,7 @@ UNIT Still
 </div>
 </section>
 <section id="pyomo-model">
-<h3>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this headline">#</a></h3>
+<h3>Pyomo Model<a class="headerlink" href="#pyomo-model" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
@@ -1369,7 +1370,7 @@ from IPython.display import display, HTML</p>
 </section>
 </section>
 <section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1380,7 +1381,7 @@ from IPython.display import display, HTML</p>
 </div>
 </div>
 <section id="profitability">
-<h3>Profitability<a class="headerlink" href="#profitability" title="Permalink to this headline">#</a></h3>
+<h3>Profitability<a class="headerlink" href="#profitability" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value of State Inventories = </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">value_of_states</span><span class="p">()</span><span class="si">:</span><span class="s2">12.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1399,7 +1400,7 @@ from IPython.display import display, HTML</p>
 </div>
 </section>
 <section id="state-inventories">
-<h3>State Inventories<a class="headerlink" href="#state-inventories" title="Permalink to this headline">#</a></h3>
+<h3>State Inventories<a class="headerlink" href="#state-inventories" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">m</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">STATES</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
@@ -1597,7 +1598,7 @@ from IPython.display import display, HTML</p>
 </div>
 </section>
 <section id="unit-assignment">
-<h3>Unit Assignment<a class="headerlink" href="#unit-assignment" title="Permalink to this headline">#</a></h3>
+<h3>Unit Assignment<a class="headerlink" href="#unit-assignment" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UnitAssignment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">j</span><span class="p">:[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="n">TIME</span><span class="p">)</span>
@@ -1726,7 +1727,7 @@ from IPython.display import display, HTML</p>
 </div>
 </section>
 <section id="unit-batch-inventories">
-<h3>Unit Batch Inventories<a class="headerlink" href="#unit-batch-inventories" title="Permalink to this headline">#</a></h3>
+<h3>Unit Batch Inventories<a class="headerlink" href="#unit-batch-inventories" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="n">model</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">t</span><span class="p">]()</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">UNITS</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">TIME</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">UNITS</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">TIME</span><span class="p">)</span>
@@ -1842,7 +1843,7 @@ from IPython.display import display, HTML</p>
 </div>
 </section>
 <section id="gannt-chart">
-<h3>Gannt Chart<a class="headerlink" href="#gannt-chart" title="Permalink to this headline">#</a></h3>
+<h3>Gannt Chart<a class="headerlink" href="#gannt-chart" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1878,7 +1879,7 @@ from IPython.display import display, HTML</p>
 </section>
 </section>
 <section id="trace-of-events-and-states">
-<h2>Trace of Events and States<a class="headerlink" href="#trace-of-events-and-states" title="Permalink to this headline">#</a></h2>
+<h2>Trace of Events and States<a class="headerlink" href="#trace-of-events-and-states" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">--------------------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s1">&#39;</span>

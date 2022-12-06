@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Log-Optimal Portfolios &#8212; CBE 40455/60455 Process Operations</title>
     
@@ -34,6 +34,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -58,7 +59,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="prev" title="Log-Optimal Growth and the Kelly Criterion" href="08-Log-Optimal-Growth-and-the-Kelly-Criterion.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -573,18 +574,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <!--NOTEBOOK_HEADER-->
-<p><em>This notebook contains course material from <a class="reference external" href="https://jckantor.github.io/CBE40455">CBE40455</a> by
-Jeffrey Kantor (jeff at <a class="reference external" href="http://nd.edu">nd.edu</a>); the content is available <a class="reference external" href="https://github.com/jckantor/CBE40455.git">on Github</a>.
-The text is released under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC-BY-NC-ND-4.0 license</a>,
-and code is released under the <a class="reference external" href="https://opensource.org/licenses/MIT">MIT license</a>.</em></p>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb">Optimization in Google Sheets</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="log-optimal-portfolios">
-<h1>Log-Optimal Portfolios<a class="headerlink" href="#log-optimal-portfolios" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="log-optimal-portfolios">
+<h1>Log-Optimal Portfolios<a class="headerlink" href="#log-optimal-portfolios" title="Permalink to this heading">#</a></h1>
 <p>This notebook demonstrates the Kelly criterion and other phenomena associated with log-optimal growth.</p>
 <section id="initializations">
-<h2>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">#</a></h2>
+<h2>Initializations<a class="headerlink" href="#initializations" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
@@ -598,14 +592,14 @@ and code is released under the <a class="reference external" href="https://opens
 </div>
 </section>
 <section id="kelly-s-criterion">
-<h2>Kelly’s Criterion<a class="headerlink" href="#kelly-s-criterion" title="Permalink to this headline">#</a></h2>
+<h2>Kelly’s Criterion<a class="headerlink" href="#kelly-s-criterion" title="Permalink to this heading">#</a></h2>
 <p>In a nutshell, Kelly’s criterion is to choose strategies that maximize expected log return.</p>
 <div class="math notranslate nohighlight">
 \[\max E[\ln R]\]</div>
 <p>where <span class="math notranslate nohighlight">\(R\)</span> is total return. As we learned, Kelly’s criterion has properties useful in the context of long-term investments.</p>
 </section>
 <section id="example-1-maximizing-return-for-a-game-with-arbitrary-odds">
-<h2>Example 1. Maximizing Return for a Game with Arbitrary Odds<a class="headerlink" href="#example-1-maximizing-return-for-a-game-with-arbitrary-odds" title="Permalink to this headline">#</a></h2>
+<h2>Example 1. Maximizing Return for a Game with Arbitrary Odds<a class="headerlink" href="#example-1-maximizing-return-for-a-game-with-arbitrary-odds" title="Permalink to this heading">#</a></h2>
 <p>Consider a game with two outcomes. For each $1 wagered, a successful outcome with probability <span class="math notranslate nohighlight">\(p\)</span> returns <span class="math notranslate nohighlight">\(b+1\)</span> dollars. An unsuccessful outcome returns nothing. What fraction <span class="math notranslate nohighlight">\(w\)</span> of our portfolio should we wager on each turn of the game?</p>
 <p><img alt="Kelly_Criterion_Fig2" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Fig2.png?raw=true" /></p>
 <p>There are two outcomes with returns</p>
@@ -665,12 +659,12 @@ E[\ln R] &amp; = p \ln R_1 + (1-p) \ln R_2 \
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/09-Log-Optimal-Portfolios_8_0.png" src="../../_images/09-Log-Optimal-Portfolios_8_0.png" />
+<img alt="../../_images/09-Log-Optimal-Portfolios_6_0.png" src="../../_images/09-Log-Optimal-Portfolios_6_0.png" />
 </div>
 </div>
 </section>
 <section id="example-2-betting-wheel">
-<h2>Example 2. Betting Wheel<a class="headerlink" href="#example-2-betting-wheel" title="Permalink to this headline">#</a></h2>
+<h2>Example 2. Betting Wheel<a class="headerlink" href="#example-2-betting-wheel" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -701,7 +695,7 @@ E[\ln R] &amp; = p \ln R_1 + (1-p) \ln R_2 \
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:18: RuntimeWarning: divide by zero encountered in log
 </pre></div>
 </div>
-<img alt="../../_images/09-Log-Optimal-Portfolios_10_1.png" src="../../_images/09-Log-Optimal-Portfolios_10_1.png" />
+<img alt="../../_images/09-Log-Optimal-Portfolios_8_1.png" src="../../_images/09-Log-Optimal-Portfolios_8_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -715,7 +709,7 @@ E[\ln R] &amp; = p \ln R_1 + (1-p) \ln R_2 \
 </div>
 </section>
 <section id="example-3-stock-bond-portfolio-in-continuous-time">
-<h2>Example 3. Stock/Bond Portfolio in Continuous Time<a class="headerlink" href="#example-3-stock-bond-portfolio-in-continuous-time" title="Permalink to this headline">#</a></h2>
+<h2>Example 3. Stock/Bond Portfolio in Continuous Time<a class="headerlink" href="#example-3-stock-bond-portfolio-in-continuous-time" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -784,7 +778,7 @@ E[\ln R] &amp; = p \ln R_1 + (1-p) \ln R_2 \
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/09-Log-Optimal-Portfolios_14_0.png" src="../../_images/09-Log-Optimal-Portfolios_14_0.png" />
+<img alt="../../_images/09-Log-Optimal-Portfolios_12_0.png" src="../../_images/09-Log-Optimal-Portfolios_12_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -844,7 +838,7 @@ sigma =   0.00963609  (annualized = 15.30%)
 </div>
 </section>
 <section id="volatility-pumping">
-<h2>Volatility Pumping<a class="headerlink" href="#volatility-pumping" title="Permalink to this headline">#</a></h2>
+<h2>Volatility Pumping<a class="headerlink" href="#volatility-pumping" title="Permalink to this heading">#</a></h2>
 <p><img alt="Kelly_Criterion_Volatility_Pumping" src="https://github.com/jckantor/CBE40455/blob/master/notebooks/figures/Kelly_Criterion_Volatility_Pumping.png?raw=true" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -969,7 +963,7 @@ sigma =   0.00963609  (annualized = 15.30%)
 <span class="ne">RuntimeError</span>: matplotlib does not support generators as input
 </pre></div>
 </div>
-<img alt="../../_images/09-Log-Optimal-Portfolios_20_2.png" src="../../_images/09-Log-Optimal-Portfolios_20_2.png" />
+<img alt="../../_images/09-Log-Optimal-Portfolios_18_2.png" src="../../_images/09-Log-Optimal-Portfolios_18_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -993,11 +987,9 @@ sigma =   0.00963609  (annualized = 15.30%)
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
 </pre></div>
 </div>
-<img alt="../../_images/09-Log-Optimal-Portfolios_21_1.png" src="../../_images/09-Log-Optimal-Portfolios_21_1.png" />
+<img alt="../../_images/09-Log-Optimal-Portfolios_19_1.png" src="../../_images/09-Log-Optimal-Portfolios_19_1.png" />
 </div>
 </div>
-<!--NAVIGATION-->
-<p>&lt; <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/07.08-Log-Optimal-Growth-and-the-Kelly-Criterion.ipynb">Log-Optimal Growth and the Kelly Criterion</a> | <span class="xref myst">Contents</span> | <a class="reference external" href="http://nbviewer.jupyter.org/github/jckantor/CBE40455/blob/master/notebooks/08.00-Optimization-in-Google-Sheets.ipynb">Optimization in Google Sheets</a> &gt;<p><a href="https://colab.research.google.com/github/jckantor/CBE40455/blob/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open in Google Colaboratory"></a><p><a href="https://raw.githubusercontent.com/jckantor/CBE40455/master/notebooks/07.09-Log-Optimal-Portfolios.ipynb"><img align="left" src="https://img.shields.io/badge/Github-Download-blue.svg" alt="Download" title="Download Notebook"></a></p>
 </section>
 </section>
 
